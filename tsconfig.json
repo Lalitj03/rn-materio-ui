@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "rootDir": ".",
+    "baseUrl": ".",
     "paths": {
-      "rn-materio-ui": ["./src/index"]
+      "rn-materio-ui": ["./src/index"],
+      "@/*": ["./example/*"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

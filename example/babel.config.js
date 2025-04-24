@@ -10,6 +10,17 @@ module.exports = function (api) {
   return getConfig(
     {
       presets: ['babel-preset-expo'],
+      plugins: [
+        [
+          'module-resolver',
+          {
+            root: ['./'],
+            alias: {
+              '@': './',
+            },
+          },
+        ],
+      ],
     },
     { root, pkg }
   );

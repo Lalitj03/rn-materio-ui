@@ -36,6 +36,7 @@
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:fix": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "clean": "del-cli lib",
     "prepare": "bob build",
     "release": "release-it"
@@ -59,6 +60,9 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-transform-flow-strip-types": "^7.26.5",
     "@commitlint/config-conventional": "^19.6.0",
     "@eslint/compat": "^1.2.7",
     "@eslint/eslintrc": "^3.3.0",
@@ -66,24 +70,34 @@
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native/eslint-config": "^0.78.0",
     "@release-it/conventional-changelog": "^9.0.2",
+    "@testing-library/react-native": "^13.2.0",
     "@types/jest": "^29.5.5",
     "@types/react": "^19.0.12",
+    "babel-jest": "^29.7.0",
     "commitlint": "^19.6.1",
     "del-cli": "^5.1.0",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "jest": "^29.7.0",
+    "metro-react-native-babel-preset": "^0.77.0",
     "prettier": "^3.0.3",
     "react": "18.3.1",
     "react-native": "0.76.9",
     "react-native-builder-bob": "^0.40.5",
+    "react-native-gesture-handler": "^2.25.0",
+    "react-native-reanimated": "^3.17.4",
+    "react-native-safe-area-context": "^5.4.0",
+    "react-test-renderer": "18.3.1",
     "release-it": "^17.10.0",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-reanimated": "*",
+    "react-native-safe-area-context": "*"
   },
   "workspaces": [
     "example"
@@ -94,7 +108,24 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^rn-materio-ui$": "<rootDir>/src/index"
+    },
+    "setupFiles": [
+      "<rootDir>/jest/setup.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|react-native-gesture-handler|react-native-reanimated|@react-native|react-native-safe-area-context)/)"
+    ],
+    "transform": {
+      "^.+\\.(js|ts|tsx)$": [
+        "babel-jest",
+        {
+          "configFile": "./jest/babel.config.js"
+        }
+      ]
+    }
   },
   "commitlint": {
     "extends": [
