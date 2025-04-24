@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons';
+import { Button, Paper, Typography, useTheme } from '@materio/rn-materio-ui';
 import { Link } from 'expo-router';
 import { useAtom } from 'jotai';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Button, Paper, Typography, useTheme } from 'rn-materio-ui';
 import { themeModeAtom } from '../App/atoms';
 
 interface ComponentCardProps {

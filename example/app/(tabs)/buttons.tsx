@@ -1,13 +1,13 @@
 import { Feather } from '@expo/vector-icons';
+import {
+    Button,
+    Divider,
+    IconButton,
+    Typography,
+    useTheme,
+} from '@materio/rn-materio-ui';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  Button,
-  Divider,
-  IconButton,
-  Typography,
-  useTheme,
-} from 'rn-materio-ui';
 
 // Component to display examples of a specific variant across all colors
 const VariantRow = ({

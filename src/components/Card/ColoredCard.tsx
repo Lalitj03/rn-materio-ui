@@ -1,9 +1,8 @@
-import { useTheme } from 'rn-materio-ui';
 import {
-  type PaperVariants,
-  type ThemeColors,
-  type ThemeColorTones,
-} from 'rn-materio-ui';
+    useTheme, type PaperVariants,
+    type ThemeColors,
+    type ThemeColorTones
+} from '@materio/rn-materio-ui';
 import { View } from 'react-native';
 import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
 

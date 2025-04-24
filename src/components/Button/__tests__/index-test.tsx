@@ -1,11 +1,11 @@
 /// <reference types="jest" />
 // components/thunderbolt/Button/index.test.tsx
+import { useTheme } from '@materio/rn-materio-ui';
 import { render } from '@testing-library/react-native';
 import { View } from 'react-native';
-import { useTheme } from 'rn-materio-ui';
 import Button from '../index';
 
-jest.mock('rn-materio-ui', () => ({
+jest.mock('@materio/rn-materio-ui', () => ({
   // Mocking the useTheme hook
   __esModule: true,
   useTheme: jest.fn(),

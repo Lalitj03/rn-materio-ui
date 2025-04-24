@@ -1,5 +1,4 @@
-import { useTheme } from 'rn-materio-ui';
-import { type PaperVariants } from 'rn-materio-ui';
+import { useTheme, type PaperVariants } from '@materio/rn-materio-ui';
 import { View, type ViewProps } from 'react-native';
 
 export interface PaperProps extends ViewProps {

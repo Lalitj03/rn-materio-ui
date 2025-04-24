@@ -1,5 +1,4 @@
-import { useTheme } from 'rn-materio-ui';
-import { type PaperVariants } from 'rn-materio-ui';
+import { useTheme, type PaperVariants } from '@materio/rn-materio-ui';
 import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
 
 export interface CardProps extends BaseButtonProps {

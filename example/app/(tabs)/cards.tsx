@@ -1,13 +1,13 @@
 import { Feather } from '@expo/vector-icons';
+import {
+    Card,
+    ColoredCard,
+    Divider,
+    Typography,
+    useTheme,
+} from '@materio/rn-materio-ui';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  Card,
-  ColoredCard,
-  Divider,
-  Typography,
-  useTheme,
-} from 'rn-materio-ui';
 
 // Basic Card Example
 const BasicCardExample = () => {

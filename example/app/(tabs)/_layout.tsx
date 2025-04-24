@@ -1,5 +1,5 @@
-import { useTheme } from 'rn-materio-ui';
 import { Feather } from '@expo/vector-icons';
+import { useTheme } from '@materio/rn-materio-ui';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';

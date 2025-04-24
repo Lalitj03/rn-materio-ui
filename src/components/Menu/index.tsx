@@ -1,16 +1,14 @@
-import Divider from '../Divider';
-import Popover, { type PopoverProps } from '../Popover';
-import { useTheme } from 'rn-materio-ui';
-import Typography, { type TypographyProps } from '../Typography';
-import { invertTone } from 'rn-materio-ui';
 import {
-  type ButtonColors,
-  type ColorValues,
-  type ThemeColorTones,
-} from 'rn-materio-ui';
+    invertTone, useTheme, type ButtonColors,
+    type ColorValues,
+    type ThemeColorTones
+} from '@materio/rn-materio-ui';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Animated from 'react-native-reanimated';
+import Divider from '../Divider';
+import Popover, { type PopoverProps } from '../Popover';
+import Typography, { type TypographyProps } from '../Typography';
 
 // Define the icon props interface
 interface IconProps {

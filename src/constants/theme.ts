@@ -1,4 +1,4 @@
-import { type Theme } from 'rn-materio-ui';
+import { type Theme } from '@materio/rn-materio-ui';
 import twcolors from './twcolors';
 
 export default {

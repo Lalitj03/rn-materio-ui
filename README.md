@@ -1,7 +1,7 @@
 # Materio UI for React Native
 
-![npm version](https://img.shields.io/npm/v/rn-materio-ui)
-![license](https://img.shields.io/npm/l/rn-materio-ui)
+![npm version](https://img.shields.io/npm/v/@materio/rn-materio-ui)
+![license](https://img.shields.io/npm/l/@materio/rn-materio-ui)
 ![React Native](https://img.shields.io/badge/React%20Native-0.65+-blue)
 
 A comprehensive, customizable UI component library for React Native with Material Design influences. Materio UI provides a set of accessible, reusable components to help you build beautiful mobile applications for iOS and Android and Web.
@@ -19,13 +19,13 @@ A comprehensive, customizable UI component library for React Native with Materia
 
 ```sh
 # Using npm
-npm install rn-materio-ui
+npm install @materio/rn-materio-ui
 
 # Using yarn
-yarn add rn-materio-ui
+yarn add @materio/rn-materio-ui
 
 # Using pnpm
-pnpm add rn-materio-ui
+pnpm add @materio/rn-materio-ui
 ```
 
 ### Dependencies
@@ -43,7 +43,7 @@ Wrap your application with the `ThemeProvider` and start using components:
 ```jsx
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ThemeProvider, Button, Typography } from 'rn-materio-ui';
+import { ThemeProvider, Button, Typography } from '@materio/rn-materio-ui';
 
 export default function App() {
   return (
@@ -92,7 +92,7 @@ Materio UI includes the following components:
 ### Buttons
 
 ```jsx
-import { Button, IconButton } from 'rn-materio-ui';
+import { Button, IconButton } from '@materio/rn-materio-ui';
 import { Feather } from '@expo/vector-icons';
 
 // Basic Button
@@ -121,7 +121,7 @@ import { Feather } from '@expo/vector-icons';
 ### Typography
 
 ```jsx
-import { Typography } from 'rn-materio-ui';
+import { Typography } from '@materio/rn-materio-ui';
 
 // Variants
 <Typography variant="display">Display Text</Typography>
@@ -145,7 +145,7 @@ import { Typography } from 'rn-materio-ui';
 ### Cards
 
 ```jsx
-import { Card, ColoredCard, Typography } from 'rn-materio-ui';
+import { Card, ColoredCard, Typography } from '@materio/rn-materio-ui';
 
 // Basic Card
 <Card>
@@ -164,7 +164,7 @@ import { Card, ColoredCard, Typography } from 'rn-materio-ui';
 Materio UI comes with a built-in theme system that supports light and dark modes:
 
 ```jsx
-import { ThemeProvider, useTheme, Button } from 'rn-materio-ui';
+import { ThemeProvider, useTheme, Button } from '@materio/rn-materio-ui';
 
 // The ThemeProvider accepts a colorScheme prop
 export function App() {

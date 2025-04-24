@@ -1,12 +1,11 @@
-import { type ButtonRounded } from '../Button';
-import { useTheme } from 'rn-materio-ui';
 import {
-  type ButtonColors,
+  useTheme, type ButtonColors,
   type ButtonSizes,
-  type ButtonVariants,
-} from 'rn-materio-ui';
+  type ButtonVariants
+} from '@materio/rn-materio-ui';
 import React, { forwardRef } from 'react';
 import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+import { type ButtonRounded } from '../Button';
 
 // Define the icon props interface
 interface IconProps {

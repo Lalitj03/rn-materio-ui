@@ -3,7 +3,7 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "rn-materio-ui": ["./src/index"],
+      "@materio/rn-materio-ui": ["./src/index"],
       "@/*": ["./example/*"]
     },
     "allowUnreachableCode": false,

@@ -1,7 +1,7 @@
-import { Divider, TextInput, Typography, useTheme } from 'rn-materio-ui';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Divider, TextInput, Typography, useTheme } from '@materio/rn-materio-ui';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Basic TextInput Examples
 const BasicInputs = () => {

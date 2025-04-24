@@ -1,5 +1,5 @@
 {
-  "name": "rn-materio-ui",
+  "name": "@materio/rn-materio-ui",
   "version": "0.1.0",
   "description": "React Native UI library",
   "source": "./src/index.tsx",
@@ -57,7 +57,8 @@
   },
   "homepage": "https://github.com/Lalitj03/rn-materio-ui#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",

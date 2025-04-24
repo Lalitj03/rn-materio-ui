@@ -1,5 +1,6 @@
 import { themeModeAtom } from '@/containers/App/atoms';
 import Feather from '@expo/vector-icons/Feather';
+import { ThemeProvider } from '@materio/rn-materio-ui';
 import {
   DarkTheme,
   DefaultTheme,
@@ -14,7 +15,6 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import { ThemeProvider } from 'rn-materio-ui';
 export { ErrorBoundary } from 'expo-router';
 
 export const unstable_settings = {

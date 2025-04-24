@@ -1,18 +1,18 @@
-import {
-  Backdrop,
-  Button,
-  Divider,
-  Menu,
-  MenuItem,
-  Paper,
-  Popover,
-  Typography,
-  useTheme,
-} from 'rn-materio-ui';
 import { Feather } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+    Backdrop,
+    Button,
+    Divider,
+    Menu,
+    MenuItem,
+    Paper,
+    Popover,
+    Typography,
+    useTheme,
+} from '@materio/rn-materio-ui';
 import { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Divider Examples
 const DividerExamples = () => {

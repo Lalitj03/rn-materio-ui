@@ -1,6 +1,6 @@
+import { Divider, Paper, Typography, useTheme } from '@materio/rn-materio-ui';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Divider, Paper, Typography, useTheme } from 'rn-materio-ui';
 
 // Typography Variants Showcase
 const VariantsShowcase = () => {

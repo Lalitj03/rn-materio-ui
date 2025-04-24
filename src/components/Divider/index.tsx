@@ -1,5 +1,4 @@
-import { useTheme } from 'rn-materio-ui';
-import { type ThemeColors, type ThemeColorTones } from 'rn-materio-ui';
+import { useTheme, type ThemeColors, type ThemeColorTones } from '@materio/rn-materio-ui';
 import { View, type ViewProps, type ViewStyle } from 'react-native';
 
 export interface DividerProps extends ViewProps {

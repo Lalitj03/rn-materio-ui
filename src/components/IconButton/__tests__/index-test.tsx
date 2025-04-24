@@ -4,7 +4,7 @@ import React from 'react';
 import IconButton from '../index';
 
 // Mock the ThemeProvider from contexts/ThemeProvider since that's where useTheme is exported from
-jest.mock('rn-materio-ui', () => ({
+jest.mock('@materio/rn-materio-ui', () => ({
   __esModule: true,
   useTheme: jest.fn(() => mockTheme),
 }));

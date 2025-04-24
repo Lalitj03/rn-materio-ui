@@ -1,11 +1,10 @@
-import { type ThemeContextType, useTheme } from 'rn-materio-ui';
 import {
-  type ButtonColors,
-  type ButtonSizes,
-  type ButtonVariants,
-} from 'rn-materio-ui';
+    type ButtonColors,
+    type ButtonSizes,
+    type ButtonVariants, type ThemeContextType, useTheme
+} from '@materio/rn-materio-ui';
 import React, { forwardRef } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
 
 export type ButtonRounded = 'none' | 'full';

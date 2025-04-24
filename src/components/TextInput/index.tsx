@@ -1,22 +1,21 @@
-import { useTheme } from 'rn-materio-ui';
-import Typography from '../Typography';
 import {
-  type ButtonVariants,
-  type ColorTones,
-  type ColorValues,
-  type SpacingOptions,
-  type ThemeColors,
-  type TypographySizes,
-  type TypographyUsageTypes,
-  type TypographyWeights,
-} from 'rn-materio-ui';
+    type ButtonVariants,
+    type ColorTones,
+    type ColorValues,
+    type SpacingOptions,
+    type ThemeColors,
+    type TypographySizes,
+    type TypographyUsageTypes,
+    type TypographyWeights, useTheme
+} from '@materio/rn-materio-ui';
 import { useState } from 'react';
 import {
-  TextInput as RNTextInput,
-  type TextInputProps as RNTextInputProps,
-  StyleSheet,
-  View,
+    TextInput as RNTextInput,
+    type TextInputProps as RNTextInputProps,
+    StyleSheet,
+    View,
 } from 'react-native';
+import Typography from '../Typography';
 
 export interface TextInputProps
   extends Omit<RNTextInputProps, 'color' | 'variant' | 'size'> {
