@@ -684,25 +684,25 @@ Text input fields with support for various states.
 
 **Props:**
 
-| Prop           | Type                 | Default      | Description                       |
-| -------------- | -------------------- | ------------ | --------------------------------- | ------------------- | ---------- | -------------- |
-| `variant`      | 'solid' \\           | 'outline'    | `'outline'`                       | Input style variant |
-| `size`         | 'small' \\           | 'medium' \\  | 'large'                           | `'small'`           | Input size |
-| `padding`      | SpacingOptions       | `'md'`       | Internal padding                  |
-| `borderRadius` | SpacingOptions       | `'md'`       | Border radius                     |
-| `label`        | string               | -            | Input label                       |
-| `helperText`   | string               | -            | Helper text displayed below input |
-| `error`        | boolean              | `false`      | Error state                       |
-| `errorMessage` | string               | -            | Error message to display          |
-| `fullWidth`    | boolean              | `false`      | Whether input takes full width    |
-| `disabled`     | boolean              | `false`      | Disables the input                |
-| `color`        | ThemeColors          | `'neutral'`  | Input color                       |
-| `colorTone`    | ColorTones           | `'low'`      | Color tone for the input          |
-| `colorValue`   | ColorValues          | `'contrast'` | Color value (main/contrast)       |
-| `colorAlpha`   | string               | `'ff'`       | Alpha value for the color (hex)   |
-| `usageType`    | TypographyUsageTypes | `'primary'`  | Semantic usage type               |
-| `align`        | 'left' \\            | 'center' \\  | 'right' \\                        | 'justify'           | `'left'`   | Text alignment |
-| `weight`       | TypographyWeights \\ | null         | -                                 | Font weight         |
+| Prop           | Type                                       | Default      | Description                       |
+| -------------- | ------------------------------------------ | ------------ | --------------------------------- |
+| `variant`      | 'solid' \| 'outline'                       | `'outline'`  | Input style variant               |
+| `size`         | 'small' \| 'medium' \| 'large'             | `'small'`    | Input size                        |
+| `padding`      | SpacingOptions                             | `'md'`       | Internal padding                  |
+| `borderRadius` | SpacingOptions                             | `'md'`       | Border radius                     |
+| `label`        | string                                     | -            | Input label                       |
+| `helperText`   | string                                     | -            | Helper text displayed below input |
+| `error`        | boolean                                    | `false`      | Error state                       |
+| `errorMessage` | string                                     | -            | Error message to display          |
+| `fullWidth`    | boolean                                    | `false`      | Whether input takes full width    |
+| `disabled`     | boolean                                    | `false`      | Disables the input                |
+| `color`        | ThemeColors                                | `'neutral'`  | Input color                       |
+| `colorTone`    | ColorTones                                 | `'low'`      | Color tone for the input          |
+| `colorValue`   | ColorValues                                | `'contrast'` | Color value (main/contrast)       |
+| `colorAlpha`   | string                                     | `'ff'`       | Alpha value for the color (hex)   |
+| `usageType`    | TypographyUsageTypes                       | `'primary'`  | Semantic usage type               |
+| `align`        | 'left' \| 'center' \| 'right' \| 'justify' | `'left'`     | Text alignment                    |
+| `weight`       | TypographyWeights \| null                  | -            | Font weight                       |
 
 **Example:**
 
