@@ -1,8 +1,12 @@
 # Materio UI for React Native
 
-![npm version](https://img.shields.io/npm/v/@materio/rn-materio-ui)
-![license](https://img.shields.io/npm/l/@materio/rn-materio-ui)
-![React Native](https://img.shields.io/badge/React%20Native-0.65+-blue)
+<p align="center">
+  <img src="docs/assets/icon.png" alt="Materio UI Logo" width="200" height="200">
+</p>
+
+[![npm version](https://img.shields.io/npm/v/@materio/rn-materio-ui)](https://www.npmjs.com/package/@materio/rn-materio-ui)
+[![license](https://img.shields.io/npm/l/@materio/rn-materio-ui)](LICENSE)
+[![React Native](https://img.shields.io/badge/React%20Native-0.65+-blue)](https://reactnative.dev/)
 
 A comprehensive, customizable UI component library for React Native with Material Design influences. Materio UI provides a set of accessible, reusable components to help you build beautiful mobile applications for iOS and Android and Web.
 
@@ -13,7 +17,7 @@ A comprehensive, customizable UI component library for React Native with Materia
 - 🧩 **Component-Based**: Composable components for consistent UIs
 - ⚡ **Performant**: Optimized for React Native apps
 - 🔍 **Accessible**: Built with accessibility in mind
-- 📚 **Well-Documented**: Clear examples and comprehensive documentation (coming soon).
+- 📚 **Well-Documented**: Clear examples and comprehensive [documentation](docs/DOCUMENTATION.md).
 
 ## Installation
 

@@ -1,13 +1,13 @@
 # Materio UI Documentation
 
 <p align="center">
-  <img src="https://via.placeholder.com/200x200?text=Materio+UI" alt="Materio UI Logo" width="200" height="200">
+  <img src="assets/icon.png" alt="Materio UI Logo" width="200" height="200">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/npm/v/@materio/rn-materio-ui" alt="npm version">
-  <img src="https://img.shields.io/npm/l/@materio/rn-materio-ui" alt="license">
-  <img src="https://img.shields.io/badge/React%20Native-0.65+-blue" alt="React Native">
+  <a href="https://www.npmjs.com/package/@materio/rn-materio-ui"><img src="https://img.shields.io/npm/v/@materio/rn-materio-ui" alt="npm version"></a>
+  <a href="../LICENSE"><img src="https://img.shields.io/npm/l/@materio/rn-materio-ui" alt="license"></a>
+  <a href="https://reactnative.dev/"><img src="https://img.shields.io/badge/React%20Native-0.65+-blue" alt="React Native"></a>
 </p>
 
 <p align="center">
