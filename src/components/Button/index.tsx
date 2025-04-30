@@ -1,7 +1,9 @@
 import {
-    type ButtonColors,
-    type ButtonSizes,
-    type ButtonVariants, type ThemeContextType, useTheme
+  type ButtonColors,
+  type ButtonSizes,
+  type ButtonVariants,
+  type ThemeContextType,
+  useTheme,
 } from '@materio/rn-materio-ui';
 import React, { forwardRef } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';

@@ -1,7 +1,8 @@
 import {
-    useTheme, type ButtonSizes,
-    type ButtonVariants,
-    type ThemeColors
+  useTheme,
+  type ButtonSizes,
+  type ButtonVariants,
+  type ThemeColors,
 } from '@materio/rn-materio-ui';
 import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';

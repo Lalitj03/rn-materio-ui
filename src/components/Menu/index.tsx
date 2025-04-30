@@ -1,7 +1,9 @@
 import {
-    invertTone, useTheme, type ButtonColors,
-    type ColorValues,
-    type ThemeColorTones
+  invertTone,
+  useTheme,
+  type ButtonColors,
+  type ColorValues,
+  type ThemeColorTones,
 } from '@materio/rn-materio-ui';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';

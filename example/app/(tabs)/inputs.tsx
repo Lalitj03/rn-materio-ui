@@ -1,4 +1,9 @@
-import { Divider, TextInput, Typography, useTheme } from '@materio/rn-materio-ui';
+import {
+  Divider,
+  TextInput,
+  Typography,
+  useTheme,
+} from '@materio/rn-materio-ui';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

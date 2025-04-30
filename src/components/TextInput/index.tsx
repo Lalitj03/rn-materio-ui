@@ -1,19 +1,20 @@
 import {
-    type ButtonVariants,
-    type ColorTones,
-    type ColorValues,
-    type SpacingOptions,
-    type ThemeColors,
-    type TypographySizes,
-    type TypographyUsageTypes,
-    type TypographyWeights, useTheme
+  type ButtonVariants,
+  type ColorTones,
+  type ColorValues,
+  type SpacingOptions,
+  type ThemeColors,
+  type TypographySizes,
+  type TypographyUsageTypes,
+  type TypographyWeights,
+  useTheme,
 } from '@materio/rn-materio-ui';
 import { useState } from 'react';
 import {
-    TextInput as RNTextInput,
-    type TextInputProps as RNTextInputProps,
-    StyleSheet,
-    View,
+  TextInput as RNTextInput,
+  type TextInputProps as RNTextInputProps,
+  StyleSheet,
+  View,
 } from 'react-native';
 import Typography from '../Typography';
 

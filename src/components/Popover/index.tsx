@@ -1,17 +1,22 @@
-import { type ButtonColors, type ThemeColorTones, type ThemeContextType, useTheme } from '@materio/rn-materio-ui';
+import {
+  type ButtonColors,
+  type ThemeColorTones,
+  type ThemeContextType,
+  useTheme,
+} from '@materio/rn-materio-ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
-    Platform,
-    StyleSheet,
-    useWindowDimensions,
-    type ViewProps,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  type ViewProps,
 } from 'react-native';
 import Animated, {
-    Easing,
-    FadeOut,
-    useAnimatedStyle,
-    useSharedValue,
-    withTiming,
+  Easing,
+  FadeOut,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Backdrop from '../Backdrop';

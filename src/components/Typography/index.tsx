@@ -1,12 +1,13 @@
 import {
-    useTheme, type ColorTones,
-    type ColorValues,
-    type ThemeColors,
-    type TypographyFontWeight,
-    type TypographySizes,
-    type TypographyUsageTypes,
-    type TypographyVariants,
-    type TypographyWeights
+  useTheme,
+  type ColorTones,
+  type ColorValues,
+  type ThemeColors,
+  type TypographyFontWeight,
+  type TypographySizes,
+  type TypographyUsageTypes,
+  type TypographyVariants,
+  type TypographyWeights,
 } from '@materio/rn-materio-ui';
 import { Text, type TextProps } from 'react-native';
 

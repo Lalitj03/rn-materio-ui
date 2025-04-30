@@ -1,7 +1,8 @@
 import {
-  useTheme, type ButtonColors,
+  useTheme,
+  type ButtonColors,
   type ButtonSizes,
-  type ButtonVariants
+  type ButtonVariants,
 } from '@materio/rn-materio-ui';
 import React, { forwardRef } from 'react';
 import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
