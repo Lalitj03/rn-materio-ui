@@ -23,5 +23,11 @@ export {
 // Export types
 export * from './utils/types/theme';
 
+// Export default theme
+export { default as theme } from './constants/theme';
+
+// Export tailwind colors
+export { default as twcolors } from './constants/twcolors';
+
 // Export utils
 export { default as invertTone } from './utils/invertTone';

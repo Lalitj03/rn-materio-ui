@@ -1,3 +1,4 @@
+import type { ThemeName } from '@/constants/themes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { atomWithStorage } from 'jotai/utils';
 
@@ -8,6 +9,19 @@ export const themeModeAtom = atomWithStorage(
     getItem: async (key) => {
       const value = await AsyncStorage.getItem(key);
       return (value as 'system' | 'light' | 'dark') || 'system';
+    },
+    setItem: (key, value) => AsyncStorage.setItem(key, value),
+    removeItem: (key) => AsyncStorage.removeItem(key),
+  }
+);
+
+export const selectedThemeAtom = atomWithStorage(
+  'selectedTheme',
+  'default' as ThemeName,
+  {
+    getItem: async (key) => {
+      const value = await AsyncStorage.getItem(key);
+      return (value as ThemeName) || 'default';
     },
     setItem: (key, value) => AsyncStorage.setItem(key, value),
     removeItem: (key) => AsyncStorage.removeItem(key),

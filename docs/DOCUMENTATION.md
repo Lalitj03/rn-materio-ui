@@ -26,6 +26,11 @@
   - [Color System](#color-system)
   - [Typography](#typography-system)
   - [Spacing & Layout](#spacing--layout)
+- [Exports and Utilities](#exports-and-utilities)
+  - [Available Exports](#available-exports)
+  - [Tailwind Colors](#tailwind-colors)
+  - [Utility Functions](#utility-functions)
+  - [TypeScript Support](#typescript-support)
 - [Components](#components)
   - [Core Components](#core-components)
   - [Form Components](#form-components)
@@ -36,6 +41,10 @@
   - [Responsive Design](#responsive-design)
   - [Accessibility](#accessibility)
 - [API Reference](#api-reference)
+- [Theme Management Best Practices](#theme-management-best-practices)
+  - [State Management for Themes](#state-management-for-themes)
+  - [Theme Performance Optimization](#theme-performance-optimization)
+  - [Testing Themed Components](#testing-themed-components)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -48,10 +57,13 @@ Materio UI is a cross-platform UI component library for React Native application
 **Key Features:**
 
 - 📱 **Cross-Platform**: Works seamlessly on iOS, Android, and Web
-- 🎨 **Themeable**: Light/dark mode support with customizable colors
+- 🎨 **Fully Customizable Themes**: Complete theme customization support with a default theme included
+- 🌙 **Dark/Light Mode**: Automatic system theme detection with manual override
 - 🧩 **Component-Based**: Composable components for consistent UIs
-- ⚡ **Performant**: Optimized for React Native apps
+- ⚡ **Performant**: Optimized for React Native apps with efficient re-rendering
 - 🔍 **Accessible**: Built with accessibility in mind
+- 📦 **TypeScript**: Full TypeScript support with comprehensive type definitions
+- 🎯 **Tailwind Integration**: Built-in Tailwind CSS colors for easy customization
 
 ---
 
@@ -133,12 +145,17 @@ Wrap your application with the `ThemeProvider` to enable theming support:
 ```jsx
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ThemeProvider, Button, Typography } from '@materio/rn-materio-ui';
+import {
+  ThemeProvider,
+  Button,
+  Typography,
+  theme,
+} from '@materio/rn-materio-ui';
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <ThemeProvider colorScheme="light">
+      <ThemeProvider colorScheme="light" theme={theme}>
         <Typography variant="title" size="large" color="primary">
           Hello World
         </Typography>
@@ -151,18 +168,32 @@ export default function App() {
 
 ### Theme Switching
 
-You can implement theme switching between light and dark modes:
+You can implement theme switching between light and dark modes, and even switch between different theme styles:
 
 ```jsx
 import React, { useState } from 'react';
 import { View, Switch } from 'react-native';
 import { ThemeProvider, Button, Typography } from '@materio/rn-materio-ui';
+// Import your custom themes (these would be created by you)
+import defaultTheme from './themes/default';
+import frozenTheme from './themes/frozen';
+import starwarsTheme from './themes/starwars';
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState('default');
+
+  const themes = {
+    default: defaultTheme,
+    frozen: frozenTheme,
+    starwars: starwarsTheme,
+  };
 
   return (
-    <ThemeProvider colorScheme={isDarkMode ? 'dark' : 'light'}>
+    <ThemeProvider
+      colorScheme={isDarkMode ? 'dark' : 'light'}
+      theme={themes[selectedTheme]}
+    >
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="body" size="medium">
           {isDarkMode ? 'Dark Mode' : 'Light Mode'}
@@ -174,7 +205,16 @@ export default function App() {
         />
 
         <Button color="primary" onPress={() => setIsDarkMode((prev) => !prev)}>
-          Toggle Theme
+          Toggle Theme Mode
+        </Button>
+
+        <Button
+          color="secondary"
+          onPress={() =>
+            setSelectedTheme(selectedTheme === 'default' ? 'frozen' : 'default')
+          }
+        >
+          Switch Theme Style
         </Button>
       </View>
     </ThemeProvider>
@@ -192,12 +232,41 @@ Materio UI comes with a built-in theme system that provides consistent styling a
 
 #### Using the ThemeProvider
 
-The `ThemeProvider` component wraps your application and manages the theme state:
+The `ThemeProvider` component wraps your application and manages the theme state. You can now pass a custom theme object to completely customize the appearance:
 
 ```jsx
-import { ThemeProvider } from '@materio/rn-materio-ui';
+import { ThemeProvider, twcolors } from '@materio/rn-materio-ui';
+
+// Create a custom theme
+const customTheme = {
+  colorScheme: {
+    light: {
+      palette: {
+        primary: {
+          base: { main: twcolors.blue[600], contrast: '#ffffff' },
+          high: { main: twcolors.blue[800], contrast: twcolors.blue[50] },
+          low: { main: twcolors.blue[100], contrast: twcolors.blue[900] },
+        },
+        // ... other colors
+      },
+      // ... other theme properties
+    },
+    dark: {
+      // ... dark theme properties
+    }
+  },
+  typography: { /* typography settings */ },
+  spacing: { /* spacing settings */ },
+  borderRadius: { /* border radius settings */ },
+};
 
 function App() {
+  return (
+    <ThemeProvider colorScheme="light" theme={customTheme}>
+      {/* Your app components */}
+    </ThemeProvider>
+  );
+}
   return (
     <ThemeProvider colorScheme="light">{/* Your app content */}</ThemeProvider>
   );
@@ -368,6 +437,124 @@ function SpacingExample() {
     </View>
   );
 }
+```
+
+---
+
+## Exports and Utilities
+
+### Available Exports
+
+Materio UI exports all the components, hooks, types, and utilities you need:
+
+```jsx
+import {
+  // Components
+  Button,
+  Typography,
+  Card,
+  ColoredCard,
+  Chip,
+  TextInput,
+  IconButton,
+  Paper,
+  Divider,
+  Menu,
+  MenuItem,
+  Popover,
+  Backdrop,
+
+  // Theme System
+  ThemeProvider,
+  useTheme,
+
+  // Utilities
+  twcolors,
+  invertTone,
+
+  // Types (for TypeScript)
+  Theme,
+  ThemeColors,
+  ColorTones,
+  ButtonVariants,
+  TypographyVariants,
+  // ... other types
+} from '@materio/rn-materio-ui';
+```
+
+### Tailwind Colors
+
+The library exports Tailwind CSS colors for easy theming:
+
+```jsx
+import { twcolors } from '@materio/rn-materio-ui';
+
+// Use Tailwind colors anywhere in your app
+const customStyle = {
+  backgroundColor: twcolors.blue[500],
+  borderColor: twcolors.slate[300],
+  color: twcolors.gray[900],
+};
+
+// Available color scales include:
+// slate, gray, zinc, neutral, stone, red, orange, amber, yellow,
+// lime, green, emerald, teal, cyan, sky, blue, indigo, violet,
+// purple, fuchsia, pink, rose
+```
+
+### Utility Functions
+
+#### `invertTone`
+
+Utility function to get the opposite tone for better contrast:
+
+```jsx
+import { invertTone } from '@materio/rn-materio-ui';
+
+const oppositeTone = invertTone('high'); // Returns 'low'
+const anotherTone = invertTone('base'); // Returns 'base'
+```
+
+### TypeScript Support
+
+Materio UI is built with TypeScript and provides comprehensive type definitions:
+
+```tsx
+import {
+  Button,
+  type ButtonColors,
+  type ButtonVariants,
+  type Theme,
+} from '@materio/rn-materio-ui';
+
+// All props are properly typed
+const MyButton: React.FC = () => {
+  const color: ButtonColors = 'primary';
+  const variant: ButtonVariants = 'solid';
+
+  return (
+    <Button color={color} variant={variant}>
+      Typed Button
+    </Button>
+  );
+};
+
+// Theme objects are also typed
+const customTheme: Theme = {
+  // TypeScript will ensure all required properties are present
+  colorScheme: {
+    /* ... */
+  },
+  typography: {
+    /* ... */
+  },
+  spacing: {
+    /* ... */
+  },
+  borderRadius: {
+    /* ... */
+  },
+};
 ```
 
 ---
@@ -1053,7 +1240,247 @@ function BackdropExample() {
 
 ### Customizing Themes
 
-> **Coming Soon:** Custom theme support will be available in future versions, allowing you to override default colors and styling.
+Materio UI supports fully custom themes! You can create your own theme objects to completely customize the appearance of your components.
+
+> **Note**: The library provides only a default theme. The additional theme variants mentioned in examples (like "Frozen", "Star Wars", "Oceanic", and "Zenith") are custom themes included in the example app to demonstrate how you can create your own themes. You can find these example themes in the `example/constants/` directory of the repository.
+
+#### Creating Custom Themes
+
+You can create completely custom themes by defining your own theme object. Here's an example of how you might create a "Frozen" theme inspired by winter aesthetics (this example shows the structure you'd use to build custom themes):
+
+```jsx
+import { ThemeProvider, twcolors } from '@materio/rn-materio-ui';
+
+// Example: Creating a custom "Frozen" theme
+const frozenTheme = {
+  colorScheme: {
+    light: {
+      palette: {
+        primary: {
+          base: { main: twcolors.blue[600], contrast: '#ffffff' },
+          high: { main: twcolors.blue[800], contrast: twcolors.blue[50] },
+          low: { main: twcolors.blue[100], contrast: twcolors.blue[900] },
+        },
+        secondary: {
+          base: { main: twcolors.purple[500], contrast: '#ffffff' },
+          high: { main: twcolors.purple[700], contrast: twcolors.purple[50] },
+          low: { main: twcolors.purple[300], contrast: twcolors.purple[900] },
+        },
+        // ... other colors customized for frozen theme
+      },
+      surface: {
+        background: twcolors.slate[50],
+        paper: '#ffffff',
+        divider: twcolors.slate[300],
+        overlay: 'rgba(255, 255, 255, 0.9)',
+        input: twcolors.slate[100],
+      },
+      typography: {
+        primary: twcolors.slate[900],
+        secondary: twcolors.slate[700],
+        disabled: twcolors.slate[400],
+        hint: twcolors.slate[500],
+        link: twcolors.blue[600],
+        error: twcolors.rose[600],
+      },
+    },
+    dark: {
+      // Dark mode variants of the frozen theme
+      palette: {
+        primary: {
+          base: { main: twcolors.cyan[400], contrast: twcolors.slate[900] },
+          high: { main: twcolors.cyan[100], contrast: twcolors.cyan[900] },
+          low: { main: twcolors.cyan[600], contrast: '#ffffff' },
+        },
+        // ... other dark mode colors
+      },
+      surface: {
+        background: twcolors.slate[900],
+        paper: twcolors.slate[800],
+        divider: twcolors.slate[600],
+        overlay: 'rgba(148, 163, 184, 0.1)',
+        input: twcolors.slate[700],
+      },
+      typography: {
+        primary: twcolors.slate[50],
+        secondary: twcolors.slate[200],
+        disabled: twcolors.slate[500],
+        hint: twcolors.slate[400],
+        link: twcolors.cyan[300],
+        error: twcolors.red[400],
+      },
+    },
+  },
+  typography: {
+    tokens: {
+      // Typography configuration with refined spacing for winter theme
+      display: {
+        large: {
+          fontFamily: 'NotoSansLight',
+          fontWeight: 'light',
+          fontSize: 57,
+          tracking: -0.25,
+          lineHeight: 64,
+        },
+        // ... other typography tokens
+      },
+    },
+    weightMap: {
+      light: { fontFamily: 'NotoSansLight', fontWeight: '300' },
+      regular: { fontFamily: 'NotoSansRegular', fontWeight: '400' },
+      medium: { fontFamily: 'NotoSansMedium', fontWeight: '500' },
+      semibold: { fontFamily: 'NotoSansSemiBold', fontWeight: '600' },
+      bold: { fontFamily: 'NotoSansBold', fontWeight: '700' },
+    },
+  },
+  spacing: {
+    none: 0,
+    xs: 2, // Tighter spacing for frozen precision
+    sm: 6, // Slightly smaller than default
+    md: 10, // More refined intervals
+    lg: 14, // Crisp, clean spacing
+    xl: 20, // Elegant larger spacing
+    xxl: 28, // Sophisticated extra large
+    xxxl: 36, // Premium maximum spacing
+  },
+  borderRadius: {
+    none: 0,
+    xs: 2, // Subtle crystalline edges
+    sm: 6, // Soft ice corners
+    md: 10, // Balanced frozen curves
+    lg: 14, // Elegant ice formation
+    xl: 20, // Smooth glacier edges
+    xxl: 28, // Flowing ice shapes
+    xxxl: 36, // Organic winter forms
+  },
+};
+```
+
+#### Additional Custom Themes
+
+You can create completely custom themes by defining your own theme object:
+
+```jsx
+import { twcolors, type Theme } from '@materio/rn-materio-ui';
+
+const myCustomTheme: Theme = {
+  colorScheme: {
+    light: {
+      palette: {
+        primary: {
+          base: { main: '#your-color', contrast: '#contrast-color' },
+          high: { main: '#darker-variant', contrast: '#light-contrast' },
+          low: { main: '#lighter-variant', contrast: '#dark-contrast' },
+        },
+        // Define all other colors...
+      },
+      surface: {
+        background: '#your-background',
+        paper: '#your-paper',
+        divider: '#your-divider',
+        overlay: 'rgba(0, 0, 0, 0.1)',
+        input: '#your-input-background',
+      },
+      typography: {
+        primary: '#your-text-color',
+        secondary: '#your-secondary-text',
+        disabled: '#your-disabled-text',
+        hint: '#your-hint-text',
+        link: '#your-link-color',
+        error: '#your-error-color',
+      },
+    },
+    dark: {
+      // Dark mode configuration
+    },
+  },
+  typography: {
+    // Typography system configuration
+  },
+  spacing: {
+    // Spacing system configuration
+  },
+  borderRadius: {
+    // Border radius system configuration
+  },
+};
+
+export default function App() {
+  return (
+    <ThemeProvider theme={myCustomTheme} colorScheme="light">
+      {/* Your app */}
+    </ThemeProvider>
+  );
+}
+```
+
+#### Dynamic Theme Switching
+
+You can implement dynamic theme switching in your application:
+
+```jsx
+import React, { useState } from 'react';
+import { ThemeProvider, Button, Menu, MenuItem } from '@materio/rn-materio-ui';
+// Import your custom themes (these would be themes you've created)
+import defaultTheme from './themes/default';
+import frozenTheme from './themes/frozen';
+import starwarsTheme from './themes/starwars';
+
+const themes = {
+  default: defaultTheme,
+  frozen: frozenTheme,
+  starwars: starwarsTheme,
+};
+
+export default function App() {
+  const [currentTheme, setCurrentTheme] = useState('default');
+  const [colorMode, setColorMode] = useState('light');
+
+  return (
+    <ThemeProvider theme={themes[currentTheme]} colorScheme={colorMode}>
+      <Button onPress={() => setCurrentTheme('frozen')}>
+        Switch to Frozen Theme
+      </Button>
+      <Button
+        onPress={() => setColorMode(colorMode === 'light' ? 'dark' : 'light')}
+      >
+        Toggle {colorMode === 'light' ? 'Dark' : 'Light'} Mode
+      </Button>
+      {/* Your app content */}
+    </ThemeProvider>
+  );
+}
+```
+
+#### Using Tailwind Colors
+
+Materio UI exports Tailwind CSS colors for easy theme customization:
+
+```jsx
+import { twcolors, type Theme } from '@materio/rn-materio-ui';
+
+// Use Tailwind colors in your custom theme
+const theme: Theme = {
+  colorScheme: {
+    light: {
+      palette: {
+        primary: {
+          base: { main: twcolors.indigo[600], contrast: twcolors.white },
+          high: { main: twcolors.indigo[800], contrast: twcolors.indigo[50] },
+          low: { main: twcolors.indigo[100], contrast: twcolors.indigo[900] },
+        },
+        success: {
+          base: { main: twcolors.emerald[500], contrast: twcolors.white },
+          high: { main: twcolors.emerald[700], contrast: twcolors.emerald[50] },
+          low: { main: twcolors.emerald[100], contrast: twcolors.emerald[800] },
+        },
+        // ... other colors
+      },
+    },
+  },
+  // ... rest of theme configuration
+};
+```
 
 ### Responsive Design
 
@@ -1130,8 +1557,24 @@ interface ThemeProviderProps {
    * - 'dark': Use dark theme
    */
   colorScheme?: 'light' | 'dark';
+  /**
+   * The theme object to use. This allows you to completely customize
+   * the appearance of all components.
+   */
+  theme: Theme;
   children: ReactNode;
 }
+```
+
+**Example:**
+
+```jsx
+import { ThemeProvider } from '@materio/rn-materio-ui';
+import myCustomTheme from './themes/myTheme';
+
+<ThemeProvider theme={myCustomTheme} colorScheme="light">
+  {/* Your app */}
+</ThemeProvider>;
 ```
 
 ### useTheme Hook
@@ -1156,6 +1599,131 @@ interface Theme {
 ```
 
 See the [Core Concepts](#core-concepts) section for more details on these properties.
+
+---
+
+## Theme Management Best Practices
+
+### State Management for Themes
+
+For production applications, you'll want to persist theme preferences. Here's an example using Jotai and AsyncStorage:
+
+```jsx
+// atoms.ts
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { atomWithStorage } from 'jotai/utils';
+
+export const themeModeAtom = atomWithStorage(
+  'themeMode',
+  'system' as 'system' | 'light' | 'dark',
+  {
+    getItem: async (key) => {
+      const value = await AsyncStorage.getItem(key);
+      return (value as 'system' | 'light' | 'dark') || 'system';
+    },
+    setItem: (key, value) => AsyncStorage.setItem(key, value),
+    removeItem: (key) => AsyncStorage.removeItem(key),
+  }
+);
+
+export const selectedThemeAtom = atomWithStorage(
+  'selectedTheme',
+  'default' as 'default' | 'frozen' | 'starwars' | 'oceanic' | 'zenith',
+  {
+    getItem: async (key) => {
+      const value = await AsyncStorage.getItem(key);
+      return value || 'default';
+    },
+    setItem: (key, value) => AsyncStorage.setItem(key, value),
+    removeItem: (key) => AsyncStorage.removeItem(key),
+  }
+);
+```
+
+```jsx
+// App.tsx
+import React, { useMemo } from 'react';
+import { useColorScheme } from 'react-native';
+import { useAtomValue } from 'jotai';
+import { ThemeProvider } from '@materio/rn-materio-ui';
+import { themeModeAtom, selectedThemeAtom } from './atoms';
+import { themes } from './themes';
+
+export default function App() {
+  const selectedTheme = useAtomValue(selectedThemeAtom);
+  const themeMode = useAtomValue(themeModeAtom);
+  const systemColorScheme = useColorScheme();
+
+  const currentTheme = useMemo(() => {
+    return themes[selectedTheme];
+  }, [selectedTheme]);
+
+  const colorMode = useMemo(() => {
+    return themeMode === 'system' ? systemColorScheme || 'light' : themeMode;
+  }, [themeMode, systemColorScheme]);
+
+  return (
+    <ThemeProvider colorScheme={colorMode} theme={currentTheme}>
+      {/* Your app */}
+    </ThemeProvider>
+  );
+}
+```
+
+### Theme Performance Optimization
+
+For better performance when switching themes:
+
+1. **Memoize theme objects** to prevent unnecessary re-renders
+2. **Use React.memo** for components that don't need to re-render on theme changes
+3. **Lazy load themes** that aren't immediately needed
+
+```jsx
+import React, { useMemo } from 'react';
+
+// Lazy load themes
+const loadTheme = (themeName) => {
+  switch (themeName) {
+    case 'frozen':
+      return import('./themes/frozen').then((m) => m.default);
+    case 'starwars':
+      return import('./themes/starwars').then((m) => m.default);
+    default:
+      return import('./themes/default').then((m) => m.default);
+  }
+};
+
+// Memoized theme selector
+const useSelectedTheme = (themeName) => {
+  return useMemo(() => {
+    return loadTheme(themeName);
+  }, [themeName]);
+};
+```
+
+### Testing Themed Components
+
+When testing components that use themes:
+
+```jsx
+import { render } from '@testing-library/react-native';
+import { ThemeProvider } from '@materio/rn-materio-ui';
+import MyComponent from './MyComponent';
+import testTheme from './themes/test';
+
+const renderWithTheme = (component, theme = testTheme) => {
+  return render(
+    <ThemeProvider theme={theme} colorScheme="light">
+      {component}
+    </ThemeProvider>
+  );
+};
+
+test('renders correctly with theme', () => {
+  const { getByText } = renderWithTheme(<MyComponent />);
+  expect(getByText('Hello')).toBeTruthy();
+});
+```
 
 ---
 

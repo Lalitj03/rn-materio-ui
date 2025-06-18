@@ -104,10 +104,14 @@ export type SpacingOptions =
   | 'xxxl';
 export type Spacing = Record<SpacingOptions, number>;
 export type BorderRadius = Record<SpacingOptions, number>;
+export type Typography = {
+  tokens: TypographyTokens;
+  weightMap: TypographyWeightMap;
+};
 
 export type Theme = {
   colorScheme: ColorScheme;
-  typography: { tokens: TypographyTokens; weightMap: TypographyWeightMap };
+  typography: Typography;
   spacing: Spacing;
   borderRadius: BorderRadius;
 };

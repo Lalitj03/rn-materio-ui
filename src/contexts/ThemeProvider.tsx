@@ -1,13 +1,20 @@
-import theme from '../constants/theme';
-import React, { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
+import React, { createContext, useContext } from 'react';
+import theme from 'src/constants/theme';
+import type {
+  BorderRadius,
+  ColorScheme,
+  Spacing,
+  Theme,
+  Typography,
+} from 'src/utils/types/theme';
 
 export interface ThemeContextType {
   theme: {
-    colorScheme: typeof theme.colorScheme.light | typeof theme.colorScheme.dark;
-    typography: typeof theme.typography;
-    borderRadius: typeof theme.borderRadius;
-    spacing: typeof theme.spacing;
+    colorScheme: ColorScheme['light'] | ColorScheme['dark'];
+    typography: Typography;
+    spacing: Spacing;
+    borderRadius: BorderRadius;
   };
 }
 
@@ -31,11 +38,13 @@ export interface ThemeProviderProps {
    * If not provided, defaults to 'light'
    */
   colorScheme?: 'light' | 'dark';
+  theme: Theme;
   children: ReactNode;
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   colorScheme = 'light',
+  theme: inheritedTheme,
   children,
 }) => {
   const {
@@ -43,7 +52,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     typography,
     borderRadius,
     spacing,
-  } = theme;
+  } = inheritedTheme;
 
   // Directly use the provided colorScheme without internal state
   const currentColorScheme =

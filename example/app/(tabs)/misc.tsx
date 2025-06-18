@@ -1,3 +1,4 @@
+import { selectedThemeAtom } from '@/containers/App/atoms';
 import { Feather } from '@expo/vector-icons';
 import {
   Backdrop,
@@ -10,9 +11,62 @@ import {
   Typography,
   useTheme,
 } from '@materio/rn-materio-ui';
+import { useAtom } from 'jotai';
 import { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Multiple themes example
+const ThemeExamples = () => {
+  const [selectedTheme, setSelectedTheme] = useAtom(selectedThemeAtom);
+  const themes = [
+    { name: 'Frozen Theme', icon: 'cloud-snow', value: 'frozen' },
+    { name: 'Star Wars Theme', icon: 'star', value: 'starwars' },
+    { name: 'Default Theme', icon: 'sun', value: 'default' },
+    { name: 'Oceanic Theme', icon: 'water', value: 'oceanic' },
+    { name: 'Zenith Theme', icon: 'moon', value: 'zenith' },
+  ];
+  const [themeMenuVisible, setThemeMenuVisible] = useState(false);
+  const themeMenuAnchorRef = useRef(null);
+
+  return (
+    <View style={styles.exampleContainer}>
+      <Button
+        ref={themeMenuAnchorRef}
+        onPress={() => setThemeMenuVisible(true)}
+        endIcon={<Feather name="chevron-down" />}
+        color="primary"
+      >
+        {themes.find((t) => t.value === selectedTheme)?.name || 'Select Theme'}
+      </Button>
+
+      <Menu
+        open={themeMenuVisible}
+        targetRef={themeMenuAnchorRef}
+        onClose={() => setThemeMenuVisible(false)}
+        placement="bottom"
+        color="primary"
+        colorTone="base"
+      >
+        {themes.map((theme) => (
+          <MenuItem
+            key={theme.value}
+            startIcon={<Feather name={theme.icon as any} />}
+            onSelected={() => {
+              setSelectedTheme(
+                theme.value as 'default' | 'frozen' | 'starwars'
+              );
+              setThemeMenuVisible(false);
+              console.log(`${theme.name} selected`);
+            }}
+          >
+            {theme.name}
+          </MenuItem>
+        ))}
+      </Menu>
+    </View>
+  );
+};
 
 // Divider Examples
 const DividerExamples = () => {
@@ -227,6 +281,24 @@ export default function MiscScreen() {
       <Typography variant="headline" size="small" color="primary" gutterBottom>
         Miscellaneous
       </Typography>
+
+      <View style={styles.section}>
+        <Typography variant="title" size="medium" gutterBottom>
+          Theme Examples
+        </Typography>
+        <Typography
+          variant="body"
+          size="small"
+          usageType="secondary"
+          gutterBottom
+        >
+          This section demonstrates how to use different themes in your
+          application. You can switch between themes like "default", "frozen",
+          and "starwars" to see how components adapt to different styles.
+        </Typography>
+
+        <ThemeExamples />
+      </View>
 
       <View style={styles.section}>
         <Typography variant="title" size="medium" gutterBottom>
