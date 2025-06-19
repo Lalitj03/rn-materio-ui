@@ -3,14 +3,14 @@ import { View, type ViewProps } from 'react-native';
 
 export interface PaperProps extends ViewProps {
   variant?: PaperVariants;
-  /** The border radius of the Paper */
-  rounded?: number;
+  /** The border radius of the Paper. Can be a number or a theme key. */
+  rounded?: number | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 export default function Paper({
   children,
   variant = 'solid',
-  rounded = 8,
+  rounded = 'md',
   style,
   ...props
 }: PaperProps) {
@@ -26,14 +26,20 @@ export default function Paper({
     borderColor = 'transparent';
   }
 
+  // Use theme.borderRadius if rounded is a string, else use the number
+  const borderRadius =
+    typeof rounded === 'string' ? theme.borderRadius[rounded] : rounded;
+  // Use theme.borderWidths.thin for outline
+  const borderWidth = variant === 'outline' ? theme.borderWidths.thin : 0;
+
   return (
     <View
       style={[
         {
-          borderWidth: variant === 'outline' ? 1 : 0,
+          borderWidth: borderWidth,
           backgroundColor: background,
           borderColor: borderColor,
-          borderRadius: rounded,
+          borderRadius: borderRadius,
         },
         style,
       ]}

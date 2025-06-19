@@ -1,6 +1,6 @@
 import type { Theme } from '@materio/rn-materio-ui';
 
-export default {
+const theme: Theme = {
   colorScheme: {
     light: {
       palette: {
@@ -459,4 +459,13 @@ export default {
     xxl: 24,
     xxxl: 32,
   },
-} as Theme;
+  borderWidths: {
+    none: 0,
+    hairline: 0.5,
+    thin: 1,
+    medium: 2,
+    thick: 4,
+  },
+};
+
+export default theme;

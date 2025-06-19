@@ -57,18 +57,39 @@ export default forwardRef<typeof RectButton, ButtonProps>(function Button(
     xl: { size: 24 },
   };
   const iconContainerSize = sizeMap[size].size * (1 + 1 / 4);
-  let paddingHorizontal = sizeMap[size].size;
-  let paddingVertical = (sizeMap[size].size * 1) / 2;
-  const brN = (sizeMap[size].size * 3) / 4;
+
+  // Use theme.spacing for padding, mapped by button size
+  const paddingConfig = {
+    xs: { h: theme.spacing.sm, v: theme.spacing.xs }, // For 10px font: pV 4, pH 8
+    sm: { h: theme.spacing.md, v: theme.spacing.xs }, // For 12px font: pV 4, pH 12
+    md: { h: theme.spacing.lg, v: theme.spacing.sm }, // For 16px font: pV 8, pH 16
+    lg: { h: theme.spacing.xl, v: theme.spacing.md }, // For 20px font: pV 12, pH 24
+    xl: { h: theme.spacing.xxl, v: theme.spacing.lg }, // For 24px font: pV 16, pH 32
+  };
+  const paddingHorizontal = paddingConfig[size].h;
+  const paddingVertical = paddingConfig[size].v;
+
+  // Use theme.borderRadius, mapped by button size, respecting 'rounded' prop
+  const borderRadiusConfig = {
+    xs: theme.borderRadius.sm, // 8
+    sm: theme.borderRadius.md, // 12
+    md: theme.borderRadius.md, // 12
+    lg: theme.borderRadius.lg, // 16
+    xl: theme.borderRadius.xl, // 24
+  };
+  const baseBorderRadius = borderRadiusConfig[size];
+  const finalBorderRadius =
+    rounded === 'none' ? 0 : rounded === 'full' ? 9999 : baseBorderRadius;
 
   const colorBlock = theme.colorScheme.palette[color];
   const solidPairing = colorBlock.high;
   const softPairing = colorBlock.low;
 
-  const borderRadius = rounded === 'none' ? 0 : rounded === 'full' ? 9999 : brN;
   let borderColor = solidPairing.main;
   let backgroundColor = solidPairing.main;
   let textColor = solidPairing.contrast;
+  // Use theme.borderWidths for outline variant
+  const borderWidthValue = variant === 'outline' ? theme.borderWidths.thin : 0;
 
   if (variant === 'soft') {
     backgroundColor = softPairing.main;
@@ -106,10 +127,10 @@ export default forwardRef<typeof RectButton, ButtonProps>(function Button(
         {
           paddingHorizontal: paddingHorizontal,
           paddingVertical: paddingVertical,
-          borderWidth: variant === 'outline' ? 1 : 0,
+          borderWidth: borderWidthValue,
           backgroundColor: backgroundColor,
           borderColor: borderColor,
-          borderRadius: borderRadius,
+          borderRadius: finalBorderRadius,
           opacity: disabled ? 0.6 : 1,
         },
       ]}

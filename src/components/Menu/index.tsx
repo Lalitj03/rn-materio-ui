@@ -130,17 +130,18 @@ export function MenuItem({
     md: 24,
     lg: 32,
   } as Record<string, number>;
+  const spacing = theme.spacing;
   const paddingMap = {
-    xs: 8,
-    sm: 10,
-    md: 12,
-    lg: 14,
+    xs: spacing.xs,
+    sm: spacing.sm,
+    md: spacing.md,
+    lg: spacing.lg,
   } as Record<string, number>;
   const gapMap = {
-    xs: 6,
-    sm: 8,
-    md: 12,
-    lg: 16,
+    xs: spacing.xs,
+    sm: spacing.sm,
+    md: spacing.md,
+    lg: spacing.md,
   } as Record<string, number>;
 
   const handlePress = () => {
@@ -154,7 +155,7 @@ export function MenuItem({
         style={[
           styles.menuItem,
           {
-            paddingHorizontal: (paddingMap[tSize] || 0) + 4,
+            paddingHorizontal: (paddingMap[tSize] || 0) + spacing.xs,
             paddingVertical: paddingMap[tSize],
             gap: gapMap[tSize],
           },

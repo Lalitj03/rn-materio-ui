@@ -17,7 +17,7 @@ export default function Backdrop({
   children,
   onPress,
   onClose,
-  backdropColor = 'rgba(0, 0, 0, 0.5)',
+  backdropColor,
   animationDuration,
   ...props
 }: BackdropProps) {
@@ -25,6 +25,9 @@ export default function Backdrop({
 
   // Use onClose if provided, otherwise fall back to onPress
   const handleBackdropPress = onClose || onPress;
+
+  // Use theme color if not provided
+  const bgColor = backdropColor || 'rgba(0, 0, 0, 0.5)';
 
   return (
     <Modal
@@ -43,7 +46,7 @@ export default function Backdrop({
         <View
           style={[
             StyleSheet.absoluteFill,
-            { zIndex: 9998, backgroundColor: backdropColor },
+            { zIndex: 9998, backgroundColor: bgColor },
           ]}
         />
       </TouchableWithoutFeedback>

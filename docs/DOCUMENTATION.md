@@ -417,7 +417,15 @@ Materio UI provides consistent spacing values through the theme:
 - `xxl` - 32px
 - `xxxl` - 40px
 
-Border radius follows the same scale:
+Border radius follows the same scale, and border widths are available for consistent borders:
+
+**Border Widths:**
+
+- `none` - 0px (no border)
+- `hairline` - 0.5px (very thin border)
+- `thin` - 1px (standard thin border)
+- `medium` - 2px (medium border)
+- `thick` - 4px (thick border)
 
 ```jsx
 import { useTheme, View } from '@materio/rn-materio-ui';
@@ -431,6 +439,8 @@ function SpacingExample() {
         padding: theme.spacing.md,
         margin: theme.spacing.lg,
         borderRadius: theme.borderRadius.md,
+        borderWidth: theme.borderWidths.thin,
+        borderColor: '#e5e5e5',
       }}
     >
       {/* Content */}
@@ -1392,8 +1402,7 @@ const myCustomTheme: Theme = {
     },
     dark: {
       // Dark mode configuration
-    },
-  },
+    },  },
   typography: {
     // Typography system configuration
   },
@@ -1402,6 +1411,14 @@ const myCustomTheme: Theme = {
   },
   borderRadius: {
     // Border radius system configuration
+  },
+  borderWidths: {
+    // Border width system configuration
+    none: 0,
+    hairline: 0.5,
+    thin: 1,
+    medium: 2,
+    thick: 4,
   },
 };
 
@@ -1481,6 +1498,42 @@ const theme: Theme = {
   // ... rest of theme configuration
 };
 ```
+
+#### Enhanced Theme Integration
+
+All components have been updated to use the standardized theme system for consistent spacing, border radius, and border widths. This ensures better consistency across your application and easier customization.
+
+**Components with Enhanced Theme Integration:**
+
+- **Button**: Uses `theme.spacing` for padding, `theme.borderRadius` for corners, and `theme.borderWidths` for outline variant
+- **Card & ColoredCard**: Support theme keys for border radius (`'sm'`, `'md'`, `'lg'`, `'xl'`) and padding
+- **Chip**: Uses theme-based spacing and border radius mapping by size
+- **IconButton**: Uses theme spacing and border radius with size-based mapping
+- **Menu/MenuItem**: Uses theme spacing for padding and gaps
+- **Paper**: Supports theme keys for border radius and uses theme border widths
+- **Popover**: Uses theme border radius for modal styling
+- **TextInput**: Already integrated with theme spacing and border radius
+
+**Usage Example:**
+
+```jsx
+import { Button, Card, Paper } from '@materio/rn-materio-ui';
+
+// All these components now use theme values
+<Button size="lg">
+  Uses theme.spacing.xl for padding and theme.borderRadius.lg for corners
+</Button>
+
+<Card rounded="md" variant="outline">
+  Uses theme.borderRadius.md and theme.borderWidths.medium
+</Card>
+
+<Paper rounded="lg" variant="outline">
+  Supports both theme keys and custom values
+</Paper>
+```
+
+---
 
 ### Responsive Design
 
@@ -1595,6 +1648,7 @@ interface Theme {
   };
   spacing: Spacing;
   borderRadius: BorderRadius;
+  borderWidths: BorderWidths;
 }
 ```
 

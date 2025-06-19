@@ -47,18 +47,39 @@ export default function Chip({
     xl: { size: 22 },
   };
   const icSize = sizeMap[size].size * (1 + 1 / 4); // Icon container size
-  const paddingHorizontal = (sizeMap[size].size * 2) / 3;
-  const paddingVertical = (sizeMap[size].size * 1) / 3;
-  const brN = (sizeMap[size].size * 3) / 4;
+
+  // Use theme.spacing for padding, mapped by chip size
+  const paddingConfig = {
+    xs: { h: theme.spacing.sm, v: theme.spacing.xs },
+    sm: { h: theme.spacing.md, v: theme.spacing.xs },
+    md: { h: theme.spacing.lg, v: theme.spacing.sm },
+    lg: { h: theme.spacing.xl, v: theme.spacing.md },
+    xl: { h: theme.spacing.xxl, v: theme.spacing.lg },
+  };
+  const paddingHorizontal = paddingConfig[size].h;
+  const paddingVertical = paddingConfig[size].v;
+
+  // Use theme.borderRadius, mapped by chip size, respecting 'rounded' prop
+  const borderRadiusConfig = {
+    xs: theme.borderRadius.sm,
+    sm: theme.borderRadius.md,
+    md: theme.borderRadius.md,
+    lg: theme.borderRadius.lg,
+    xl: theme.borderRadius.xl,
+  };
+  const baseBorderRadius = borderRadiusConfig[size];
+  const finalBorderRadius =
+    rounded === 'none' ? 0 : rounded === 'full' ? 9999 : baseBorderRadius;
 
   const colorBlock = theme.colorScheme.palette[color];
   const solidPairing = colorBlock.high;
   const softPairing = colorBlock.low;
 
-  const borderRadius = rounded === 'none' ? 0 : rounded === 'full' ? 9999 : brN;
   let borderColor = solidPairing.main;
   let backgroundColor = solidPairing.main;
   let textColor = solidPairing.contrast;
+  // Use theme.borderWidths for outline variant
+  const borderWidthValue = variant === 'outline' ? theme.borderWidths.thin : 0;
 
   if (variant === 'soft') {
     backgroundColor = softPairing.main;
@@ -90,10 +111,10 @@ export default function Chip({
         {
           paddingHorizontal,
           paddingVertical,
-          borderWidth: variant === 'outline' ? 1 : 0,
+          borderWidth: borderWidthValue,
           backgroundColor: backgroundColor,
           borderColor: borderColor,
-          borderRadius: borderRadius,
+          borderRadius: finalBorderRadius,
         },
       ]}
       {...props}

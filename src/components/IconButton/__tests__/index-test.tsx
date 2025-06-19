@@ -22,13 +22,32 @@ const mockTheme = {
       },
     },
   },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 20,
+    xxl: 24,
+  },
+  borderRadius: {
+    sm: 4,
+    md: 8,
+    lg: 12,
+    xl: 16,
+  },
+  borderWidths: {
+    thin: 1,
+    thick: 2,
+  },
 };
 
 describe('IconButton', () => {
   it('renders correctly with default props', () => {
     const { getByTestId } = render(
       <IconButton onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        {/* Provide a valid icon element for children */}
+        <FakeIcon />
       </IconButton>
     );
     const button = getByTestId('icon-button');
@@ -38,32 +57,28 @@ describe('IconButton', () => {
   it('renders correctly with different variants', () => {
     const { getByTestId, rerender } = render(
       <IconButton variant="solid" onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     let button = getByTestId('icon-button');
-    // Access styles directly without array indexing
     expect(button.props.style.backgroundColor).toBe('#000');
-
     rerender(
       <IconButton variant="soft" onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     button = getByTestId('icon-button');
     expect(button.props.style.backgroundColor).toBe('#ccc');
-
     rerender(
       <IconButton variant="outline" onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     button = getByTestId('icon-button');
     expect(button.props.style.backgroundColor).toBe('transparent');
-
     rerender(
       <IconButton variant="ghost" onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     button = getByTestId('icon-button');
@@ -73,30 +88,27 @@ describe('IconButton', () => {
   it('renders correctly with different sizes', () => {
     const { getByTestId, rerender } = render(
       <IconButton size="xs" onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     let button = getByTestId('icon-button');
-    // Access styles directly without array indexing
     expect(button.props.style.padding).toBe(4);
-
     rerender(
       <IconButton size="lg" onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     button = getByTestId('icon-button');
-    expect(button.props.style.padding).toBe((32 / 18) * 4);
+    expect(button.props.style.padding).toBe(16);
   });
 
   it('renders correctly with different colors', () => {
     const { getByTestId } = render(
       <IconButton color="primary" onPress={() => {}} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     let button = getByTestId('icon-button');
-    // Access styles directly without array indexing
     expect(button.props.style.backgroundColor).toBe('#007bff');
   });
 
@@ -104,7 +116,7 @@ describe('IconButton', () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
       <IconButton onPress={onPressMock} testID="icon-button">
-        <React.Fragment />
+        <FakeIcon />
       </IconButton>
     );
     const button = getByTestId('icon-button');
@@ -112,3 +124,6 @@ describe('IconButton', () => {
     expect(onPressMock).toHaveBeenCalled();
   });
 });
+
+// Add a simple fake icon component for testing
+const FakeIcon = (props: any) => <React.Fragment {...props} />;

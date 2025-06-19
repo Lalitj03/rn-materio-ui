@@ -1,6 +1,6 @@
 import { twcolors, type Theme } from '@materio/rn-materio-ui';
 
-export default {
+const theme: Theme = {
   colorScheme: {
     dark: {
       palette: {
@@ -168,12 +168,14 @@ export default {
         },
         medium: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 45,
           tracking: 0,
           lineHeight: 52,
         },
         small: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 36,
           tracking: 0,
           lineHeight: 44,
@@ -182,18 +184,21 @@ export default {
       headline: {
         large: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 32,
           tracking: 0,
           lineHeight: 40,
         },
         medium: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 28,
           tracking: 0,
           lineHeight: 36,
         },
         small: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 24,
           tracking: 0,
           lineHeight: 32,
@@ -202,18 +207,21 @@ export default {
       title: {
         large: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 22,
           tracking: 0,
           lineHeight: 28,
         },
         medium: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 16,
           tracking: 0.15,
           lineHeight: 24,
         },
         small: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 14,
           tracking: 0.1,
           lineHeight: 20,
@@ -222,18 +230,21 @@ export default {
       body: {
         large: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 16,
           tracking: 0.5,
           lineHeight: 24,
         },
         medium: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 14,
           tracking: 0.25,
           lineHeight: 20,
         },
         small: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 12,
           tracking: 0.4,
           lineHeight: 16,
@@ -242,18 +253,21 @@ export default {
       label: {
         large: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 14,
           tracking: 0.1,
           lineHeight: 20,
         },
         medium: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 12,
           tracking: 0.5,
           lineHeight: 16,
         },
         small: {
           fontFamily: 'NotoSansMedium',
+          fontWeight: 'medium',
           fontSize: 11,
           tracking: 0.5,
           lineHeight: 16,
@@ -262,18 +276,21 @@ export default {
       caption: {
         large: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 12,
           tracking: 0.4,
           lineHeight: 16,
         },
         medium: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 11,
           tracking: 0.5,
           lineHeight: 16,
         },
         small: {
           fontFamily: 'NotoSansRegular',
+          fontWeight: 'regular',
           fontSize: 10,
           tracking: 0.5,
           lineHeight: 14,
@@ -323,4 +340,13 @@ export default {
     xxl: 32,
     xxxl: 40,
   },
-} as Theme;
+  borderWidths: {
+    none: 0,
+    hairline: 0.5,
+    thin: 1,
+    medium: 2,
+    thick: 4,
+  },
+};
+
+export default theme;

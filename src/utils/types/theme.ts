@@ -104,14 +104,22 @@ export type SpacingOptions =
   | 'xxxl';
 export type Spacing = Record<SpacingOptions, number>;
 export type BorderRadius = Record<SpacingOptions, number>;
+export type BorderWidthOptions =
+  | 'none'
+  | 'hairline'
+  | 'thin'
+  | 'medium'
+  | 'thick';
+export type BorderWidths = Record<BorderWidthOptions, number>;
 export type Typography = {
   tokens: TypographyTokens;
   weightMap: TypographyWeightMap;
 };
 
-export type Theme = {
+export interface Theme {
   colorScheme: ColorScheme;
   typography: Typography;
   spacing: Spacing;
   borderRadius: BorderRadius;
-};
+  borderWidths: BorderWidths;
+}

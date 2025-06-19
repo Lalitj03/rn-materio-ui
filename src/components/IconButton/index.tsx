@@ -44,46 +44,57 @@ export default forwardRef<typeof RectButton, IconButtonProps>(
       lg: { size: 32 },
       xl: { size: 36 },
     };
-
+    // Use theme.spacing for padding, mapped by icon button size
+    const paddingConfig = {
+      xs: theme.spacing.xs,
+      sm: theme.spacing.sm,
+      md: theme.spacing.md,
+      lg: theme.spacing.lg,
+      xl: theme.spacing.xl,
+    };
+    const padding = paddingConfig[size];
+    // Use theme.borderRadius, mapped by size, respecting 'rounded' prop
+    const borderRadiusConfig = {
+      xs: theme.borderRadius.sm,
+      sm: theme.borderRadius.md,
+      md: theme.borderRadius.md,
+      lg: theme.borderRadius.lg,
+      xl: theme.borderRadius.xl,
+    };
+    const baseBorderRadius = borderRadiusConfig[size];
+    const finalBorderRadius =
+      rounded === 'none' ? 0 : rounded === 'full' ? 9999 : baseBorderRadius;
     const colorBlock = theme.colorScheme.palette[color];
     const solidPairing = colorBlock.high;
     const softPairing = colorBlock.low;
-
-    const padding = (sizeMap[size].size / sizeMap.xs.size) * 4;
-    const borderRadius =
-      rounded === 'none'
-        ? 0
-        : rounded === 'full'
-          ? 9999
-          : (sizeMap[size].size * 1) / 2;
     let borderColor = solidPairing.main;
     let backgroundColor = solidPairing.main;
     let textColor = solidPairing.contrast;
+    // Use theme.borderWidths for outline variant
+    const borderWidthValue =
+      variant === 'outline' ? theme.borderWidths.thin : 0;
 
     if (variant === 'soft') {
       backgroundColor = softPairing.main;
       textColor = softPairing.contrast;
     }
-
     if (variant === 'outline') {
       backgroundColor = 'transparent';
       borderColor = solidPairing.main;
       textColor = solidPairing.main;
     }
-
     if (variant === 'ghost') {
       backgroundColor = 'transparent';
       textColor = solidPairing.main;
     }
-
     return (
       <RectButton
         ref={ref}
         testID="icon-button"
         onPress={onPress}
         style={{
-          borderWidth: variant === 'outline' ? 1 : 0,
-          borderRadius: borderRadius,
+          borderWidth: borderWidthValue,
+          borderRadius: finalBorderRadius,
           backgroundColor: backgroundColor,
           borderColor: borderColor,
           padding: padding,

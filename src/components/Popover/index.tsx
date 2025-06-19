@@ -249,7 +249,7 @@ const useStyles = ({ theme }: ThemeContextType) =>
     modal: {
       position: 'absolute',
       backgroundColor: theme.colorScheme.surface.paper,
-      borderRadius: 12,
+      borderRadius: theme.borderRadius.lg,
       zIndex: 9999,
     },
   });

@@ -1,6 +1,6 @@
 import { twcolors, type Theme } from '@materio/rn-materio-ui';
 
-export default {
+const theme: Theme = {
   colorScheme: {
     dark: {
       palette: {
@@ -370,4 +370,13 @@ export default {
     xxl: 28, // Flowing ice shapes
     xxxl: 36, // Organic winter forms
   },
-} as Theme;
+  borderWidths: {
+    none: 0,
+    hairline: 0.5,
+    thin: 1,
+    medium: 2,
+    thick: 4,
+  },
+};
+
+export default theme;
