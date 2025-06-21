@@ -1,15 +1,17 @@
 import {
-  useTheme,
   type ColorTones,
   type ColorValues,
   type ThemeColors,
-  type TypographyFontWeight,
+  type TypographyComponentDefaultProps,
   type TypographySizes,
   type TypographyUsageTypes,
   type TypographyVariants,
   type TypographyWeights,
+  useTheme,
 } from '@materio/rn-materio-ui';
 import { Text, type TextProps } from 'react-native';
+import { useComponentDefaults } from 'src/hooks/useComponentStyle';
+import { getTypographyStyles } from '../../utils/typographyUtils';
 
 export interface ColoredTypographyProps {
   color?: ThemeColors;
@@ -37,54 +39,67 @@ export interface TypographyProps
 
 export default function Typography({
   style,
-  variant = 'body',
-  size = 'small',
+  variant,
+  size,
   weight,
   color,
-  colorTone = 'low',
-  colorValue = 'contrast',
-  colorAlpha = 'ff',
-  usageType = 'primary',
-  align = 'left',
-  gutterBottom = false,
+  colorTone,
+  colorValue,
+  colorAlpha,
+  usageType,
+  align,
+  gutterBottom,
   children,
   ...props
 }: TypographyProps) {
   const theme = useTheme();
-  let fontColor = theme.colorScheme.typography[usageType];
-  if (color) {
-    const colorBlock = theme.colorScheme.palette[color];
-    fontColor = colorBlock[colorTone][colorValue] + colorAlpha;
+
+  const defaultProps = useComponentDefaults<
+    TypographyVariants,
+    TypographySizes
+  >('Typography') as TypographyComponentDefaultProps;
+
+  const finalVariant = variant ?? defaultProps.variant;
+  const finalSize = size ?? defaultProps.size;
+  const finalUsageType = usageType ?? defaultProps.usageType;
+  const finalWeight = weight ?? defaultProps.weight ?? null;
+  const finalAlign = align ?? defaultProps.align;
+  const finalGutterBottom = gutterBottom ?? defaultProps.gutterBottom ?? false;
+  const finalColor = color ?? defaultProps.color ?? null;
+  const finalColorTone = colorTone ?? defaultProps.colorTone;
+  const finalColorValue = colorValue ?? defaultProps.colorValue;
+  const finalColorAlpha = colorAlpha ?? defaultProps.colorAlpha;
+
+  let fontColor =
+    theme.colorScheme.typography[finalUsageType as TypographyUsageTypes];
+  if (finalColor) {
+    const colorBlock = theme.colorScheme.palette[finalColor];
+    fontColor =
+      colorBlock[finalColorTone as ColorTones][finalColorValue as ColorValues] +
+      finalColorAlpha;
   }
 
-  const typographyStyle = theme.typography.tokens[variant][size];
-  let { fontFamily, fontSize, lineHeight, tracking } = typographyStyle;
-  fontSize = (fontSize * 96) / 72; //convert pt to px
-  lineHeight = (lineHeight * 96) / 72; //convert pt to px
-  tracking = (tracking * 96) / 72; //convert pt to px
-  let letterSpacing = tracking / fontSize; //result is in em units
-  letterSpacing = Math.round(letterSpacing * 1000) / 1000; //round to 3 decimal places
-
-  let fontWeight = '400' as TypographyFontWeight;
-  if (weight) {
-    const { fontFamily: weightFontFamily, fontWeight: weightFontWeight } =
-      theme.typography.weightMap[weight];
-    fontFamily = weightFontFamily;
-    fontWeight = weightFontWeight;
-  }
+  // Use the shared typography utility function
+  const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing } =
+    getTypographyStyles(
+      theme,
+      finalVariant as TypographyVariants,
+      finalSize as TypographySizes,
+      finalWeight
+    );
 
   return (
     <Text
       style={[
         {
-          textAlign: align,
+          textAlign: finalAlign,
           fontFamily,
           fontSize,
           fontWeight,
           lineHeight,
-          letterSpacing: letterSpacing,
+          letterSpacing,
           color: fontColor,
-          marginBottom: gutterBottom ? theme.spacing.md : 0,
+          marginBottom: finalGutterBottom ? theme.spacing.md : 0,
         },
         style,
       ]}

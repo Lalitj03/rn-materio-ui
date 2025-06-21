@@ -1,4 +1,4 @@
-import { type Theme } from '@materio/rn-materio-ui';
+import { type Theme } from '../utils/types/theme';
 import twcolors from './twcolors';
 
 const theme: Theme = {
@@ -127,7 +127,7 @@ const theme: Theme = {
         background: twcolors.neutral[900],
         overlay: twcolors.neutral[800],
         divider: twcolors.stone[700],
-        paper: twcolors.stone[900],
+        paper: twcolors.stone[800],
         input: twcolors.stone[800],
       },
       typography: {
@@ -284,7 +284,7 @@ const theme: Theme = {
           fontWeight: 'regular',
           fontSize: 57,
           tracking: -0.25,
-          lineHeight: 64,
+          lineHeight: 72,
         },
         medium: {
           fontFamily: 'NotoSansRegular',
@@ -382,14 +382,14 @@ const theme: Theme = {
           fontFamily: 'NotoSansMedium',
           fontWeight: 'medium',
           fontSize: 12,
-          tracking: 0.5,
+          tracking: 0.05,
           lineHeight: 16,
         },
         small: {
           fontFamily: 'NotoSansMedium',
           fontWeight: 'medium',
           fontSize: 11,
-          tracking: 0.5,
+          tracking: 0.05,
           lineHeight: 16,
         },
       },
@@ -397,22 +397,22 @@ const theme: Theme = {
         large: {
           fontFamily: 'NotoSansRegular',
           fontWeight: 'regular',
-          fontSize: 12,
-          tracking: 0.4,
+          fontSize: 11,
+          tracking: 0.04,
           lineHeight: 16,
         },
         medium: {
           fontFamily: 'NotoSansRegular',
           fontWeight: 'regular',
-          fontSize: 11,
-          tracking: 0.5,
+          fontSize: 10,
+          tracking: 0.03,
           lineHeight: 16,
         },
         small: {
           fontFamily: 'NotoSansRegular',
           fontWeight: 'regular',
-          fontSize: 10,
-          tracking: 0.5,
+          fontSize: 9,
+          tracking: 0.02,
           lineHeight: 14,
         },
       },
@@ -466,6 +466,281 @@ const theme: Theme = {
     thin: 1,
     medium: 2,
     thick: 4,
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        variant: 'solid',
+        size: 'md',
+        color: 'primary',
+      },
+      baseStyle: {
+        borderRadius: 'md',
+        fontWeight: 'medium',
+      },
+      sizes: {
+        xs: {
+          fontSize: 10,
+          padding: { horizontal: 'sm', vertical: 'xs' },
+          minHeight: 24,
+        },
+        sm: {
+          fontSize: 12,
+          padding: { horizontal: 'md', vertical: 'xs' },
+          minHeight: 28,
+        },
+        md: {
+          fontSize: 16,
+          padding: { horizontal: 'lg', vertical: 'sm' },
+          minHeight: 40,
+        },
+        lg: {
+          fontSize: 20,
+          padding: { horizontal: 'xl', vertical: 'md' },
+          minHeight: 48,
+        },
+        xl: {
+          fontSize: 24,
+          padding: { horizontal: 'xxl', vertical: 'lg' },
+          minHeight: 56,
+        },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Paper: {
+      baseStyle: {
+        borderRadius: 'md',
+        borderWidth: 'none',
+        padding: 'lg',
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: 'surface.paper',
+          borderColor: 'transparent',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    Card: {
+      baseStyle: {
+        borderRadius: 'lg',
+        padding: 'lg',
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: 'surface.paper',
+          borderColor: 'transparent',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    Chip: {
+      defaultProps: {
+        variant: 'solid',
+        size: 'md',
+        color: 'neutral',
+      },
+      baseStyle: {
+        borderRadius: 'xl',
+        fontWeight: 'medium',
+      },
+      sizes: {
+        xs: {
+          fontSize: 10,
+          padding: { horizontal: 'sm', vertical: 'xs' },
+        },
+        sm: {
+          fontSize: 12,
+          padding: { horizontal: 'md', vertical: 'xs' },
+        },
+        md: {
+          fontSize: 14,
+          padding: { horizontal: 'lg', vertical: 'sm' },
+        },
+        lg: {
+          fontSize: 18,
+          padding: { horizontal: 'xl', vertical: 'md' },
+        },
+        xl: {
+          fontSize: 22,
+          padding: { horizontal: 'xxl', vertical: 'lg' },
+        },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    TextInput: {
+      // TODO: Refactor to clearly separate typography variant from visual variant (solid/outline) and improve code clarity.
+      defaultProps: {
+        size: 'small',
+      },
+      baseStyle: {
+        borderRadius: 'md',
+        minHeight: 40,
+        // padding: { horizontal: 'md', vertical: 'sm' },
+      },
+      sizes: {
+        small: {
+          padding: { horizontal: 'sm', vertical: 'xs' },
+        },
+        medium: {
+          padding: { horizontal: 'lg', vertical: 'sm' },
+        },
+        large: {
+          padding: { horizontal: 'lg', vertical: 'md' },
+        },
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: `surface.input`,
+          borderColor: 'transparent',
+          borderWidth: 'none',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    IconButton: {
+      defaultProps: {
+        variant: 'solid',
+        size: 'md',
+        color: 'neutral',
+      },
+      baseStyle: {
+        borderRadius: 'md',
+      },
+      sizes: {
+        xs: {
+          padding: 'xs',
+        },
+        sm: {
+          padding: 'sm',
+        },
+        md: {
+          padding: 'md',
+        },
+        lg: {
+          padding: 'lg',
+        },
+        xl: {
+          padding: 'xl',
+        },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Menu: {
+      baseStyle: {
+        borderRadius: 'md',
+        borderWidth: 'thin',
+        padding: 'xs',
+      },
+    },
+    Popover: {
+      baseStyle: {
+        borderRadius: 'md',
+        borderWidth: 'thin',
+        padding: 'lg',
+      },
+    },
+    Backdrop: {
+      baseStyle: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+    },
+    Divider: {
+      baseStyle: {
+        borderWidth: 'hairline',
+      },
+    },
+    Typography: {
+      defaultProps: {
+        variant: 'body',
+        size: 'medium',
+        usageType: 'primary',
+        align: 'left',
+        gutterBottom: false,
+        color: null,
+        colorTone: 'low',
+        colorValue: 'contrast',
+        colorAlpha: 'ff',
+      },
+    },
   },
 };
 

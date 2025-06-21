@@ -1,5 +1,4 @@
 import {
-  invertTone,
   useTheme,
   type ButtonColors,
   type ColorValues,
@@ -19,10 +18,14 @@ interface IconProps {
   [key: string]: any; // Allow other props that might be needed by various icon components
 }
 
+export type MenuVariants = 'solid';
+export type MenuSizes = 'xs' | 'sm' | 'md' | 'lg';
+
 interface MenuProps extends PopoverProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: MenuSizes;
   targetRef: React.RefObject<any>;
   separator?: boolean;
+  variant?: MenuVariants;
 }
 
 export default function Menu({
@@ -64,11 +67,7 @@ export default function Menu({
                 ...itemColor,
               })}
               {separator && index < React.Children.count(children) - 1 && (
-                <Divider
-                  marginH={4}
-                  color={color}
-                  colorTone={invertTone(colorTone)}
-                />
+                <Divider marginH={4} color={color} />
               )}
             </React.Fragment>
           );

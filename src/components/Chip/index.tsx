@@ -1,12 +1,16 @@
 import {
   useTheme,
+  type ButtonColors,
   type ButtonSizes,
   type ButtonVariants,
-  type ThemeColors,
 } from '@materio/rn-materio-ui';
 import React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+import {
+  useComponentDefaults,
+  useComponentStyle,
+} from '../../hooks/useComponentStyle';
 
 export type ButtonRounded = 'none' | 'full';
 
@@ -18,7 +22,7 @@ interface IconProps {
 }
 
 export interface ChipProps extends RectButtonProps {
-  color?: ThemeColors;
+  color?: ButtonColors;
   variant?: ButtonVariants;
   size?: ButtonSizes;
   rounded?: ButtonRounded;
@@ -30,78 +34,44 @@ export interface ChipProps extends RectButtonProps {
 export default function Chip({
   onPress,
   children,
-  variant = 'solid',
-  color = 'neutral',
-  size = 'md',
+  variant,
+  color,
+  size,
   rounded,
   startIcon,
   endIcon,
   ...props
 }: ChipProps) {
   const theme = useTheme();
-  const sizeMap = {
-    xs: { size: 10 },
-    sm: { size: 12 },
-    md: { size: 14 },
-    lg: { size: 18 },
-    xl: { size: 22 },
-  };
-  const icSize = sizeMap[size].size * (1 + 1 / 4); // Icon container size
 
-  // Use theme.spacing for padding, mapped by chip size
-  const paddingConfig = {
-    xs: { h: theme.spacing.sm, v: theme.spacing.xs },
-    sm: { h: theme.spacing.md, v: theme.spacing.xs },
-    md: { h: theme.spacing.lg, v: theme.spacing.sm },
-    lg: { h: theme.spacing.xl, v: theme.spacing.md },
-    xl: { h: theme.spacing.xxl, v: theme.spacing.lg },
-  };
-  const paddingHorizontal = paddingConfig[size].h;
-  const paddingVertical = paddingConfig[size].v;
+  // Get default props from theme
+  const defaultProps = useComponentDefaults<ButtonVariants, ButtonSizes>(
+    'Chip'
+  );
 
-  // Use theme.borderRadius, mapped by chip size, respecting 'rounded' prop
-  const borderRadiusConfig = {
-    xs: theme.borderRadius.sm,
-    sm: theme.borderRadius.md,
-    md: theme.borderRadius.md,
-    lg: theme.borderRadius.lg,
-    xl: theme.borderRadius.xl,
-  };
-  const baseBorderRadius = borderRadiusConfig[size];
+  // Apply defaults with prop overrides
+  const finalVariant = variant ?? defaultProps.variant ?? 'soft';
+  const finalColor = color ?? defaultProps.color ?? 'neutral';
+  const finalSize = size ?? defaultProps.size ?? 'md';
+
+  // Use the new component style system
+  const componentStyle = useComponentStyle(
+    'Chip',
+    finalVariant,
+    finalSize,
+    finalColor
+  );
+
+  // Handle rounded prop override
   const finalBorderRadius =
-    rounded === 'none' ? 0 : rounded === 'full' ? 9999 : baseBorderRadius;
+    rounded === 'none'
+      ? 0
+      : rounded === 'full'
+        ? 9999
+        : componentStyle.borderRadius;
 
-  const colorBlock = theme.colorScheme.palette[color];
-  const solidPairing = colorBlock.high;
-  const softPairing = colorBlock.low;
-
-  let borderColor = solidPairing.main;
-  let backgroundColor = solidPairing.main;
-  let textColor = solidPairing.contrast;
-  // Use theme.borderWidths for outline variant
-  const borderWidthValue = variant === 'outline' ? theme.borderWidths.thin : 0;
-
-  if (variant === 'soft') {
-    backgroundColor = softPairing.main;
-    textColor = softPairing.contrast;
-  }
-
-  if (variant === 'outline') {
-    backgroundColor = 'transparent';
-    borderColor = solidPairing.main;
-    textColor = solidPairing.main;
-  }
-
-  if (variant === 'ghost') {
-    backgroundColor = 'transparent';
-    textColor = solidPairing.main;
-  }
-
-  const icStartMargin = Platform.select({
-    web: paddingHorizontal,
-    default: paddingHorizontal / 2,
-  }); // Right Margin for Start Icon
-  const icEndMargin = paddingHorizontal / 2; // Left Margin for End Icon
+  // Calculate icon size based on font size
+  const iconSize = componentStyle.fontSize * 0.875; // Slightly smaller than font size
 
   return (
     <RectButton
@@ -109,11 +79,11 @@ export default function Chip({
       style={[
         styles.chip,
         {
-          paddingHorizontal,
-          paddingVertical,
-          borderWidth: borderWidthValue,
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
+          paddingHorizontal: componentStyle.paddingHorizontal,
+          paddingVertical: componentStyle.paddingVertical,
+          borderWidth: componentStyle.borderWidth || 0,
+          backgroundColor: componentStyle.backgroundColor,
+          borderColor: componentStyle.borderColor,
           borderRadius: finalBorderRadius,
         },
       ]}
@@ -124,23 +94,26 @@ export default function Chip({
           style={[
             styles.iconContainer,
             {
-              width: icSize,
-              height: icSize,
-              marginRight: icStartMargin,
-              marginLeft: Platform.select({ web: 4, default: 0 }),
+              width: iconSize,
+              height: iconSize,
+              marginRight: theme.spacing.xs,
             },
           ]}
         >
           {React.cloneElement(startIcon, {
-            color: textColor,
-            size: sizeMap[size].size + 1,
+            color: componentStyle.color,
+            size: iconSize,
           })}
         </View>
       )}
       <Text
         style={[
           styles.text,
-          { color: textColor, fontSize: sizeMap[size].size },
+          {
+            color: componentStyle.color,
+            fontSize: componentStyle.fontSize,
+            fontWeight: componentStyle.fontWeight,
+          },
         ]}
       >
         {children}
@@ -149,12 +122,16 @@ export default function Chip({
         <View
           style={[
             styles.iconContainer,
-            { width: icSize, height: icSize, marginLeft: icEndMargin },
+            {
+              width: iconSize,
+              height: iconSize,
+              marginLeft: theme.spacing.xs,
+            },
           ]}
         >
           {React.cloneElement(endIcon, {
-            color: textColor,
-            size: sizeMap[size].size + 1,
+            color: componentStyle.color,
+            size: iconSize,
           })}
         </View>
       )}

@@ -1,4 +1,6 @@
 export default {
+  white: '#ffffff',
+  black: '#000000',
   slate: {
     '50': '#f8fafc',
     '100': '#f1f5f9',

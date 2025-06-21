@@ -1,11 +1,14 @@
+import React, { forwardRef } from 'react';
+import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
 import {
-  useTheme,
+  useComponentDefaults,
+  useComponentStyle,
+} from '../../hooks/useComponentStyle';
+import {
   type ButtonColors,
   type ButtonSizes,
   type ButtonVariants,
-} from '@materio/rn-materio-ui';
-import React, { forwardRef } from 'react';
-import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+} from '../../utils/types/theme';
 import { type ButtonRounded } from '../Button';
 
 // Define the icon props interface
@@ -28,82 +31,64 @@ export default forwardRef<typeof RectButton, IconButtonProps>(
     {
       onPress,
       children,
-      variant = 'solid',
-      color = 'neutral',
-      size = 'md',
+      variant,
+      color,
+      size,
       rounded,
       ...props
     }: IconButtonProps,
     ref
   ) {
-    const theme = useTheme();
-    const sizeMap = {
-      xs: { size: 18 },
-      sm: { size: 24 },
-      md: { size: 28 },
-      lg: { size: 32 },
-      xl: { size: 36 },
-    };
-    // Use theme.spacing for padding, mapped by icon button size
-    const paddingConfig = {
-      xs: theme.spacing.xs,
-      sm: theme.spacing.sm,
-      md: theme.spacing.md,
-      lg: theme.spacing.lg,
-      xl: theme.spacing.xl,
-    };
-    const padding = paddingConfig[size];
-    // Use theme.borderRadius, mapped by size, respecting 'rounded' prop
-    const borderRadiusConfig = {
-      xs: theme.borderRadius.sm,
-      sm: theme.borderRadius.md,
-      md: theme.borderRadius.md,
-      lg: theme.borderRadius.lg,
-      xl: theme.borderRadius.xl,
-    };
-    const baseBorderRadius = borderRadiusConfig[size];
-    const finalBorderRadius =
-      rounded === 'none' ? 0 : rounded === 'full' ? 9999 : baseBorderRadius;
-    const colorBlock = theme.colorScheme.palette[color];
-    const solidPairing = colorBlock.high;
-    const softPairing = colorBlock.low;
-    let borderColor = solidPairing.main;
-    let backgroundColor = solidPairing.main;
-    let textColor = solidPairing.contrast;
-    // Use theme.borderWidths for outline variant
-    const borderWidthValue =
-      variant === 'outline' ? theme.borderWidths.thin : 0;
+    // Get default props from theme
+    const defaultProps = useComponentDefaults<ButtonVariants, ButtonSizes>(
+      'IconButton'
+    );
 
-    if (variant === 'soft') {
-      backgroundColor = softPairing.main;
-      textColor = softPairing.contrast;
-    }
-    if (variant === 'outline') {
-      backgroundColor = 'transparent';
-      borderColor = solidPairing.main;
-      textColor = solidPairing.main;
-    }
-    if (variant === 'ghost') {
-      backgroundColor = 'transparent';
-      textColor = solidPairing.main;
-    }
+    // Apply defaults with prop overrides
+    const finalVariant = variant ?? defaultProps.variant ?? 'ghost';
+    const finalColor = color ?? defaultProps.color ?? 'neutral';
+    const finalSize = size ?? defaultProps.size ?? 'md';
+
+    // Use the new component style system
+    const componentStyle = useComponentStyle(
+      'IconButton',
+      finalVariant,
+      finalSize,
+      finalColor
+    );
+
+    // Handle rounded prop override
+    const finalBorderRadius =
+      rounded === 'none'
+        ? 0
+        : rounded === 'full'
+          ? 9999
+          : componentStyle.borderRadius;
+
+    // Calculate icon size - use a size map based on component size
+    const iconSizeMap = {
+      xs: 16,
+      sm: 20,
+      md: 24,
+      lg: 28,
+      xl: 32,
+    };
+    const iconSize = iconSizeMap[finalSize];
+
     return (
       <RectButton
         ref={ref}
         testID="icon-button"
         onPress={onPress}
         style={{
-          borderWidth: borderWidthValue,
+          ...componentStyle,
           borderRadius: finalBorderRadius,
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
-          padding: padding,
         }}
         {...props}
       >
         {React.cloneElement(children, {
-          color: textColor,
-          size: sizeMap[size].size,
+          color: componentStyle.color,
+          size: iconSize,
         })}
       </RectButton>
     );

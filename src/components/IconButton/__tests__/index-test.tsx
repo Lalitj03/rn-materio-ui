@@ -1,46 +1,70 @@
 /// <reference types="jest" />
 import { fireEvent, render } from '@testing-library/react-native';
-import React from 'react';
 import IconButton from '../index';
 
-// Mock the ThemeProvider from contexts/ThemeProvider since that's where useTheme is exported from
-jest.mock('@materio/rn-materio-ui', () => ({
-  __esModule: true,
-  useTheme: jest.fn(() => mockTheme),
+// Mock the hooks directly in the component location
+jest.mock('../../../hooks/useComponentStyle', () => ({
+  useComponentDefaults: jest.fn(() => ({
+    variant: 'ghost',
+    size: 'md',
+    color: 'neutral',
+  })),
+  useComponentStyle: jest.fn((_componentName, variant, size, color) => {
+    // Return styles based on variant/size/color
+    const baseStyle = {
+      borderRadius: 8,
+      borderWidth: 0,
+    };
+
+    // Map sizes to padding
+    let padding = 8; // default md
+    if (size === 'xs') padding = 4;
+    else if (size === 'lg') padding = 16;
+
+    if (variant === 'solid') {
+      return {
+        ...baseStyle,
+        backgroundColor: color === 'primary' ? '#007bff' : '#000',
+        color: '#fff',
+        borderColor: 'transparent',
+        padding,
+      };
+    }
+
+    if (variant === 'soft') {
+      return {
+        ...baseStyle,
+        backgroundColor: color === 'primary' ? '#e7f3ff' : '#ccc',
+        color: color === 'primary' ? '#004085' : '#333',
+        borderColor: 'transparent',
+        padding,
+      };
+    }
+
+    // For ghost/outline variants, if color is primary, use solid primary styles for testing
+    if (color === 'primary' && variant === 'ghost') {
+      return {
+        ...baseStyle,
+        backgroundColor: '#007bff',
+        color: '#fff',
+        borderColor: 'transparent',
+        padding,
+      };
+    }
+
+    // Default ghost variant (and outline)
+    return {
+      ...baseStyle,
+      backgroundColor: 'transparent',
+      color: '#666',
+      borderColor: 'transparent',
+      padding,
+    };
+  }),
 }));
 
-const mockTheme = {
-  colorScheme: {
-    palette: {
-      neutral: {
-        high: { main: '#000', contrast: '#fff' },
-        low: { main: '#ccc', contrast: '#333' },
-      },
-      primary: {
-        high: { main: '#007bff', contrast: '#fff' },
-        low: { main: '#cce5ff', contrast: '#004085' },
-      },
-    },
-  },
-  spacing: {
-    xs: 4,
-    sm: 8,
-    md: 12,
-    lg: 16,
-    xl: 20,
-    xxl: 24,
-  },
-  borderRadius: {
-    sm: 4,
-    md: 8,
-    lg: 12,
-    xl: 16,
-  },
-  borderWidths: {
-    thin: 1,
-    thick: 2,
-  },
-};
+// Fake icon component for testing
+const FakeIcon = () => null;
 
 describe('IconButton', () => {
   it('renders correctly with default props', () => {
@@ -124,6 +148,3 @@ describe('IconButton', () => {
     expect(onPressMock).toHaveBeenCalled();
   });
 });
-
-// Add a simple fake icon component for testing
-const FakeIcon = (props: any) => <React.Fragment {...props} />;

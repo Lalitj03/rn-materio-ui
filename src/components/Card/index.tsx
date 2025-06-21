@@ -1,55 +1,38 @@
-import {
-  useTheme,
-  type PaperVariants,
-  type Theme,
-} from '@materio/rn-materio-ui';
+import { type PaperVariants } from '@materio/rn-materio-ui';
 import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
+import { useComponentStyle } from 'src/hooks/useComponentStyle';
 
 export interface CardProps extends BaseButtonProps {
   variant?: PaperVariants;
   /** The border radius of the card. Can be a theme key or a number */
-  rounded?: keyof Theme['borderRadius'] | number;
+  rounded?: 'none' | 'full' | number;
 }
 
 export default function Card({
   children,
   variant = 'solid',
-  rounded = 'md',
+  rounded,
   style,
   ...props
 }: CardProps) {
-  const theme = useTheme();
-  const backgroundColor =
-    variant === 'solid' ? theme.colorScheme.surface.paper : 'transparent';
-  const borderWidth =
-    variant === 'outline' ? theme.borderWidths.medium : theme.borderWidths.none;
-  const borderColor =
-    variant === 'outline' ? theme.colorScheme.surface.divider : 'transparent';
-  let borderRadius: number;
-  if (
-    typeof rounded === 'string' &&
-    Object.prototype.hasOwnProperty.call(theme.borderRadius, rounded)
-  ) {
-    borderRadius = theme.borderRadius[rounded as keyof Theme['borderRadius']];
-  } else if (typeof rounded === 'number') {
-    borderRadius = rounded;
-  } else {
-    borderRadius = theme.borderRadius.md;
-  }
+  const componentStyle = useComponentStyle<PaperVariants, any>(
+    'Card',
+    variant,
+    'none'
+  );
+
+  // Handle rounded prop override
+  const borderRadius =
+    rounded === 'none'
+      ? 0
+      : rounded === 'full'
+        ? 9999
+        : typeof rounded === 'number'
+          ? rounded
+          : componentStyle.borderRadius;
 
   return (
-    <BaseButton
-      style={[
-        {
-          borderWidth,
-          backgroundColor,
-          borderColor,
-          borderRadius,
-        },
-        style,
-      ]}
-      {...props}
-    >
+    <BaseButton style={[componentStyle, { borderRadius }, style]} {...props}>
       {children}
     </BaseButton>
   );

@@ -1,3 +1,5 @@
+import type { ThemeContextType } from 'lib/typescript/src';
+
 /** Theme Colors */
 export type ThemeColors =
   | 'primary'
@@ -22,7 +24,10 @@ export type ButtonColors =
   | 'info';
 export type ButtonVariants = 'solid' | 'soft' | 'outline' | 'ghost';
 export type ButtonSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type PaperVariants = 'solid' | 'outline';
+
+export type SolidOutlineVariants = 'solid' | 'outline';
+export type PaperVariants = SolidOutlineVariants;
+export type InputVariants = SolidOutlineVariants;
 
 export type ColorValues = 'main' | 'contrast';
 export type ColorPairing = Record<ColorValues, string>;
@@ -116,10 +121,161 @@ export type Typography = {
   weightMap: TypographyWeightMap;
 };
 
+export type TypographyAlignment = 'left' | 'center' | 'right' | 'justify';
+
+/** Component Configuration Types */
+
+// Color Resolver - can be a string (theme path) or function
+export type ColorResolver =
+  | string
+  | ((theme: any, colorScheme: string) => string);
+
+// Generic Component Style Object
+export interface ComponentStyle {
+  // Layout
+  padding?:
+    | SpacingOptions
+    | {
+        horizontal?: SpacingOptions;
+        vertical?: SpacingOptions;
+      };
+  margin?: SpacingOptions;
+  borderRadius?: SpacingOptions;
+  borderWidth?: BorderWidthOptions;
+  minHeight?: number;
+
+  // Typography (use sparingly - prefer typography tokens)
+  fontSize?: number;
+  fontWeight?: TypographyWeights;
+
+  // Colors (theme-aware)
+  backgroundColor?: ColorResolver;
+  borderColor?: ColorResolver;
+  textColor?: ColorResolver;
+
+  // Component-specific properties
+  [key: string]: any;
+}
+
+// Variant Function - dynamic styles based on theme and color scheme
+export type VariantFunction = (
+  theme: ThemeContextType['theme'],
+  color: ThemeColors
+) => ComponentStyle;
+
+// Generic Component Configuration
+export interface ComponentConfig<
+  TVariants extends string,
+  TSizes extends string,
+> {
+  // Default variant and size
+  defaultProps?: {
+    variant?: TVariants;
+    size?: TSizes;
+    color?: ButtonColors; // Most components use ButtonColors
+  };
+
+  // Base styles (applied to all variants)
+  baseStyle?: ComponentStyle;
+
+  // Size-specific styles
+  sizes?: Record<TSizes, ComponentStyle>;
+
+  // Variant-specific styles
+  variants?: Record<TVariants, ComponentStyle | VariantFunction>;
+}
+
+// Button Component Configuration (now using the generic pattern)
+export type ButtonComponentConfig = ComponentConfig<
+  ButtonVariants,
+  ButtonSizes
+>;
+
+// Paper Component Configuration (simple config, no variants needed)
+export interface PaperComponentConfig {
+  baseStyle: ComponentStyle;
+  variants?: Record<PaperVariants, ComponentStyle | VariantFunction>;
+}
+
+// Card Component Configuration (simple config, no variants needed)
+export interface CardComponentConfig {
+  baseStyle: ComponentStyle;
+  variants?: Record<PaperVariants, ComponentStyle | VariantFunction>;
+}
+
+// Chip Component Configuration (uses Button variants and sizes)
+export type ChipComponentConfig = ComponentConfig<ButtonVariants, ButtonSizes>;
+
+// TextInput Component Configuration (simple config with size variants)
+export type TextInputComponentConfig = ComponentConfig<
+  InputVariants,
+  TypographySizes
+>;
+
+// IconButton Component Configuration (uses Button variants and sizes)
+export type IconButtonComponentConfig = ComponentConfig<
+  ButtonVariants,
+  ButtonSizes
+>;
+
+// Menu Component Configuration (simple config with size variants)
+export type MenuComponentConfig = ComponentConfig<never, ButtonSizes>;
+
+// Popover Component Configuration (simple config, no variants)
+export interface PopoverComponentConfig {
+  baseStyle: ComponentStyle;
+}
+
+// Backdrop Component Configuration (simple config, no variants)
+export interface BackdropComponentConfig {
+  baseStyle: ComponentStyle;
+}
+
+// Divider Component Configuration (simple config, no variants)
+export interface DividerComponentConfig {
+  baseStyle: ComponentStyle;
+}
+
+// Typography Component Default Props
+export interface TypographyComponentDefaultProps {
+  variant?: TypographyVariants;
+  size?: TypographySizes;
+  weight?: TypographyWeights | null;
+  color?: ThemeColors | null; // Theme color name
+  colorTone?: ColorTones;
+  colorValue?: ColorValues;
+  colorAlpha?: string; // Hex alpha value to append to color
+  align?: TypographyAlignment; // Text alignment
+  usageType?: TypographyUsageTypes; // Applies typography color based on usage if color is not provided
+  gutterBottom?: boolean; // Adds bottom margin
+}
+
+// Typography Component Configuration (uses existing typography tokens - minimal config)
+export interface TypographyComponentConfig {
+  defaultProps?: TypographyComponentDefaultProps;
+  baseStyle?: ComponentStyle;
+}
+
+// Combined Component Configuration
+export type ComponentsConfig = {
+  Button: ButtonComponentConfig;
+  Paper: PaperComponentConfig;
+  Card: CardComponentConfig;
+  Chip: ChipComponentConfig;
+  TextInput: TextInputComponentConfig;
+  IconButton: IconButtonComponentConfig;
+  Menu: MenuComponentConfig;
+  Popover: PopoverComponentConfig;
+  Backdrop: BackdropComponentConfig;
+  Divider: DividerComponentConfig;
+  Typography: TypographyComponentConfig;
+};
+
 export interface Theme {
   colorScheme: ColorScheme;
   typography: Typography;
   spacing: Spacing;
   borderRadius: BorderRadius;
   borderWidths: BorderWidths;
+  components: ComponentsConfig;
 }

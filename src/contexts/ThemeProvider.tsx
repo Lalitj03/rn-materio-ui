@@ -5,6 +5,7 @@ import type {
   BorderRadius,
   BorderWidths,
   ColorScheme,
+  ComponentsConfig,
   Spacing,
   Theme,
   Typography,
@@ -17,6 +18,7 @@ export interface ThemeContextType {
     spacing: Spacing;
     borderRadius: BorderRadius;
     borderWidths: BorderWidths;
+    components: ComponentsConfig;
   };
 }
 
@@ -28,6 +30,7 @@ const defaultTheme = {
     borderRadius: theme.borderRadius,
     spacing: theme.spacing,
     borderWidths: theme.borderWidths,
+    components: theme.components,
   },
 };
 
@@ -56,6 +59,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     borderRadius,
     spacing,
     borderWidths,
+    components,
   } = inheritedTheme;
 
   // Directly use the provided colorScheme without internal state
@@ -69,6 +73,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       borderRadius,
       spacing,
       borderWidths,
+      components,
     },
   };
 

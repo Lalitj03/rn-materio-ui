@@ -82,14 +82,14 @@ const DividerExamples = () => {
       <Typography variant="body" size="small" gutterBottom>
         Custom color divider:
       </Typography>
-      <Divider color="primary" colorTone="base" />
+      <Divider color="primary" />
 
       <View style={{ height: 16 }} />
 
       <Typography variant="body" size="small" gutterBottom>
         Thick divider with margins:
       </Typography>
-      <Divider thickness={3} marginV={8} marginH={16} color="secondary" />
+      <Divider size="thick" marginV={8} marginH={16} color="secondary" />
 
       <View style={{ height: 16 }} />
 
@@ -98,7 +98,7 @@ const DividerExamples = () => {
       </Typography>
       <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
         <Typography>Left</Typography>
-        <Divider orientation="vertical" marginH={16} thickness={1} />
+        <Divider orientation="vertical" marginH={16} size="thin" />
         <Typography>Right</Typography>
       </View>
     </View>

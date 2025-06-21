@@ -16,8 +16,8 @@ const BasicInputs = () => {
   return (
     <View style={styles.inputsContainer}>
       <TextInput
-        label="Basic Input (Solid Variant)"
-        variant="solid"
+        label="Basic Input (Solid)"
+        outlined={false}
         placeholder="Enter text here"
         style={styles.inputSpacing}
         value={basicValue}
@@ -26,7 +26,7 @@ const BasicInputs = () => {
 
       <TextInput
         label="Outline Input"
-        variant="outline"
+        outlined={true}
         placeholder="Enter text here"
         style={styles.inputSpacing}
         value={outlineValue}
@@ -62,6 +62,7 @@ const ColoredInputs = () => {
           key={color}
           label={`${color.charAt(0).toUpperCase() + color.slice(1)} Input`}
           color={color}
+          outlined={true}
           placeholder={`${color} color input`}
           style={styles.inputSpacing}
           value={values[color] || ''}
@@ -83,6 +84,7 @@ const InputStates = () => {
         label="Input with Error"
         error={true}
         errorMessage="This is an error message"
+        outlined={true}
         placeholder="Error state"
         style={styles.inputSpacing}
         value={errorValue}
@@ -92,6 +94,7 @@ const InputStates = () => {
       <TextInput
         label="Input with Helper Text"
         helperText="This is some helper text"
+        outlined={false}
         placeholder="With helper text"
         style={styles.inputSpacing}
         value={helperValue}
@@ -101,6 +104,7 @@ const InputStates = () => {
       <TextInput
         label="Disabled Input"
         disabled={true}
+        outlined={true}
         placeholder="This input is disabled"
         style={styles.inputSpacing}
       />
@@ -119,6 +123,7 @@ const InputSizes = () => {
       <TextInput
         label="Small Size"
         size="small"
+        outlined={true}
         placeholder="Small input"
         style={styles.inputSpacing}
         value={smallValue}
@@ -128,6 +133,7 @@ const InputSizes = () => {
       <TextInput
         label="Medium Size"
         size="medium"
+        outlined={false}
         placeholder="Medium input"
         style={styles.inputSpacing}
         value={mediumValue}
@@ -137,6 +143,7 @@ const InputSizes = () => {
       <TextInput
         label="Large Size"
         size="large"
+        outlined={true}
         placeholder="Large input"
         style={styles.inputSpacing}
         value={largeValue}
@@ -156,9 +163,73 @@ const FullWidthInput = () => {
         label="Full Width Input"
         placeholder="This input takes the full available width"
         fullWidth
+        outlined={true}
         style={styles.inputSpacing}
         value={value}
         onChangeText={setValue}
+      />
+    </View>
+  );
+};
+
+// Typography-Aligned TextInput Examples
+const TypographyInputs = () => {
+  const [displayValue, setDisplayValue] = useState('');
+  const [headlineValue, setHeadlineValue] = useState('');
+  const [bodyValue, setBodyValue] = useState('');
+  const [captionValue, setCaptionValue] = useState('');
+
+  return (
+    <View style={styles.inputsContainer}>
+      <TextInput
+        label="Display Typography"
+        variant="display"
+        size="large"
+        weight="bold"
+        placeholder="Large display text"
+        style={styles.inputSpacing}
+        value={displayValue}
+        onChangeText={setDisplayValue}
+      />
+
+      <TextInput
+        label="Headline Typography"
+        variant="headline"
+        size="medium"
+        weight="semibold"
+        color="primary"
+        colorTone="high"
+        outlined={true}
+        placeholder="Headline text"
+        style={styles.inputSpacing}
+        value={headlineValue}
+        onChangeText={setHeadlineValue}
+      />
+
+      <TextInput
+        label="Body Typography"
+        variant="body"
+        size="medium"
+        weight="regular"
+        usageType="secondary"
+        placeholder="Regular body text"
+        style={styles.inputSpacing}
+        value={bodyValue}
+        onChangeText={setBodyValue}
+      />
+
+      <TextInput
+        label="Caption Typography"
+        variant="caption"
+        size="small"
+        weight="light"
+        color="secondary"
+        colorAlpha="80"
+        outlined={true}
+        placeholder="Small caption text"
+        style={styles.inputSpacing}
+        value={captionValue}
+        onChangeText={setCaptionValue}
       />
     </View>
   );
@@ -193,7 +264,8 @@ export default function InputsScreen() {
           usageType="secondary"
           gutterBottom
         >
-          The TextInput component supports solid and outline variants.
+          The TextInput component supports solid and outline styles via the
+          outlined prop.
         </Typography>
 
         <BasicInputs />
@@ -269,6 +341,25 @@ export default function InputsScreen() {
         </Typography>
 
         <FullWidthInput />
+      </View>
+
+      <Divider marginV={16} />
+
+      <View style={styles.section}>
+        <Typography variant="title" size="medium" gutterBottom>
+          Typography Alignment
+        </Typography>
+        <Typography
+          variant="body"
+          size="small"
+          usageType="secondary"
+          gutterBottom
+        >
+          TextInputs now align with Typography variants, sizes, weights, and
+          colors.
+        </Typography>
+
+        <TypographyInputs />
       </View>
     </ScrollView>
   );

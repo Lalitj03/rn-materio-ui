@@ -1,23 +1,23 @@
-import {
-  useTheme,
-  type ThemeColors,
-  type ThemeColorTones,
-} from '@materio/rn-materio-ui';
+import { type ThemeColors } from '@materio/rn-materio-ui';
 import { View, type ViewProps, type ViewStyle } from 'react-native';
+import {
+  useComponentDefaults,
+  useComponentStyle,
+} from '../../hooks/useComponentStyle';
+
+export type DividerVariants = 'solid';
+export type DividerSizes = 'thin' | 'medium' | 'thick';
 
 export interface DividerProps extends ViewProps {
   color?: ThemeColors;
-  colorTone?: ThemeColorTones;
+  variant?: DividerVariants;
+  size?: DividerSizes;
   /** Margin horizontal */
   marginH?: number;
   /** Margin vertical */
   marginV?: number;
-  /** Color alpha Ex: 1A */
-  colorAlpha?: string;
   /** Orientation of the divider (horizontal or vertical) */
   orientation?: 'horizontal' | 'vertical';
-  /** Thickness of the divider line */
-  thickness?: number;
   /** Custom color in hex format (overrides color prop) */
   customColor?: string;
 }
@@ -27,22 +27,41 @@ export default function Divider({
   marginH = 0,
   marginV = 0,
   color,
-  colorTone = 'high',
-  colorAlpha = '4A',
+  variant,
+  size,
   orientation = 'horizontal',
-  thickness = 1,
   customColor,
   style,
   ...props
 }: DividerProps) {
-  const theme = useTheme();
-  let background = theme.colorScheme.surface.divider;
+  // Get default props from theme
+  const defaultProps = useComponentDefaults<DividerVariants, DividerSizes>(
+    'Divider'
+  );
 
-  if (customColor) {
-    background = customColor;
-  } else if (color) {
-    background = theme.colorScheme.palette[color][colorTone].main + colorAlpha;
-  }
+  // Apply defaults with prop overrides
+  const finalVariant = variant ?? defaultProps.variant ?? 'solid';
+  const finalColor = color ?? defaultProps.color ?? 'neutral';
+  const finalSize = size ?? defaultProps.size ?? 'thin';
+
+  // Use the new component style system
+  const componentStyle = useComponentStyle(
+    'Divider',
+    finalVariant,
+    finalSize,
+    finalColor
+  );
+
+  // Use custom color if provided, otherwise use component style
+  const backgroundColor = customColor || componentStyle.backgroundColor;
+
+  // Calculate thickness based on size
+  const thicknessMap = {
+    thin: 1,
+    medium: 2,
+    thick: 4,
+  };
+  const thickness = thicknessMap[finalSize];
 
   // Calculate styles based on orientation
   const dividerStyle: ViewStyle =
@@ -64,7 +83,7 @@ export default function Divider({
     <View
       style={[
         {
-          backgroundColor: background,
+          backgroundColor: backgroundColor,
           ...dividerStyle,
         },
         style,
