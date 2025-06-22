@@ -74,9 +74,6 @@ const theme: Theme = {
           },
         },
       },
-      paper: {
-        base: { main: twcolors.slate[800] }, // Deep frozen surface with subtle blue tint
-      },
       surface: {
         background: twcolors.slate[950], // Deeper, darker icy expanse for more contrast
         overlay: 'rgba(148, 163, 184, 0.1)', // Subtle frost overlay
@@ -161,9 +158,6 @@ const theme: Theme = {
             contrast: twcolors.slate[700],
           },
         },
-      },
-      paper: {
-        base: { main: twcolors.white }, // Pure white snow
       },
       surface: {
         background: twcolors.slate[100], // A cooler, slightly darker background for better separation
@@ -601,7 +595,7 @@ const theme: Theme = {
       baseStyle: {
         borderRadius: 'md',
         padding: 'xs',
-        backgroundColor: 'paper.base.main',
+        backgroundColor: 'surface.paper',
         borderWidth: 'thin',
         borderColor: 'surface.divider',
       },
@@ -610,7 +604,7 @@ const theme: Theme = {
       baseStyle: {
         borderRadius: 'md',
         padding: 'lg',
-        backgroundColor: 'paper.base.main',
+        backgroundColor: 'surface.paper',
         borderWidth: 'thin',
         borderColor: 'surface.divider',
       },

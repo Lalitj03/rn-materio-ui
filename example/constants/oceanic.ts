@@ -125,11 +125,6 @@ const theme: Theme = {
           },
         },
       },
-      paper: {
-        base: {
-          main: twcolors.white,
-        },
-      },
       surface: {
         background: twcolors.slate[50],
         overlay: 'rgba(30, 41, 59, 0.08)',
@@ -267,11 +262,6 @@ const theme: Theme = {
             main: twcolors.slate[600],
             contrast: twcolors.slate[200],
           },
-        },
-      },
-      paper: {
-        base: {
-          main: twcolors.slate[900],
         },
       },
       surface: {
@@ -718,34 +708,28 @@ const theme: Theme = {
       baseStyle: {
         borderRadius: 'md',
         padding: 'xs',
-        backgroundColor: (_theme, colorScheme) =>
-          `colorScheme.${colorScheme}.paper.base.main`,
+        backgroundColor: (_theme) => `surface.paper`,
         borderWidth: 'thin',
-        borderColor: (_theme, colorScheme) =>
-          `colorScheme.${colorScheme}.surface.divider`,
+        borderColor: (_theme) => `surface.divider`,
       },
     },
     Popover: {
       baseStyle: {
         borderRadius: 'md',
         padding: 'lg',
-        backgroundColor: (_theme, colorScheme) =>
-          `colorScheme.${colorScheme}.paper.base.main`,
+        backgroundColor: (_theme) => `surface.paper`,
         borderWidth: 'thin',
-        borderColor: (_theme, colorScheme) =>
-          `colorScheme.${colorScheme}.surface.divider`,
+        borderColor: (_theme) => `surface.divider`,
       },
     },
     Backdrop: {
       baseStyle: {
-        backgroundColor: (_theme, colorScheme) =>
-          `colorScheme.${colorScheme}.surface.overlay`,
+        backgroundColor: (_theme) => `surface.overlay`,
       },
     },
     Divider: {
       baseStyle: {
-        backgroundColor: (_theme, colorScheme) =>
-          `colorScheme.${colorScheme}.surface.divider`,
+        backgroundColor: (_theme) => `surface.divider`,
         borderWidth: 'hairline',
       },
     },

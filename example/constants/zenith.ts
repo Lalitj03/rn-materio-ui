@@ -117,11 +117,6 @@ const theme: Theme = {
           },
         },
       },
-      paper: {
-        base: {
-          main: twcolors.white,
-        },
-      },
       surface: {
         background: '#F7FAFC',
         overlay: 'rgba(0, 0, 0, 0.04)',
@@ -251,11 +246,6 @@ const theme: Theme = {
             main: '#2D3748',
             contrast: '#718096',
           },
-        },
-      },
-      paper: {
-        base: {
-          main: '#20242E',
         },
       },
       surface: {

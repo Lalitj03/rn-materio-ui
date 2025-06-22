@@ -53,11 +53,6 @@ const theme: Theme = {
           low: { main: twcolors.zinc[800], contrast: twcolors.zinc[400] },
         },
       },
-      paper: {
-        base: {
-          main: twcolors.slate[900], // Darker paper for the dark side
-        },
-      },
       surface: {
         background: twcolors.black, // True black for the void of space
         overlay: twcolors.slate[800],
@@ -132,11 +127,6 @@ const theme: Theme = {
             contrast: twcolors.neutral[100],
           },
           low: { main: twcolors.neutral[200], contrast: twcolors.neutral[700] },
-        },
-      },
-      paper: {
-        base: {
-          main: twcolors.stone[100], // Lighter paper for the light side
         },
       },
       surface: {
