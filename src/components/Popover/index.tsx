@@ -1,9 +1,3 @@
-import {
-  type ButtonColors,
-  type ThemeColorTones,
-  type ThemeContextType,
-  useTheme,
-} from '@materio/rn-materio-ui';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Platform,
@@ -19,6 +13,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  type ButtonColors,
+  type ThemeColorTones,
+  type ThemeContextType,
+  useTheme,
+} from '../../index';
 import Backdrop from '../Backdrop';
 
 export type PopoverPlacement =

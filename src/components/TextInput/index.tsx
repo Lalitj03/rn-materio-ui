@@ -1,14 +1,3 @@
-import {
-  useTheme,
-  type ColorTones,
-  type ColorValues,
-  type SolidOutlineVariants,
-  type ThemeColors,
-  type TypographySizes,
-  type TypographyUsageTypes,
-  type TypographyVariants,
-  type TypographyWeights,
-} from '@materio/rn-materio-ui';
 import { useState } from 'react';
 import {
   TextInput as RNTextInput,
@@ -20,6 +9,17 @@ import {
   useComponentDefaults,
   useComponentStyle,
 } from '../../hooks/useComponentStyle';
+import {
+  useTheme,
+  type ColorTones,
+  type ColorValues,
+  type SolidOutlineVariants,
+  type ThemeColors,
+  type TypographySizes,
+  type TypographyUsageTypes,
+  type TypographyVariants,
+  type TypographyWeights,
+} from '../../index';
 import { getTypographyStyles } from '../../utils/typographyUtils';
 import Typography from '../Typography';
 

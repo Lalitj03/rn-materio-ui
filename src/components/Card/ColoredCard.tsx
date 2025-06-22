@@ -1,12 +1,12 @@
+import { View } from 'react-native';
+import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
 import {
   useTheme,
   type PaperVariants,
   type Theme,
   type ThemeColors,
   type ThemeColorTones,
-} from '@materio/rn-materio-ui';
-import { View } from 'react-native';
-import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
+} from '../../index';
 
 export interface ColoredCardProps extends BaseButtonProps {
   color?: ThemeColors;

@@ -1,9 +1,9 @@
-import { type ThemeColors } from '@materio/rn-materio-ui';
 import { View, type ViewProps, type ViewStyle } from 'react-native';
 import {
   useComponentDefaults,
   useComponentStyle,
 } from '../../hooks/useComponentStyle';
+import { type ThemeColors } from '../../index';
 
 export type DividerVariants = 'solid';
 export type DividerSizes = 'thin' | 'medium' | 'thick';

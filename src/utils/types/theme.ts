@@ -1,4 +1,4 @@
-import type { ThemeContextType } from 'lib/typescript/src';
+import type { ThemeContextType } from '../../index';
 
 /** Theme Colors */
 export type ThemeColors =

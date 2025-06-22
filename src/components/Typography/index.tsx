@@ -1,3 +1,5 @@
+import { Text, type TextProps } from 'react-native';
+import { useComponentDefaults } from 'src/hooks/useComponentStyle';
 import {
   type ColorTones,
   type ColorValues,
@@ -8,9 +10,7 @@ import {
   type TypographyVariants,
   type TypographyWeights,
   useTheme,
-} from '@materio/rn-materio-ui';
-import { Text, type TextProps } from 'react-native';
-import { useComponentDefaults } from 'src/hooks/useComponentStyle';
+} from '../../index';
 import { getTypographyStyles } from '../../utils/typographyUtils';
 
 export interface ColoredTypographyProps {

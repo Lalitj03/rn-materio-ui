@@ -1,6 +1,6 @@
-import { type PaperVariants } from '@materio/rn-materio-ui';
 import { View, type ViewProps } from 'react-native';
 import { useComponentStyle } from 'src/hooks/useComponentStyle';
+import { type PaperVariants } from '../../index';
 
 export interface PaperProps extends ViewProps {
   variant?: PaperVariants;

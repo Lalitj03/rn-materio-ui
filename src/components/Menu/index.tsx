@@ -1,12 +1,12 @@
+import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import Animated from 'react-native-reanimated';
 import {
   useTheme,
   type ButtonColors,
   type ColorValues,
   type ThemeColorTones,
-} from '@materio/rn-materio-ui';
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import Animated from 'react-native-reanimated';
+} from '../../index';
 import Divider from '../Divider';
 import Popover, { type PopoverProps } from '../Popover';
 import Typography, { type TypographyProps } from '../Typography';
