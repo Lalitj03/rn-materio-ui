@@ -118,11 +118,6 @@ const theme: Theme = {
           },
         },
       },
-      paper: {
-        base: {
-          main: twcolors.stone[900],
-        },
-      },
       surface: {
         background: twcolors.neutral[900],
         overlay: twcolors.neutral[800],
@@ -252,11 +247,6 @@ const theme: Theme = {
             main: twcolors.slate[400],
             contrast: twcolors.slate[200],
           },
-        },
-      },
-      paper: {
-        base: {
-          main: twcolors.stone[50],
         },
       },
       surface: {

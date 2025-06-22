@@ -56,7 +56,6 @@ export type ColorScheme = Record<
   'light' | 'dark',
   {
     palette: ColorPalette;
-    paper: { base: { main: string } };
     surface: SurfaceColors;
     typography: TypographyColors;
   }
