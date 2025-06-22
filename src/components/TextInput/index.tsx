@@ -11,7 +11,7 @@ import {
 } from '../../hooks/useComponentStyle';
 import {
   useTheme,
-  type ColorTones,
+  type ColorTone,
   type ColorValues,
   type SolidOutlineVariants,
   type ThemeColors,
@@ -30,7 +30,7 @@ export interface TextInputProps
   size?: TypographySizes;
   weight?: null | TypographyWeights;
   color?: ThemeColors;
-  colorTone?: ColorTones;
+  colorTone?: ColorTone;
   colorValue?: ColorValues;
   /** alpha value will be appended to the color Eg: "#000000" + "60" */
   colorAlpha?: string;
@@ -113,7 +113,7 @@ export default function TextInput({
   if (finalColor) {
     const colorBlock = theme.colorScheme.palette[finalColor];
     textColor =
-      colorBlock[finalColorTone as ColorTones][finalColorValue as ColorValues] +
+      colorBlock[finalColorTone as ColorTone][finalColorValue as ColorValues] +
       finalColorAlpha;
   }
 

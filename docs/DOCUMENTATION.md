@@ -550,8 +550,8 @@ Materio UI provides consistent spacing values through the theme:
 - `md` - 12px
 - `lg` - 16px
 - `xl` - 24px
-- `xxl` - 32px
-- `xxxl` - 40px
+- `2xl` - 32px
+- `3xl` - 40px
 
 Border radius follows the same scale, and border widths are available for consistent borders:
 
@@ -1592,8 +1592,8 @@ const frozenTheme = {
     md: 10, // More refined intervals
     lg: 14, // Crisp, clean spacing
     xl: 20, // Elegant larger spacing
-    xxl: 28, // Sophisticated extra large
-    xxxl: 36, // Premium maximum spacing
+    2xl: 28, // Sophisticated extra large
+    3xl: 36, // Premium maximum spacing
   },
   borderRadius: {
     none: 0,
@@ -1602,8 +1602,8 @@ const frozenTheme = {
     md: 10, // Balanced frozen curves
     lg: 14, // Elegant ice formation
     xl: 20, // Smooth glacier edges
-    xxl: 28, // Flowing ice shapes
-    xxxl: 36, // Organic winter forms
+    2xl: 28, // Flowing ice shapes
+    3xl: 36, // Organic winter forms
   },
 };
 ```

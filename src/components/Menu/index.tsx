@@ -4,8 +4,8 @@ import Animated from 'react-native-reanimated';
 import {
   useTheme,
   type ButtonColors,
+  type ColorTone,
   type ColorValues,
-  type ThemeColorTones,
 } from '../../index';
 import Divider from '../Divider';
 import Popover, { type PopoverProps } from '../Popover';
@@ -85,7 +85,7 @@ interface MenuItemProps {
   children?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   color?: ButtonColors;
-  colorTone?: ThemeColorTones;
+  colorTone?: ColorTone;
   onSelected?: () => void;
   onClose?: () => void;
   typographyProps?: TypographyProps;
@@ -93,7 +93,7 @@ interface MenuItemProps {
   itemProps?: {
     size?: 'xs' | 'sm' | 'md' | 'lg';
     color?: ButtonColors;
-    colorTone?: ThemeColorTones;
+    colorTone?: ColorTone;
     colorValue?: ColorValues;
   };
 }

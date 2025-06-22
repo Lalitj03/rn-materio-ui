@@ -11,9 +11,8 @@ export type ThemeColors =
   | 'info'
   | 'inactive';
 
-export type ColorTones = 'high' | 'base' | 'low';
+export type ColorTone = 'high' | 'base' | 'low';
 
-export type ThemeColorTones = 'high' | 'base' | 'low';
 export type ButtonColors =
   | 'neutral'
   | 'primary'
@@ -31,7 +30,7 @@ export type InputVariants = SolidOutlineVariants;
 
 export type ColorValues = 'main' | 'contrast';
 export type ColorPairing = Record<ColorValues, string>;
-export type ColorBlock = Record<ThemeColorTones, ColorPairing>;
+export type ColorBlock = Record<ColorTone, ColorPairing>;
 export type ColorPalette = Record<ThemeColors, ColorBlock>;
 
 export type SurfaceColors = {
@@ -104,10 +103,11 @@ export type SpacingOptions =
   | 'md'
   | 'lg'
   | 'xl'
-  | 'xxl'
-  | 'xxxl';
+  | '2xl'
+  | '3xl';
+export type BorderRadiusOptions = SpacingOptions | 'full';
 export type Spacing = Record<SpacingOptions, number>;
-export type BorderRadius = Record<SpacingOptions, number>;
+export type BorderRadius = Record<BorderRadiusOptions, number>;
 export type BorderWidthOptions =
   | 'none'
   | 'hairline'
@@ -241,7 +241,7 @@ export interface TypographyComponentDefaultProps {
   size?: TypographySizes;
   weight?: TypographyWeights | null;
   color?: ThemeColors | null; // Theme color name
-  colorTone?: ColorTones;
+  colorTone?: ColorTone;
   colorValue?: ColorValues;
   colorAlpha?: string; // Hex alpha value to append to color
   align?: TypographyAlignment; // Text alignment

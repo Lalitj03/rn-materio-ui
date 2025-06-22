@@ -15,7 +15,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   type ButtonColors,
-  type ThemeColorTones,
+  type ColorTone,
   type ThemeContextType,
   useTheme,
 } from '../../index';
@@ -33,7 +33,7 @@ export interface PopoverProps extends ViewProps {
   open: boolean;
   onClose: () => void;
   color?: ButtonColors;
-  colorTone?: ThemeColorTones;
+  colorTone?: ColorTone;
   /** Ref of the target element which the popover will be positioned relative to */
   targetRef: React.RefObject<any>;
   /** Space between the target and the popover */

@@ -1,7 +1,7 @@
 import { Text, type TextProps } from 'react-native';
 import { useComponentDefaults } from 'src/hooks/useComponentStyle';
 import {
-  type ColorTones,
+  type ColorTone,
   type ColorValues,
   type ThemeColors,
   type TypographyComponentDefaultProps,
@@ -15,7 +15,7 @@ import { getTypographyStyles } from '../../utils/typographyUtils';
 
 export interface ColoredTypographyProps {
   color?: ThemeColors;
-  colorTone?: ColorTones;
+  colorTone?: ColorTone;
   colorValue?: ColorValues;
   /** alpha value will be appended to the color Eg: "#000000" + "60" */
   colorAlpha?: string;
@@ -75,7 +75,7 @@ export default function Typography({
   if (finalColor) {
     const colorBlock = theme.colorScheme.palette[finalColor];
     fontColor =
-      colorBlock[finalColorTone as ColorTones][finalColorValue as ColorValues] +
+      colorBlock[finalColorTone as ColorTone][finalColorValue as ColorValues] +
       finalColorAlpha;
   }
 

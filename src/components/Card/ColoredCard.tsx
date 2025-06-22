@@ -2,15 +2,15 @@ import { View } from 'react-native';
 import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
 import {
   useTheme,
+  type ColorTone,
   type PaperVariants,
   type Theme,
   type ThemeColors,
-  type ThemeColorTones,
 } from '../../index';
 
 export interface ColoredCardProps extends BaseButtonProps {
   color?: ThemeColors;
-  colorTone?: ThemeColorTones;
+  colorTone?: ColorTone;
   variant?: PaperVariants;
   /** The border radius of the card. Can be a theme key or a number */
   rounded?: keyof Theme['borderRadius'] | number;

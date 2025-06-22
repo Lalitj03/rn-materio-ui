@@ -341,24 +341,25 @@ const theme: Theme = {
     },
   },
   spacing: {
-    none: 0,
-    xs: 2, // Tighter spacing for frozen precision
-    sm: 6, // Slightly smaller than default
-    md: 10, // More refined intervals
-    lg: 14, // Crisp, clean spacing
-    xl: 20, // Elegant larger spacing
-    xxl: 28, // Sophisticated extra large
-    xxxl: 36, // Premium maximum spacing
+    'none': 0,
+    'xs': 2, // Tighter spacing for frozen precision
+    'sm': 6, // Slightly smaller than default
+    'md': 10, // More refined intervals
+    'lg': 14, // Crisp, clean spacing
+    'xl': 20, // Elegant larger spacing
+    '2xl': 28, // Sophisticated extra large
+    '3xl': 36, // Premium maximum spacing
   },
   borderRadius: {
-    none: 0,
-    xs: 2, // Subtle crystalline edges
-    sm: 6, // Soft ice corners
-    md: 10, // Balanced frozen curves
-    lg: 14, // Elegant ice formation
-    xl: 20, // Smooth glacier edges
-    xxl: 28, // Flowing ice shapes
-    xxxl: 36, // Organic winter forms
+    'none': 0,
+    'xs': 2, // Subtle crystalline edges
+    'sm': 6, // Soft ice corners
+    'md': 10, // Balanced frozen curves
+    'lg': 14, // Elegant ice formation
+    'xl': 20, // Smooth glacier edges
+    '2xl': 28, // Flowing ice shapes
+    '3xl': 36, // Organic winter forms
+    'full': 9999, // Infinite ice flow
   },
   borderWidths: {
     none: 0,
@@ -404,7 +405,7 @@ const theme: Theme = {
         },
         xl: {
           fontSize: 24,
-          padding: { horizontal: 'xxl', vertical: 'lg' },
+          padding: { horizontal: '2xl', vertical: 'lg' },
           borderRadius: 'xl',
           minHeight: 56,
         },
