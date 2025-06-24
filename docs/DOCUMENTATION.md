@@ -30,6 +30,9 @@
   - [Available Exports](#available-exports)
   - [Tailwind Colors](#tailwind-colors)
   - [Utility Functions](#utility-functions)
+    - [createPalette](#createpalette)
+    - [extendTheme](#extendtheme)
+    - [invertTone](#inverttone)
   - [TypeScript Support](#typescript-support)
 - [Components](#components)
   - [Core Components](#core-components)
@@ -38,6 +41,14 @@
   - [Overlay Components](#overlay-components)
 - [Advanced Usage](#advanced-usage)
   - [Customizing Themes](#customizing-themes)
+    - [Quick Theme Customization with Utilities](#quick-theme-customization-with-utilities)
+    - [Advanced Palette Customization](#advanced-palette-customization)
+    - [Partial Theme Extensions](#partial-theme-extensions)
+    - [Creating Custom Themes from Scratch](#creating-custom-themes-from-scratch)
+    - [Practical Theme Examples](#practical-theme-examples)
+    - [Dynamic Theme Switching](#dynamic-theme-switching)
+    - [Enhanced Theme Integration](#enhanced-theme-integration)
+    - [Theme Customization Best Practices](#theme-customization-best-practices)
   - [Responsive Design](#responsive-design)
   - [Accessibility](#accessibility)
 - [API Reference](#api-reference)
@@ -615,9 +626,11 @@ import {
   useTheme,
   theme, // Default theme
 
-  // Utilities
-  twcolors,
-  invertTone,
+  // Theme Utilities
+  createPalette, // Create color palettes from Tailwind colors
+  extendTheme, // Extend the default theme with custom overrides
+  twcolors, // Tailwind CSS colors
+  invertTone, // Utility for inverting color tones
 
   // Types (for TypeScript)
   // All types are exported as well, including:
@@ -668,6 +681,131 @@ import { invertTone } from '@materio/rn-materio-ui';
 
 const oppositeTone = invertTone('high'); // Returns 'low'
 const anotherTone = invertTone('base'); // Returns 'base'
+```
+
+#### `createPalette`
+
+A powerful utility for creating complete color palettes from simple Tailwind color definitions. This function generates both light and dark mode color schemes with automatically calculated contrast colors and tones.
+
+```jsx
+import { createPalette, twcolors } from '@materio/rn-materio-ui';
+
+// Create a palette using simple color definitions
+const customPalette = createPalette({
+  primary: 'purple', // Uses purple-500 as base
+  secondary: ['rose', '600'], // Uses rose-600 as base
+  success: 'emerald', // Uses emerald-500 as base
+  // Different colors for light and dark modes
+  neutral: {
+    light: 'stone',
+    dark: ['slate', '400'],
+  },
+});
+
+// Returns an object with light and dark palettes
+const { light, dark } = customPalette;
+```
+
+**Parameters:**
+
+- `config`: An object where keys are theme color names and values can be:
+  - `string`: A Tailwind color family name (uses 500 shade by default)
+  - `[family, shade]`: A tuple specifying both color family and shade
+  - `{ light: ColorInput, dark: ColorInput }`: Different colors for light/dark modes
+
+**Returns:**
+
+An object with `light` and `dark` properties, each containing partial color palettes that can be merged into your theme.
+
+#### `extendTheme`
+
+A utility for extending the default Materio UI theme with custom overrides. This function performs a deep merge, allowing you to customize only the parts of the theme you need without rewriting the entire theme object.
+
+```jsx
+import { extendTheme, twcolors } from '@materio/rn-materio-ui';
+
+// Extend the default theme with custom overrides
+const customTheme = extendTheme({
+  // Override specific colors
+  colorScheme: {
+    light: {
+      palette: {
+        primary: {
+          base: { main: twcolors.indigo[600], contrast: '#ffffff' },
+          high: { main: twcolors.indigo[800], contrast: twcolors.indigo[50] },
+          low: { main: twcolors.indigo[100], contrast: twcolors.indigo[900] },
+        },
+      },
+      surface: {
+        background: twcolors.gray[50],
+      },
+    },
+  },
+  // Customize spacing
+  spacing: {
+    xs: 2,
+    sm: 6,
+    md: 10,
+  },
+  // Override component defaults
+  components: {
+    Button: {
+      defaultProps: {
+        variant: 'outline',
+        color: 'secondary',
+      },
+    },
+  },
+});
+```
+
+**Parameters:**
+
+- `overrides`: A partial theme object containing your customizations. Only the properties you specify will be overridden.
+
+**Returns:**
+
+A complete theme object with your customizations merged into the default theme.
+
+**Combining createPalette and extendTheme:**
+
+For maximum flexibility, you can combine both utilities:
+
+```jsx
+import { createPalette, extendTheme, twcolors } from '@materio/rn-materio-ui';
+
+// First, create a custom palette
+const palette = createPalette({
+  primary: 'violet',
+  secondary: 'pink',
+  success: 'emerald',
+  danger: 'red',
+});
+
+// Then extend the theme with the palette and other customizations
+const customTheme = extendTheme({
+  colorScheme: {
+    light: {
+      palette: palette.light,
+      surface: {
+        background: twcolors.violet[50],
+        paper: '#ffffff',
+      },
+    },
+    dark: {
+      palette: palette.dark,
+      surface: {
+        background: twcolors.violet[950],
+        paper: twcolors.violet[900],
+      },
+    },
+  },
+  spacing: {
+    xs: 3,
+    sm: 6,
+    md: 12,
+  },
+});
 ```
 
 ### TypeScript Support
@@ -1492,13 +1630,145 @@ function BackdropExample() {
 
 ### Customizing Themes
 
-Materio UI supports fully custom themes! You can create your own theme objects to completely customize the appearance of your components.
+Materio UI provides powerful tools for theme customization, making it easy to create and maintain custom themes. You can either create themes from scratch or use the provided utilities to simplify the process.
 
 > **Note**: The library provides only a default theme. The additional theme variants mentioned in examples (like "Frozen", "Star Wars", "Oceanic", and "Zenith") are custom themes included in the example app to demonstrate how you can create your own themes. You can find these example themes in the `example/constants/` directory of the repository.
 
-#### Creating Custom Themes
+#### Quick Theme Customization with Utilities
 
-You can create completely custom themes by defining your own theme object. Here's an example of how you might create a "Frozen" theme inspired by winter aesthetics (this example shows the structure you'd use to build custom themes):
+The easiest way to create custom themes is using the `createPalette` and `extendTheme` utilities:
+
+```jsx
+import {
+  createPalette,
+  extendTheme,
+  ThemeProvider,
+} from '@materio/rn-materio-ui';
+
+// Step 1: Create a custom color palette
+const customPalette = createPalette({
+  primary: 'violet', // Uses violet-500 as base
+  secondary: 'pink', // Uses pink-500 as base
+  success: 'emerald', // Uses emerald-500 as base
+  warning: 'amber',
+  danger: 'red',
+  info: 'sky',
+});
+
+// Step 2: Extend the default theme with your palette and other customizations
+const myTheme = extendTheme({
+  colorScheme: {
+    light: {
+      palette: customPalette.light,
+    },
+    dark: {
+      palette: customPalette.dark,
+    },
+  },
+  // Customize other aspects
+  spacing: {
+    xs: 3,
+    sm: 6,
+    md: 12,
+    lg: 18,
+  },
+  borderRadius: {
+    xs: 2,
+    sm: 6,
+    md: 10,
+    lg: 16,
+  },
+});
+
+// Step 3: Use your custom theme
+export default function App() {
+  return (
+    <ThemeProvider theme={myTheme} colorScheme="light">
+      {/* Your app */}
+    </ThemeProvider>
+  );
+}
+```
+
+#### Advanced Palette Customization
+
+The `createPalette` utility supports advanced configurations:
+
+```jsx
+import { createPalette, twcolors } from '@materio/rn-materio-ui';
+
+const advancedPalette = createPalette({
+  // Use specific shades
+  primary: ['indigo', '600'], // indigo-600 as base
+  secondary: ['rose', '500'], // rose-500 as base
+
+  // Different colors for light and dark modes
+  neutral: {
+    light: 'stone', // stone-500 for light mode
+    dark: ['slate', '400'], // slate-400 for dark mode
+  },
+
+  // Mix approaches
+  success: 'emerald', // emerald-500
+  warning: {
+    light: ['amber', '600'], // amber-600 for light
+    dark: ['yellow', '400'], // yellow-400 for dark
+  },
+});
+```
+
+#### Partial Theme Extensions
+
+You can extend just specific parts of the theme:
+
+```jsx
+import { extendTheme } from '@materio/rn-materio-ui';
+
+// Only customize component defaults
+const buttonFocusedTheme = extendTheme({
+  components: {
+    Button: {
+      defaultProps: {
+        variant: 'outline',
+        color: 'primary',
+      },
+      sizes: {
+        md: {
+          fontSize: 18,
+          padding: { horizontal: 'xl', vertical: 'md' },
+        },
+      },
+    },
+  },
+});
+
+// Only customize spacing
+const tightSpacingTheme = extendTheme({
+  spacing: {
+    xs: 2,
+    sm: 4,
+    md: 8,
+    lg: 12,
+    xl: 16,
+  },
+});
+
+// Only customize colors for light mode
+const lightOnlyTheme = extendTheme({
+  colorScheme: {
+    light: {
+      surface: {
+        background: '#f8fafc',
+        paper: '#ffffff',
+      },
+    },
+  },
+});
+```
+
+#### Creating Custom Themes from Scratch
+
+For complete control, you can still create themes from scratch by defining your own theme object:Here's an example of how you might create a "Frozen" theme inspired by winter aesthetics (this example shows the structure you'd use to build custom themes):
 
 ```jsx
 import { ThemeProvider, twcolors } from '@materio/rn-materio-ui';
@@ -1673,6 +1943,276 @@ export default function App() {
 }
 ```
 
+#### Practical Theme Examples
+
+Here are complete, real-world examples of creating custom themes using the new utilities:
+
+**Example 1: E-commerce App Theme**
+
+```jsx
+import {
+  createPalette,
+  extendTheme,
+  ThemeProvider,
+} from '@materio/rn-materio-ui';
+
+// Create an e-commerce focused palette
+const ecommercePalette = createPalette({
+  primary: 'emerald', // Trust and growth
+  secondary: 'orange', // Energy and enthusiasm
+  success: 'green', // Positive actions
+  warning: 'amber', // Caution
+  danger: 'red', // Errors and alerts
+  info: 'blue', // Information
+  neutral: {
+    light: 'slate',
+    dark: 'gray',
+  },
+});
+
+const ecommerceTheme = extendTheme({
+  colorScheme: {
+    light: {
+      palette: ecommercePalette.light,
+      surface: {
+        background: '#fafafa',
+        paper: '#ffffff',
+        input: '#f1f5f9',
+      },
+    },
+    dark: {
+      palette: ecommercePalette.dark,
+      surface: {
+        background: '#0f172a',
+        paper: '#1e293b',
+        input: '#334155',
+      },
+    },
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        variant: 'solid',
+        color: 'primary',
+      },
+      baseStyle: {
+        borderRadius: 'lg',
+      },
+    },
+    Card: {
+      baseStyle: {
+        borderRadius: 'xl',
+        padding: 'lg',
+      },
+    },
+  },
+});
+
+export default function EcommerceApp() {
+  return (
+    <ThemeProvider theme={ecommerceTheme} colorScheme="light">
+      {/* Your e-commerce app */}
+    </ThemeProvider>
+  );
+}
+```
+
+**Example 2: Healthcare App Theme**
+
+```jsx
+import { createPalette, extendTheme } from '@materio/rn-materio-ui';
+
+// Healthcare-focused color palette
+const healthcarePalette = createPalette({
+  primary: ['blue', '600'], // Professional and trustworthy
+  secondary: 'teal', // Calming and healing
+  success: 'emerald', // Health and wellness
+  warning: 'amber', // Important notifications
+  danger: 'red', // Critical alerts
+  info: ['cyan', '500'], // Information
+  neutral: 'slate',
+});
+
+const healthcareTheme = extendTheme({
+  colorScheme: {
+    light: {
+      palette: healthcarePalette.light,
+      surface: {
+        background: '#f8fafc',
+        paper: '#ffffff',
+      },
+    },
+    dark: {
+      palette: healthcarePalette.dark,
+    },
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+  },
+  borderRadius: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 20,
+  },
+  components: {
+    Card: {
+      baseStyle: {
+        borderRadius: 'md',
+        padding: 'lg',
+      },
+      variants: {
+        solid: () => ({
+          backgroundColor: 'surface.paper',
+          borderColor: 'surface.divider',
+          borderWidth: 'hairline',
+        }),
+      },
+    },
+  },
+});
+```
+
+**Example 3: Gaming App Theme**
+
+```jsx
+import { createPalette, extendTheme, twcolors } from '@materio/rn-materio-ui';
+
+const gamingPalette = createPalette({
+  primary: 'purple',
+  secondary: ['pink', '500'],
+  success: 'green',
+  warning: 'yellow',
+  danger: 'red',
+  info: 'cyan',
+  neutral: {
+    light: 'slate',
+    dark: ['zinc', '700'],
+  },
+});
+
+const gamingTheme = extendTheme({
+  colorScheme: {
+    light: {
+      palette: gamingPalette.light,
+      surface: {
+        background: twcolors.slate[50],
+        paper: '#ffffff',
+      },
+    },
+    dark: {
+      palette: gamingPalette.dark,
+      surface: {
+        background: '#0a0a0a',
+        paper: '#171717',
+      },
+    },
+  },
+  borderRadius: {
+    'xs': 2,
+    'sm': 4,
+    'md': 8,
+    'lg': 12,
+    'xl': 16,
+    '2xl': 20,
+    '3xl': 24,
+    'full': 9999,
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        borderRadius: 'full',
+      },
+      variants: {
+        solid: (theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          // Add glow effect for gaming theme
+          shadowColor: `${color}.high.main`,
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 8,
+          elevation: 8,
+        }),
+      },
+    },
+  },
+});
+```
+
+**Example 4: Minimalist App Theme**
+
+```jsx
+import { createPalette, extendTheme } from '@materio/rn-materio-ui';
+
+const minimalistPalette = createPalette({
+  primary: 'gray',
+  secondary: 'stone',
+  success: ['emerald', '600'],
+  warning: ['amber', '600'],
+  danger: ['red', '600'],
+  info: ['blue', '600'],
+  neutral: 'neutral',
+});
+
+const minimalistTheme = extendTheme({
+  colorScheme: {
+    light: {
+      palette: minimalistPalette.light,
+      surface: {
+        background: '#ffffff',
+        paper: '#fafafa',
+        divider: '#e5e5e5',
+      },
+    },
+    dark: {
+      palette: minimalistPalette.dark,
+      surface: {
+        background: '#0a0a0a',
+        paper: '#171717',
+        divider: '#404040',
+      },
+    },
+  },
+  spacing: {
+    'xs': 2,
+    'sm': 4,
+    'md': 8,
+    'lg': 16,
+    'xl': 24,
+    '2xl': 32,
+    '3xl': 48,
+  },
+  borderRadius: {
+    xs: 1,
+    sm: 2,
+    md: 4,
+    lg: 6,
+    xl: 8,
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        borderRadius: 'sm',
+      },
+      variants: {
+        outline: (theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'hairline', // Very subtle borders
+        }),
+      },
+    },
+  },
+});
+```
+
 #### Dynamic Theme Switching
 
 You can implement dynamic theme switching in your application:
@@ -1773,6 +2313,172 @@ import { Button, Card, Paper } from '@materio/rn-materio-ui';
 <Paper rounded="lg" variant="outline">
   Supports both theme keys and custom values
 </Paper>
+```
+
+#### Theme Customization Best Practices
+
+When using `createPalette` and `extendTheme`, follow these best practices for optimal results:
+
+**1. Start with createPalette for Color Schemes**
+
+```jsx
+// ✅ Good: Use createPalette for consistent color generation
+const palette = createPalette({
+  primary: 'blue',
+  secondary: 'purple',
+  // This automatically generates proper contrast ratios and tones
+});
+
+// ❌ Avoid: Manually defining every color variant
+const manualColors = {
+  primary: {
+    base: { main: '#3b82f6', contrast: '#ffffff' },
+    high: { main: '#1d4ed8', contrast: '#dbeafe' },
+    low: { main: '#dbeafe', contrast: '#1e3a8a' },
+    // Lots of manual work and potential inconsistencies
+  },
+};
+```
+
+**2. Use extendTheme for Incremental Customization**
+
+```jsx
+// ✅ Good: Only override what you need
+const customTheme = extendTheme({
+  spacing: {
+    xs: 2, // Only change specific values
+    sm: 6,
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        variant: 'outline', // Just change defaults
+      },
+    },
+  },
+});
+
+// ❌ Avoid: Recreating entire theme objects
+const fullTheme = {
+  colorScheme: {
+    /* entire color scheme */
+  },
+  typography: {
+    /* entire typography system */
+  },
+  // ... unnecessarily verbose
+};
+```
+
+**3. Combine Utilities for Complex Themes**
+
+```jsx
+// ✅ Good: Use both utilities together
+const brandPalette = createPalette({
+  primary: 'indigo',
+  secondary: 'pink',
+});
+
+const brandTheme = extendTheme({
+  colorScheme: {
+    light: { palette: brandPalette.light },
+    dark: { palette: brandPalette.dark },
+  },
+  spacing: { xs: 3, sm: 6, md: 12 },
+  components: {
+    Button: {
+      baseStyle: { borderRadius: 'xl' },
+    },
+  },
+});
+```
+
+**4. Consistent Color Usage**
+
+```jsx
+// ✅ Good: Use theme color names consistently
+const theme = extendTheme({
+  components: {
+    Button: {
+      variants: {
+        solid: (theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+        }),
+      },
+    },
+  },
+});
+
+// ❌ Avoid: Hardcoded colors in component styles
+const badTheme = extendTheme({
+  components: {
+    Button: {
+      variants: {
+        solid: () => ({
+          backgroundColor: '#3b82f6', // Hardcoded, won't adapt
+          textColor: '#ffffff',
+        }),
+      },
+    },
+  },
+});
+```
+
+**5. Theme Organization**
+
+```jsx
+// ✅ Good: Organize themes in separate files
+// themes/colors.js
+export const appPalette = createPalette({
+  primary: 'blue',
+  secondary: 'purple',
+});
+
+// themes/components.js
+export const componentOverrides = {
+  Button: {
+    defaultProps: { variant: 'outline' },
+  },
+  Card: {
+    baseStyle: { borderRadius: 'lg' },
+  },
+};
+
+// themes/index.js
+import { extendTheme } from '@materio/rn-materio-ui';
+import { appPalette } from './colors';
+import { componentOverrides } from './components';
+
+export const customTheme = extendTheme({
+  colorScheme: {
+    light: { palette: appPalette.light },
+    dark: { palette: appPalette.dark },
+  },
+  components: componentOverrides,
+});
+```
+
+**6. TypeScript Integration**
+
+```tsx
+// ✅ Good: Use proper typing for custom themes
+import { extendTheme, type Theme } from '@materio/rn-materio-ui';
+
+const typedTheme: Theme = extendTheme({
+  spacing: {
+    xs: 2,
+    sm: 4,
+    // TypeScript will ensure you don't miss required properties
+  },
+});
+
+// Use module declaration for custom theme properties
+declare module '@materio/rn-materio-ui' {
+  interface CustomTheme {
+    customProperty?: string;
+  }
+}
 ```
 
 ---

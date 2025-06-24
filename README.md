@@ -190,7 +190,7 @@ function AppContent() {
 }
 ```
 
-> **Coming Soon:** Custom theme support will be available in the next version, allowing you to override default colors and styling.
+> Materio UI has a powerful theme architecture that allows for deep customization. You can override default colors, typography, spacing, and even component-specific styles. See our [Theme Architecture Guide](docs/THEME_ARCHITECTURE.md) for more details.
 
 ## Contributing
 
