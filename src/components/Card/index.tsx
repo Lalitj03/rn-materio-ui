@@ -1,39 +1,38 @@
-import { useTheme, type PaperVariants } from '@materio/rn-materio-ui';
 import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
+import { useComponentStyle } from 'src/hooks/useComponentStyle';
+import { type PaperVariants } from '../../index';
 
 export interface CardProps extends BaseButtonProps {
   variant?: PaperVariants;
-  /** The border radius of the card */
-  rounded?: number;
+  /** The border radius of the card. Can be a theme key or a number */
+  rounded?: 'none' | 'full' | number;
 }
 
 export default function Card({
   children,
   variant = 'solid',
-  rounded = 12,
+  rounded,
   style,
   ...props
 }: CardProps) {
-  const theme = useTheme();
-  const backgroundColor =
-    variant === 'solid' ? theme.colorScheme.surface.paper : 'transparent';
-  const borderWidth = variant === 'outline' ? 1 : 0;
-  const borderColor =
-    variant === 'outline' ? theme.colorScheme.surface.divider : 'transparent';
+  const componentStyle = useComponentStyle<PaperVariants, any>(
+    'Card',
+    variant,
+    'none'
+  );
+
+  // Handle rounded prop override
+  const borderRadius =
+    rounded === 'none'
+      ? 0
+      : rounded === 'full'
+        ? 9999
+        : typeof rounded === 'number'
+          ? rounded
+          : componentStyle.borderRadius;
 
   return (
-    <BaseButton
-      style={[
-        {
-          borderWidth,
-          backgroundColor,
-          borderColor,
-          borderRadius: rounded,
-        },
-        style,
-      ]}
-      {...props}
-    >
+    <BaseButton style={[componentStyle, { borderRadius }, style]} {...props}>
       {children}
     </BaseButton>
   );

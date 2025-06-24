@@ -1,277 +1,283 @@
-import type { Theme } from '@materio/rn-materio-ui';
+import { twcolors, type Theme } from '@materio/rn-materio-ui';
 
-export default {
+const theme: Theme = {
   colorScheme: {
     light: {
       palette: {
         primary: {
+          // Deep Ocean Blue
           high: {
-            main: '#D4E3FF',
-            contrast: '#001B3E',
+            main: twcolors.blue[100],
+            contrast: twcolors.blue[900],
           },
           base: {
-            main: '#0B61A4',
-            contrast: '#FFFFFF',
+            main: twcolors.blue[600],
+            contrast: twcolors.white,
           },
           low: {
-            main: '#00487A',
-            contrast: '#FFFFFF',
+            main: twcolors.blue[800],
+            contrast: twcolors.white,
           },
         },
         secondary: {
+          // Seafoam Green
           high: {
-            main: '#DCE2F9',
-            contrast: '#131C2B',
+            main: twcolors.teal[100],
+            contrast: twcolors.teal[900],
           },
           base: {
-            main: '#555F71',
-            contrast: '#FFFFFF',
+            main: twcolors.teal[600],
+            contrast: twcolors.white,
           },
           low: {
-            main: '#283041',
-            contrast: '#FFFFFF',
+            main: twcolors.teal[800],
+            contrast: twcolors.white,
           },
         },
         neutral: {
+          // Sandy Beige
           high: {
-            main: '#F1F0F4',
-            contrast: '#1A1C1E',
+            main: twcolors.stone[100],
+            contrast: twcolors.stone[900],
           },
           base: {
-            main: '#8F9194',
-            contrast: '#000000',
+            main: twcolors.stone[500],
+            contrast: twcolors.white,
           },
           low: {
-            main: '#464649',
-            contrast: '#FFFFFF',
+            main: twcolors.stone[700],
+            contrast: twcolors.white,
           },
         },
         success: {
+          // Kelp Green
           high: {
-            main: '#D9FDD9',
-            contrast: '#00220A',
+            main: twcolors.green[100],
+            contrast: twcolors.green[900],
           },
           base: {
-            main: '#266C2E',
-            contrast: '#FFFFFF',
+            main: twcolors.green[600],
+            contrast: twcolors.white,
           },
           low: {
-            main: '#005319',
-            contrast: '#FFFFFF',
+            main: twcolors.green[800],
+            contrast: twcolors.white,
           },
         },
         warning: {
+          // Coral Orange
           high: {
-            main: '#FFDECC',
-            contrast: '#381E00',
+            main: twcolors.orange[100],
+            contrast: twcolors.orange[900],
           },
           base: {
-            main: '#954A00',
-            contrast: '#FFFFFF',
+            main: twcolors.orange[500],
+            contrast: twcolors.white,
           },
           low: {
-            main: '#653300',
-            contrast: '#FFFFFF',
+            main: twcolors.orange[700],
+            contrast: twcolors.white,
           },
         },
         danger: {
+          // Urchin Red
           high: {
-            main: '#FFDAD6',
-            contrast: '#410002',
+            main: twcolors.red[100],
+            contrast: twcolors.red[900],
           },
           base: {
-            main: '#BA1A1A',
-            contrast: '#FFFFFF',
+            main: twcolors.red[600],
+            contrast: twcolors.white,
           },
           low: {
-            main: '#93000A',
-            contrast: '#FFFFFF',
+            main: twcolors.red[800],
+            contrast: twcolors.white,
           },
         },
         info: {
+          // Bright Aqua
           high: {
-            main: '#D2E4FF',
-            contrast: '#001C3A',
+            main: twcolors.cyan[100],
+            contrast: twcolors.cyan[900],
           },
           base: {
-            main: '#0060A9',
-            contrast: '#FFFFFF',
+            main: twcolors.cyan[600],
+            contrast: twcolors.white,
           },
           low: {
-            main: '#004982',
-            contrast: '#FFFFFF',
+            main: twcolors.cyan[800],
+            contrast: twcolors.white,
           },
         },
         inactive: {
+          // Driftwood Gray
           high: {
-            main: '#E0E2EC',
-            contrast: '#44474F',
+            main: twcolors.slate[200],
+            contrast: twcolors.slate[800],
           },
           base: {
-            main: '#C4C6D0',
-            contrast: '#191C23',
+            main: twcolors.slate[400],
+            contrast: twcolors.slate[900],
           },
           low: {
-            main: '#74777F',
-            contrast: '#FFFFFF',
+            main: twcolors.slate[500],
+            contrast: twcolors.white,
           },
-        },
-      },
-      paper: {
-        base: {
-          main: '#FEFBFF',
         },
       },
       surface: {
-        background: '#FDFBFF',
-        overlay: 'rgba(0, 0, 0, 0.08)',
-        divider: '#757575',
-        paper: '#FFFFFF',
-        input: '#E7E0EC',
+        background: twcolors.slate[50],
+        overlay: 'rgba(30, 41, 59, 0.08)',
+        divider: twcolors.slate[300],
+        paper: twcolors.white,
+        input: twcolors.slate[200],
       },
       typography: {
-        primary: '#1A1C1E',
-        secondary: '#43474E',
-        disabled: '#A0A3A9',
-        hint: '#6F7277',
-        link: '#0B61A4',
-        error: '#BA1A1A',
+        primary: twcolors.slate[800],
+        secondary: twcolors.slate[600],
+        disabled: twcolors.slate[400],
+        hint: twcolors.slate[500],
+        link: twcolors.blue[600],
+        error: twcolors.red[600],
       },
     },
     dark: {
       palette: {
         primary: {
+          // Bioluminescent Blue
           high: {
-            main: '#3E4758',
-            contrast: '#D4E3FF',
+            main: twcolors.blue[800],
+            contrast: twcolors.blue[100],
           },
           base: {
-            main: '#A5C8FF',
-            contrast: '#003264',
+            main: twcolors.blue[400],
+            contrast: twcolors.blue[950],
           },
           low: {
-            main: '#80ACFF',
-            contrast: '#002A53',
+            main: twcolors.blue[300],
+            contrast: twcolors.blue[950],
           },
         },
         secondary: {
+          // Deep Sea Teal
           high: {
-            main: '#3E4758',
-            contrast: '#BEC6DC',
+            main: twcolors.teal[800],
+            contrast: twcolors.teal[100],
           },
           base: {
-            main: '#BFC7DC',
-            contrast: '#283141',
+            main: twcolors.teal[400],
+            contrast: twcolors.teal[950],
           },
           low: {
-            main: '#A3ADC5',
-            contrast: '#1F2837',
+            main: twcolors.teal[300],
+            contrast: twcolors.teal[950],
           },
         },
         neutral: {
+          // Volcanic Rock Gray
           high: {
-            main: '#44474A',
-            contrast: '#E4E2E6',
+            main: twcolors.slate[700],
+            contrast: twcolors.slate[100],
           },
           base: {
-            main: '#8F9194',
-            contrast: '#FFFFFF',
+            main: twcolors.slate[400],
+            contrast: twcolors.slate[900],
           },
           low: {
-            main: '#606164',
-            contrast: '#FFFFFF',
+            main: twcolors.slate[300],
+            contrast: twcolors.slate[900],
           },
         },
         success: {
+          // Deep Kelp Green
           high: {
-            main: '#005319',
-            contrast: '#99F79A',
+            main: twcolors.green[800],
+            contrast: twcolors.green[100],
           },
           base: {
-            main: '#80DA81',
-            contrast: '#003914',
+            main: twcolors.green[400],
+            contrast: twcolors.green[950],
           },
           low: {
-            main: '#64BE67',
-            contrast: '#00300F',
+            main: twcolors.green[300],
+            contrast: twcolors.green[950],
           },
         },
         warning: {
+          // Sunken Treasure Gold
           high: {
-            main: '#755A00',
-            contrast: '#FFDDB7',
+            main: twcolors.yellow[800],
+            contrast: twcolors.yellow[100],
           },
           base: {
-            main: '#FFB95A',
-            contrast: '#4F2600',
+            main: twcolors.yellow[400],
+            contrast: twcolors.yellow[950],
           },
           low: {
-            main: '#EAA040',
-            contrast: '#422100',
+            main: twcolors.yellow[300],
+            contrast: twcolors.yellow[950],
           },
         },
         danger: {
+          // Deepwater Red
           high: {
-            main: '#93000A',
-            contrast: '#FFDAD6',
+            main: twcolors.red[800],
+            contrast: twcolors.red[100],
           },
           base: {
-            main: '#FFB4AB',
-            contrast: '#690005',
+            main: twcolors.red[400],
+            contrast: twcolors.red[950],
           },
           low: {
-            main: '#FF897D',
-            contrast: '#570003',
+            main: twcolors.red[300],
+            contrast: twcolors.red[950],
           },
         },
         info: {
+          // Abyss Cyan
           high: {
-            main: '#004982',
-            contrast: '#D2E4FF',
+            main: twcolors.cyan[800],
+            contrast: twcolors.cyan[100],
           },
           base: {
-            main: '#A0C9FF',
-            contrast: '#00315E',
+            main: twcolors.cyan[400],
+            contrast: twcolors.cyan[950],
           },
           low: {
-            main: '#7BABF1',
-            contrast: '#00284D',
+            main: twcolors.cyan[300],
+            contrast: twcolors.cyan[950],
           },
         },
         inactive: {
+          // Shadowy Gray
           high: {
-            main: '#44474F',
-            contrast: '#E0E2EC',
+            main: twcolors.slate[700],
+            contrast: twcolors.slate[300],
           },
           base: {
-            main: '#8E9099',
-            contrast: '#2D3038',
+            main: twcolors.slate[500],
+            contrast: twcolors.slate[100],
           },
           low: {
-            main: '#60626A',
-            contrast: '#F9FAFF',
+            main: twcolors.slate[600],
+            contrast: twcolors.slate[200],
           },
-        },
-      },
-      paper: {
-        base: {
-          main: '#121417',
         },
       },
       surface: {
-        background: '#121417',
-        overlay: 'rgba(255, 255, 255, 0.08)',
-        divider: '#43474E',
-        paper: '#1C1B1F',
-        input: '#2A2E33',
+        background: twcolors.slate[950],
+        overlay: 'rgba(203, 213, 225, 0.08)',
+        divider: twcolors.slate[700],
+        paper: twcolors.slate[900],
+        input: twcolors.slate[800],
       },
       typography: {
-        primary: '#E3E2E6',
-        secondary: '#C7C6CA',
-        disabled: '#8E9094',
-        hint: '#777A7E',
-        link: '#A5C8FF',
-        error: '#FFB4AB',
+        primary: twcolors.slate[100],
+        secondary: twcolors.slate[300],
+        disabled: twcolors.slate[500],
+        hint: twcolors.slate[400],
+        link: twcolors.blue[400],
+        error: twcolors.red[400],
       },
     },
   },
@@ -440,23 +446,311 @@ export default {
     },
   },
   spacing: {
-    none: 0,
-    xs: 4,
-    sm: 8,
-    md: 12,
-    lg: 16,
-    xl: 24,
-    xxl: 32,
-    xxxl: 48,
+    'none': 0,
+    'xs': 4,
+    'sm': 8,
+    'md': 12,
+    'lg': 16,
+    'xl': 24,
+    '2xl': 32,
+    '3xl': 48,
   },
   borderRadius: {
-    none: 0,
-    xs: 4,
-    sm: 8,
-    md: 12,
-    lg: 16,
-    xl: 24,
-    xxl: 32,
-    xxxl: 48,
+    'none': 0,
+    'xs': 4,
+    'sm': 8,
+    'md': 12,
+    'lg': 16,
+    'xl': 24,
+    '2xl': 32,
+    '3xl': 48,
+    'full': 9999,
   },
-} as Theme;
+  borderWidths: {
+    none: 0,
+    hairline: 0.5, // Consider using StyleSheet.hairlineWidth if appropriate
+    thin: 1,
+    medium: 2,
+    thick: 4,
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        variant: 'solid',
+        size: 'md',
+        color: 'primary',
+      },
+      baseStyle: {
+        fontWeight: 'medium',
+        borderRadius: 'md',
+      },
+      sizes: {
+        xs: {
+          fontSize: 10,
+          padding: { horizontal: 'sm', vertical: 'xs' },
+          borderRadius: 'sm',
+          minHeight: 24,
+        },
+        sm: {
+          fontSize: 12,
+          padding: { horizontal: 'md', vertical: 'xs' },
+          borderRadius: 'md',
+          minHeight: 28,
+        },
+        md: {
+          fontSize: 16,
+          padding: { horizontal: 'lg', vertical: 'sm' },
+          borderRadius: 'md',
+          minHeight: 40,
+        },
+        lg: {
+          fontSize: 20,
+          padding: { horizontal: 'xl', vertical: 'md' },
+          borderRadius: 'lg',
+          minHeight: 48,
+        },
+        xl: {
+          fontSize: 24,
+          padding: { horizontal: '2xl', vertical: 'lg' },
+          borderRadius: 'xl',
+          minHeight: 56,
+        },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Chip: {
+      defaultProps: {
+        variant: 'soft',
+        size: 'md',
+        color: 'primary',
+      },
+      baseStyle: {
+        borderRadius: 'xl',
+        fontWeight: 'medium',
+      },
+      sizes: {
+        xs: {
+          fontSize: 10,
+          padding: { horizontal: 'xs', vertical: 'xs' },
+        },
+        sm: {
+          fontSize: 12,
+          padding: { horizontal: 'sm', vertical: 'xs' },
+        },
+        md: {
+          fontSize: 14,
+          padding: { horizontal: 'md', vertical: 'xs' },
+        },
+        lg: {
+          fontSize: 16,
+          padding: { horizontal: 'lg', vertical: 'sm' },
+        },
+        xl: {
+          fontSize: 18,
+          padding: { horizontal: 'xl', vertical: 'md' },
+        },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Card: {
+      baseStyle: {
+        borderRadius: 'lg',
+        padding: 'lg',
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: 'surface.paper',
+          borderColor: 'transparent',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    Paper: {
+      baseStyle: {
+        borderRadius: 'md',
+        borderWidth: 'none',
+        padding: 'lg',
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: 'surface.paper',
+          borderColor: 'transparent',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    TextInput: {
+      // TODO: Refactor to clearly separate typography variant from visual variant (solid/outline) and improve code clarity.
+      defaultProps: {
+        size: 'small',
+      },
+      baseStyle: {
+        borderRadius: 'md',
+        minHeight: 40,
+        // padding: { horizontal: 'md', vertical: 'sm' },
+      },
+      sizes: {
+        small: {
+          padding: { horizontal: 'sm', vertical: 'xs' },
+        },
+        medium: {
+          padding: { horizontal: 'lg', vertical: 'sm' },
+        },
+        large: {
+          padding: { horizontal: 'lg', vertical: 'md' },
+        },
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: `surface.input`,
+          borderColor: 'transparent',
+          borderWidth: 'none',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    IconButton: {
+      defaultProps: {
+        variant: 'ghost',
+        size: 'md',
+        color: 'neutral',
+      },
+      baseStyle: {
+        borderRadius: 'md',
+      },
+      sizes: {
+        xs: { padding: 'xs' },
+        sm: { padding: 'xs' },
+        md: { padding: 'sm' },
+        lg: { padding: 'md' },
+        xl: { padding: 'lg' },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Menu: {
+      baseStyle: {
+        borderRadius: 'md',
+        padding: 'xs',
+        backgroundColor: (_theme) => `surface.paper`,
+        borderWidth: 'thin',
+        borderColor: (_theme) => `surface.divider`,
+      },
+    },
+    Popover: {
+      baseStyle: {
+        borderRadius: 'md',
+        padding: 'lg',
+        backgroundColor: (_theme) => `surface.paper`,
+        borderWidth: 'thin',
+        borderColor: (_theme) => `surface.divider`,
+      },
+    },
+    Backdrop: {
+      baseStyle: {
+        backgroundColor: (_theme) => `surface.overlay`,
+      },
+    },
+    Divider: {
+      baseStyle: {
+        backgroundColor: (_theme) => `surface.divider`,
+        borderWidth: 'hairline',
+      },
+    },
+    Typography: {
+      defaultProps: {
+        variant: 'body',
+        size: 'medium',
+        usageType: 'primary',
+        align: 'left',
+        gutterBottom: false,
+        color: null,
+        colorTone: 'high',
+        colorValue: 'contrast',
+        colorAlpha: 'ff',
+      },
+      baseStyle: {
+        textColor: 'typography.primary',
+      },
+    },
+  },
+};
+
+export default theme;

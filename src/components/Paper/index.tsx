@@ -1,44 +1,38 @@
-import { useTheme, type PaperVariants } from '@materio/rn-materio-ui';
 import { View, type ViewProps } from 'react-native';
+import { useComponentStyle } from 'src/hooks/useComponentStyle';
+import { type PaperVariants } from '../../index';
 
 export interface PaperProps extends ViewProps {
   variant?: PaperVariants;
-  /** The border radius of the Paper */
-  rounded?: number;
+  /** The border radius of the Paper. Can be a number or a theme key. */
+  rounded?: 'none' | 'full' | number;
 }
 
 export default function Paper({
   children,
   variant = 'solid',
-  rounded = 8,
+  rounded,
   style,
   ...props
 }: PaperProps) {
-  const theme = useTheme();
-  let background = theme.colorScheme.surface.paper;
-  let borderColor = theme.colorScheme.surface.divider;
+  const componentStyle = useComponentStyle<PaperVariants, any>(
+    'Paper',
+    variant,
+    'none'
+  );
 
-  if (variant === 'outline') {
-    background = 'transparent';
-  }
-
-  if (variant === 'solid') {
-    borderColor = 'transparent';
-  }
+  // Handle rounded prop override
+  const borderRadius =
+    rounded === 'none'
+      ? 0
+      : rounded === 'full'
+        ? 9999
+        : typeof rounded === 'number'
+          ? rounded
+          : componentStyle.borderRadius;
 
   return (
-    <View
-      style={[
-        {
-          borderWidth: variant === 'outline' ? 1 : 0,
-          backgroundColor: background,
-          borderColor: borderColor,
-          borderRadius: rounded,
-        },
-        style,
-      ]}
-      {...props}
-    >
+    <View style={[componentStyle, { borderRadius }, style]} {...props}>
       {children}
     </View>
   );

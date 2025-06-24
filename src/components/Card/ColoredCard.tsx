@@ -1,20 +1,21 @@
-import {
-  useTheme,
-  type PaperVariants,
-  type ThemeColors,
-  type ThemeColorTones,
-} from '@materio/rn-materio-ui';
 import { View } from 'react-native';
 import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
+import {
+  useTheme,
+  type ColorTone,
+  type PaperVariants,
+  type Theme,
+  type ThemeColors,
+} from '../../index';
 
 export interface ColoredCardProps extends BaseButtonProps {
   color?: ThemeColors;
-  colorTone?: ThemeColorTones;
+  colorTone?: ColorTone;
   variant?: PaperVariants;
-  /** The border radius of the card */
-  rounded?: number;
-  /** Adds padding to the card. Default is 8 */
-  padding?: number;
+  /** The border radius of the card. Can be a theme key or a number */
+  rounded?: keyof Theme['borderRadius'] | number;
+  /** Adds padding to the card. Can be a theme key or a number. Default is 'sm' */
+  padding?: keyof Theme['spacing'] | number;
   pressable?: boolean;
 }
 
@@ -24,8 +25,8 @@ export default function ColoredCard({
   colorTone = 'low',
   variant = 'solid',
   enabled = true,
-  rounded = 16,
-  padding = 8,
+  rounded = 'md',
+  padding = 'sm',
   style,
   pressable,
   ...props
@@ -51,16 +52,42 @@ export default function ColoredCard({
     }
   }
 
+  const borderWidth =
+    variant === 'outline' ? theme.borderWidths.medium : theme.borderWidths.none;
+  let borderRadius: number;
+  if (
+    typeof rounded === 'string' &&
+    Object.prototype.hasOwnProperty.call(theme.borderRadius, rounded)
+  ) {
+    borderRadius = theme.borderRadius[rounded as keyof Theme['borderRadius']];
+  } else if (typeof rounded === 'number') {
+    borderRadius = rounded;
+  } else {
+    borderRadius = theme.borderRadius.md;
+  }
+
+  let resolvedPadding: number;
+  if (
+    typeof padding === 'string' &&
+    Object.prototype.hasOwnProperty.call(theme.spacing, padding)
+  ) {
+    resolvedPadding = theme.spacing[padding as keyof Theme['spacing']];
+  } else if (typeof padding === 'number') {
+    resolvedPadding = padding;
+  } else {
+    resolvedPadding = theme.spacing.sm;
+  }
+
   if (pressable) {
     return (
       <BaseButton
         style={[
           {
-            borderWidth: variant === 'outline' ? 1 : 0,
+            borderWidth,
             backgroundColor,
             borderColor,
-            borderRadius: rounded,
-            padding,
+            borderRadius,
+            padding: resolvedPadding,
           },
           style,
         ]}
@@ -75,11 +102,11 @@ export default function ColoredCard({
     <View
       style={[
         {
-          borderWidth: variant === 'outline' ? 1 : 0,
+          borderWidth,
           backgroundColor,
           borderColor,
-          borderRadius: rounded,
-          padding,
+          borderRadius,
+          padding: resolvedPadding,
         },
         style,
       ]}

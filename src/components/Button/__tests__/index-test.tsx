@@ -1,32 +1,42 @@
 /// <reference types="jest" />
 // components/thunderbolt/Button/index.test.tsx
-import { useTheme } from '@materio/rn-materio-ui';
 import { render } from '@testing-library/react-native';
 import { View } from 'react-native';
 import Button from '../index';
 
-jest.mock('@materio/rn-materio-ui', () => ({
-  // Mocking the useTheme hook
-  __esModule: true,
-  useTheme: jest.fn(),
+// Mock the hooks directly in the component location
+jest.mock('../../../hooks/useComponentStyle', () => ({
+  useComponentDefaults: jest.fn(() => ({
+    variant: 'solid',
+    size: 'md',
+    color: 'neutral',
+  })),
+  useComponentStyle: jest.fn(() => ({
+    backgroundColor: '#666',
+    color: '#fff',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+  })),
 }));
 
-const mockTheme = {
-  colorScheme: {
-    palette: {
-      neutral: {
-        high: { main: '#000', contrast: '#fff' },
-        low: { main: '#ccc', contrast: '#333' },
-      },
+// Mock the theme provider to return spacing
+jest.mock('../../../contexts/ThemeProvider', () => ({
+  useTheme: jest.fn(() => ({
+    spacing: {
+      'xs': 4,
+      'sm': 8,
+      'md': 12,
+      'lg': 16,
+      'xl': 24,
+      '2xl': 32,
     },
-  },
-};
+  })),
+}));
 
 describe('Button Component', () => {
-  beforeEach(() => {
-    (useTheme as jest.Mock).mockReturnValue(mockTheme);
-  });
-
   it('renders correctly with default props', () => {
     const { getByText } = render(<Button>Test Button</Button>);
     expect(getByText('Test Button')).toBeTruthy();

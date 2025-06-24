@@ -1,6 +1,6 @@
-import type { Theme } from '@materio/rn-materio-ui';
+import { twcolors, type Theme } from '@materio/rn-materio-ui';
 
-export default {
+const theme: Theme = {
   colorScheme: {
     light: {
       palette: {
@@ -11,11 +11,11 @@ export default {
           },
           base: {
             main: '#3182CE',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
           low: {
             main: '#2C5282',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         secondary: {
@@ -25,11 +25,11 @@ export default {
           },
           base: {
             main: '#718096',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
           low: {
             main: '#4A5568',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         neutral: {
@@ -39,11 +39,11 @@ export default {
           },
           base: {
             main: '#A0AEC0',
-            contrast: '#000000',
+            contrast: twcolors.black,
           },
           low: {
             main: '#718096',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         success: {
@@ -53,11 +53,11 @@ export default {
           },
           base: {
             main: '#38A169',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
           low: {
             main: '#2F855A',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         warning: {
@@ -67,11 +67,11 @@ export default {
           },
           base: {
             main: '#D69E2E',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
           low: {
             main: '#B7791F',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         danger: {
@@ -81,11 +81,11 @@ export default {
           },
           base: {
             main: '#E53E3E',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
           low: {
             main: '#C53030',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         info: {
@@ -95,11 +95,11 @@ export default {
           },
           base: {
             main: '#3182CE',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
           low: {
             main: '#2B6CB0',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         inactive: {
@@ -113,20 +113,15 @@ export default {
           },
           low: {
             main: '#718096',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
-        },
-      },
-      paper: {
-        base: {
-          main: '#FFFFFF',
         },
       },
       surface: {
         background: '#F7FAFC',
         overlay: 'rgba(0, 0, 0, 0.04)',
         divider: '#E2E8F0',
-        paper: '#FFFFFF',
+        paper: twcolors.white,
         input: '#EDF2F7',
       },
       typography: {
@@ -151,7 +146,7 @@ export default {
           },
           low: {
             main: '#4299E1',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         secondary: {
@@ -193,7 +188,7 @@ export default {
           },
           low: {
             main: '#48BB78',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         warning: {
@@ -221,7 +216,7 @@ export default {
           },
           low: {
             main: '#F56565',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         info: {
@@ -235,7 +230,7 @@ export default {
           },
           low: {
             main: '#4299E1',
-            contrast: '#FFFFFF',
+            contrast: twcolors.white,
           },
         },
         inactive: {
@@ -251,11 +246,6 @@ export default {
             main: '#2D3748',
             contrast: '#718096',
           },
-        },
-      },
-      paper: {
-        base: {
-          main: '#20242E',
         },
       },
       surface: {
@@ -440,23 +430,306 @@ export default {
     },
   },
   spacing: {
-    none: 0,
-    xs: 4,
-    sm: 8,
-    md: 12,
-    lg: 16,
-    xl: 24,
-    xxl: 32,
-    xxxl: 48,
+    'none': 0,
+    'xs': 4,
+    'sm': 8,
+    'md': 12,
+    'lg': 16,
+    'xl': 24,
+    '2xl': 32,
+    '3xl': 48,
   },
   borderRadius: {
-    none: 0,
-    xs: 2,
-    sm: 4,
-    md: 8,
-    lg: 12,
-    xl: 16,
-    xxl: 24,
-    xxxl: 32,
+    'none': 0,
+    'xs': 2,
+    'sm': 4,
+    'md': 8,
+    'lg': 12,
+    'xl': 16,
+    '2xl': 24,
+    '3xl': 32,
+    'full': 9999,
   },
-} as Theme;
+  borderWidths: {
+    none: 0,
+    hairline: 0.5,
+    thin: 1,
+    medium: 2,
+    thick: 4,
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        variant: 'solid',
+        size: 'md',
+        color: 'primary',
+      },
+      baseStyle: {
+        fontWeight: 'medium',
+        borderRadius: 'md',
+      },
+      sizes: {
+        xs: {
+          fontSize: 10,
+          padding: { horizontal: 'sm', vertical: 'xs' },
+          borderRadius: 'sm',
+          minHeight: 24,
+        },
+        sm: {
+          fontSize: 12,
+          padding: { horizontal: 'md', vertical: 'xs' },
+          borderRadius: 'md',
+          minHeight: 28,
+        },
+        md: {
+          fontSize: 16,
+          padding: { horizontal: 'lg', vertical: 'sm' },
+          borderRadius: 'md',
+          minHeight: 40,
+        },
+        lg: {
+          fontSize: 20,
+          padding: { horizontal: 'xl', vertical: 'md' },
+          borderRadius: 'lg',
+          minHeight: 48,
+        },
+        xl: {
+          fontSize: 24,
+          padding: { horizontal: '2xl', vertical: 'lg' },
+          borderRadius: 'xl',
+          minHeight: 56,
+        },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Chip: {
+      defaultProps: {
+        variant: 'soft',
+        size: 'md',
+        color: 'primary',
+      },
+      baseStyle: {
+        borderRadius: 'xl',
+        fontWeight: 'medium',
+      },
+      sizes: {
+        xs: {
+          fontSize: 10,
+          padding: { horizontal: 'xs', vertical: 'xs' },
+        },
+        sm: {
+          fontSize: 12,
+          padding: { horizontal: 'sm', vertical: 'xs' },
+        },
+        md: {
+          fontSize: 14,
+          padding: { horizontal: 'md', vertical: 'xs' },
+        },
+        lg: {
+          fontSize: 16,
+          padding: { horizontal: 'lg', vertical: 'sm' },
+        },
+        xl: {
+          fontSize: 18,
+          padding: { horizontal: 'xl', vertical: 'md' },
+        },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Card: {
+      baseStyle: {
+        borderRadius: 'lg',
+        padding: 'lg',
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: 'surface.paper',
+          borderColor: 'transparent',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    Paper: {
+      baseStyle: {
+        borderRadius: 'md',
+        borderWidth: 'none',
+        padding: 'lg',
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: 'surface.paper',
+          borderColor: 'transparent',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    TextInput: {
+      // TODO: Refactor to clearly separate typography variant from visual variant (solid/outline) and improve code clarity.
+      defaultProps: {
+        size: 'small',
+      },
+      baseStyle: {
+        borderRadius: 'md',
+        minHeight: 40,
+        // padding: { horizontal: 'md', vertical: 'sm' },
+      },
+      sizes: {
+        small: {
+          padding: { horizontal: 'sm', vertical: 'xs' },
+        },
+        medium: {
+          padding: { horizontal: 'lg', vertical: 'sm' },
+        },
+        large: {
+          padding: { horizontal: 'lg', vertical: 'md' },
+        },
+      },
+      variants: {
+        solid: (_theme) => ({
+          backgroundColor: `surface.input`,
+          borderColor: 'transparent',
+          borderWidth: 'none',
+        }),
+        outline: (_theme) => ({
+          backgroundColor: 'transparent',
+          borderColor: `surface.divider`,
+          borderWidth: 'thin',
+        }),
+      },
+    },
+    IconButton: {
+      defaultProps: {
+        variant: 'ghost',
+        size: 'md',
+        color: 'neutral',
+      },
+      baseStyle: {
+        borderRadius: 'md',
+      },
+      sizes: {
+        xs: { padding: 'xs' },
+        sm: { padding: 'xs' },
+        md: { padding: 'sm' },
+        lg: { padding: 'md' },
+        xl: { padding: 'lg' },
+      },
+      variants: {
+        solid: (_theme, color) => ({
+          backgroundColor: `${color}.high.main`,
+          textColor: `${color}.high.contrast`,
+          borderWidth: 'none',
+        }),
+        outline: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderColor: `${color}.high.main`,
+          borderWidth: 'thin',
+        }),
+        soft: (_theme, color) => ({
+          backgroundColor: `${color}.low.main`,
+          textColor: `${color}.low.contrast`,
+          borderWidth: 'none',
+        }),
+        ghost: (_theme, color) => ({
+          backgroundColor: 'transparent',
+          textColor: `${color}.high.main`,
+          borderWidth: 'none',
+        }),
+      },
+    },
+    Menu: {
+      baseStyle: {
+        borderRadius: 'md',
+        borderWidth: 'thin',
+        padding: 'xs',
+      },
+    },
+    Popover: {
+      baseStyle: {
+        borderRadius: 'md',
+        borderWidth: 'thin',
+        padding: 'lg',
+      },
+    },
+    Backdrop: {
+      baseStyle: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+    },
+    Divider: {
+      baseStyle: {
+        borderWidth: 'hairline',
+      },
+    },
+    Typography: {
+      defaultProps: {
+        variant: 'body',
+        size: 'medium',
+        usageType: 'primary',
+        align: 'left',
+        gutterBottom: false,
+        color: null,
+        colorTone: 'low',
+        colorValue: 'contrast',
+        colorAlpha: 'ff',
+      },
+      baseStyle: {
+        textColor: 'typography.primary',
+      },
+    },
+  },
+};
+
+export default theme;

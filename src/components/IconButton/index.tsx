@@ -1,11 +1,14 @@
+import React, { forwardRef } from 'react';
+import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
 import {
-  useTheme,
+  useComponentDefaults,
+  useComponentStyle,
+} from '../../hooks/useComponentStyle';
+import {
   type ButtonColors,
   type ButtonSizes,
   type ButtonVariants,
-} from '@materio/rn-materio-ui';
-import React, { forwardRef } from 'react';
-import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+} from '../../utils/types/theme';
 import { type ButtonRounded } from '../Button';
 
 // Define the icon props interface
@@ -28,53 +31,49 @@ export default forwardRef<typeof RectButton, IconButtonProps>(
     {
       onPress,
       children,
-      variant = 'solid',
-      color = 'neutral',
-      size = 'md',
+      variant,
+      color,
+      size,
       rounded,
       ...props
     }: IconButtonProps,
     ref
   ) {
-    const theme = useTheme();
-    const sizeMap = {
-      xs: { size: 18 },
-      sm: { size: 24 },
-      md: { size: 28 },
-      lg: { size: 32 },
-      xl: { size: 36 },
-    };
+    // Get default props from theme
+    const defaultProps = useComponentDefaults<ButtonVariants, ButtonSizes>(
+      'IconButton'
+    );
 
-    const colorBlock = theme.colorScheme.palette[color];
-    const solidPairing = colorBlock.high;
-    const softPairing = colorBlock.low;
+    // Apply defaults with prop overrides
+    const finalVariant = variant ?? defaultProps.variant ?? 'ghost';
+    const finalColor = color ?? defaultProps.color ?? 'neutral';
+    const finalSize = size ?? defaultProps.size ?? 'md';
 
-    const padding = (sizeMap[size].size / sizeMap.xs.size) * 4;
-    const borderRadius =
+    // Use the new component style system
+    const componentStyle = useComponentStyle(
+      'IconButton',
+      finalVariant,
+      finalSize,
+      finalColor
+    );
+
+    // Handle rounded prop override
+    const finalBorderRadius =
       rounded === 'none'
         ? 0
         : rounded === 'full'
           ? 9999
-          : (sizeMap[size].size * 1) / 2;
-    let borderColor = solidPairing.main;
-    let backgroundColor = solidPairing.main;
-    let textColor = solidPairing.contrast;
+          : componentStyle.borderRadius;
 
-    if (variant === 'soft') {
-      backgroundColor = softPairing.main;
-      textColor = softPairing.contrast;
-    }
-
-    if (variant === 'outline') {
-      backgroundColor = 'transparent';
-      borderColor = solidPairing.main;
-      textColor = solidPairing.main;
-    }
-
-    if (variant === 'ghost') {
-      backgroundColor = 'transparent';
-      textColor = solidPairing.main;
-    }
+    // Calculate icon size - use a size map based on component size
+    const iconSizeMap = {
+      xs: 16,
+      sm: 20,
+      md: 24,
+      lg: 28,
+      xl: 32,
+    };
+    const iconSize = iconSizeMap[finalSize];
 
     return (
       <RectButton
@@ -82,17 +81,14 @@ export default forwardRef<typeof RectButton, IconButtonProps>(
         testID="icon-button"
         onPress={onPress}
         style={{
-          borderWidth: variant === 'outline' ? 1 : 0,
-          borderRadius: borderRadius,
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
-          padding: padding,
+          ...componentStyle,
+          borderRadius: finalBorderRadius,
         }}
         {...props}
       >
         {React.cloneElement(children, {
-          color: textColor,
-          size: sizeMap[size].size,
+          color: componentStyle.color,
+          size: iconSize,
         })}
       </RectButton>
     );

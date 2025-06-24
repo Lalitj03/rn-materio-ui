@@ -1,13 +1,12 @@
-import {
-  invertTone,
-  useTheme,
-  type ButtonColors,
-  type ColorValues,
-  type ThemeColorTones,
-} from '@materio/rn-materio-ui';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Animated from 'react-native-reanimated';
+import {
+  useTheme,
+  type ButtonColors,
+  type ColorTone,
+  type ColorValues,
+} from '../../index';
 import Divider from '../Divider';
 import Popover, { type PopoverProps } from '../Popover';
 import Typography, { type TypographyProps } from '../Typography';
@@ -19,10 +18,14 @@ interface IconProps {
   [key: string]: any; // Allow other props that might be needed by various icon components
 }
 
+export type MenuVariants = 'solid';
+export type MenuSizes = 'xs' | 'sm' | 'md' | 'lg';
+
 interface MenuProps extends PopoverProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: MenuSizes;
   targetRef: React.RefObject<any>;
   separator?: boolean;
+  variant?: MenuVariants;
 }
 
 export default function Menu({
@@ -64,11 +67,7 @@ export default function Menu({
                 ...itemColor,
               })}
               {separator && index < React.Children.count(children) - 1 && (
-                <Divider
-                  marginH={4}
-                  color={color}
-                  colorTone={invertTone(colorTone)}
-                />
+                <Divider marginH={4} color={color} />
               )}
             </React.Fragment>
           );
@@ -86,7 +85,7 @@ interface MenuItemProps {
   children?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   color?: ButtonColors;
-  colorTone?: ThemeColorTones;
+  colorTone?: ColorTone;
   onSelected?: () => void;
   onClose?: () => void;
   typographyProps?: TypographyProps;
@@ -94,7 +93,7 @@ interface MenuItemProps {
   itemProps?: {
     size?: 'xs' | 'sm' | 'md' | 'lg';
     color?: ButtonColors;
-    colorTone?: ThemeColorTones;
+    colorTone?: ColorTone;
     colorValue?: ColorValues;
   };
 }
@@ -130,17 +129,18 @@ export function MenuItem({
     md: 24,
     lg: 32,
   } as Record<string, number>;
+  const spacing = theme.spacing;
   const paddingMap = {
-    xs: 8,
-    sm: 10,
-    md: 12,
-    lg: 14,
+    xs: spacing.xs,
+    sm: spacing.sm,
+    md: spacing.md,
+    lg: spacing.lg,
   } as Record<string, number>;
   const gapMap = {
-    xs: 6,
-    sm: 8,
-    md: 12,
-    lg: 16,
+    xs: spacing.xs,
+    sm: spacing.sm,
+    md: spacing.md,
+    lg: spacing.md,
   } as Record<string, number>;
 
   const handlePress = () => {
@@ -154,7 +154,7 @@ export function MenuItem({
         style={[
           styles.menuItem,
           {
-            paddingHorizontal: (paddingMap[tSize] || 0) + 4,
+            paddingHorizontal: (paddingMap[tSize] || 0) + spacing.xs,
             paddingVertical: paddingMap[tSize],
             gap: gapMap[tSize],
           },

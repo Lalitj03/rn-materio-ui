@@ -1,12 +1,16 @@
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+import {
+  useComponentDefaults,
+  useComponentStyle,
+} from '../../hooks/useComponentStyle';
 import {
   useTheme,
+  type ButtonColors,
   type ButtonSizes,
   type ButtonVariants,
-  type ThemeColors,
-} from '@materio/rn-materio-ui';
-import React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+} from '../../index';
 
 export type ButtonRounded = 'none' | 'full';
 
@@ -18,7 +22,7 @@ interface IconProps {
 }
 
 export interface ChipProps extends RectButtonProps {
-  color?: ThemeColors;
+  color?: ButtonColors;
   variant?: ButtonVariants;
   size?: ButtonSizes;
   rounded?: ButtonRounded;
@@ -30,57 +34,44 @@ export interface ChipProps extends RectButtonProps {
 export default function Chip({
   onPress,
   children,
-  variant = 'solid',
-  color = 'neutral',
-  size = 'md',
+  variant,
+  color,
+  size,
   rounded,
   startIcon,
   endIcon,
   ...props
 }: ChipProps) {
   const theme = useTheme();
-  const sizeMap = {
-    xs: { size: 10 },
-    sm: { size: 12 },
-    md: { size: 14 },
-    lg: { size: 18 },
-    xl: { size: 22 },
-  };
-  const icSize = sizeMap[size].size * (1 + 1 / 4); // Icon container size
-  const paddingHorizontal = (sizeMap[size].size * 2) / 3;
-  const paddingVertical = (sizeMap[size].size * 1) / 3;
-  const brN = (sizeMap[size].size * 3) / 4;
 
-  const colorBlock = theme.colorScheme.palette[color];
-  const solidPairing = colorBlock.high;
-  const softPairing = colorBlock.low;
+  // Get default props from theme
+  const defaultProps = useComponentDefaults<ButtonVariants, ButtonSizes>(
+    'Chip'
+  );
 
-  const borderRadius = rounded === 'none' ? 0 : rounded === 'full' ? 9999 : brN;
-  let borderColor = solidPairing.main;
-  let backgroundColor = solidPairing.main;
-  let textColor = solidPairing.contrast;
+  // Apply defaults with prop overrides
+  const finalVariant = variant ?? defaultProps.variant ?? 'soft';
+  const finalColor = color ?? defaultProps.color ?? 'neutral';
+  const finalSize = size ?? defaultProps.size ?? 'md';
 
-  if (variant === 'soft') {
-    backgroundColor = softPairing.main;
-    textColor = softPairing.contrast;
-  }
+  // Use the new component style system
+  const componentStyle = useComponentStyle(
+    'Chip',
+    finalVariant,
+    finalSize,
+    finalColor
+  );
 
-  if (variant === 'outline') {
-    backgroundColor = 'transparent';
-    borderColor = solidPairing.main;
-    textColor = solidPairing.main;
-  }
+  // Handle rounded prop override
+  const finalBorderRadius =
+    rounded === 'none'
+      ? 0
+      : rounded === 'full'
+        ? 9999
+        : componentStyle.borderRadius;
 
-  if (variant === 'ghost') {
-    backgroundColor = 'transparent';
-    textColor = solidPairing.main;
-  }
-
-  const icStartMargin = Platform.select({
-    web: paddingHorizontal,
-    default: paddingHorizontal / 2,
-  }); // Right Margin for Start Icon
-  const icEndMargin = paddingHorizontal / 2; // Left Margin for End Icon
+  // Calculate icon size based on font size
+  const iconSize = componentStyle.fontSize * 0.875; // Slightly smaller than font size
 
   return (
     <RectButton
@@ -88,12 +79,12 @@ export default function Chip({
       style={[
         styles.chip,
         {
-          paddingHorizontal,
-          paddingVertical,
-          borderWidth: variant === 'outline' ? 1 : 0,
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
-          borderRadius: borderRadius,
+          paddingHorizontal: componentStyle.paddingHorizontal,
+          paddingVertical: componentStyle.paddingVertical,
+          borderWidth: componentStyle.borderWidth || 0,
+          backgroundColor: componentStyle.backgroundColor,
+          borderColor: componentStyle.borderColor,
+          borderRadius: finalBorderRadius,
         },
       ]}
       {...props}
@@ -103,23 +94,26 @@ export default function Chip({
           style={[
             styles.iconContainer,
             {
-              width: icSize,
-              height: icSize,
-              marginRight: icStartMargin,
-              marginLeft: Platform.select({ web: 4, default: 0 }),
+              width: iconSize,
+              height: iconSize,
+              marginRight: theme.spacing.xs,
             },
           ]}
         >
           {React.cloneElement(startIcon, {
-            color: textColor,
-            size: sizeMap[size].size + 1,
+            color: componentStyle.color,
+            size: iconSize,
           })}
         </View>
       )}
       <Text
         style={[
           styles.text,
-          { color: textColor, fontSize: sizeMap[size].size },
+          {
+            color: componentStyle.color,
+            fontSize: componentStyle.fontSize,
+            fontWeight: componentStyle.fontWeight,
+          },
         ]}
       >
         {children}
@@ -128,12 +122,16 @@ export default function Chip({
         <View
           style={[
             styles.iconContainer,
-            { width: icSize, height: icSize, marginLeft: icEndMargin },
+            {
+              width: iconSize,
+              height: iconSize,
+              marginLeft: theme.spacing.xs,
+            },
           ]}
         >
           {React.cloneElement(endIcon, {
-            color: textColor,
-            size: sizeMap[size].size + 1,
+            color: componentStyle.color,
+            size: iconSize,
           })}
         </View>
       )}

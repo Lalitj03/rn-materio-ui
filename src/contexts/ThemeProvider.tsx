@@ -3,7 +3,9 @@ import React, { createContext, useContext } from 'react';
 import theme from 'src/constants/theme';
 import type {
   BorderRadius,
+  BorderWidths,
   ColorScheme,
+  ComponentsConfig,
   Spacing,
   Theme,
   Typography,
@@ -15,6 +17,8 @@ export interface ThemeContextType {
     typography: Typography;
     spacing: Spacing;
     borderRadius: BorderRadius;
+    borderWidths: BorderWidths;
+    components: ComponentsConfig;
   };
 }
 
@@ -25,6 +29,8 @@ const defaultTheme = {
     typography: theme.typography,
     borderRadius: theme.borderRadius,
     spacing: theme.spacing,
+    borderWidths: theme.borderWidths,
+    components: theme.components,
   },
 };
 
@@ -52,6 +58,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     typography,
     borderRadius,
     spacing,
+    borderWidths,
+    components,
   } = inheritedTheme;
 
   // Directly use the provided colorScheme without internal state
@@ -64,6 +72,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       typography,
       borderRadius,
       spacing,
+      borderWidths,
+      components,
     },
   };
 

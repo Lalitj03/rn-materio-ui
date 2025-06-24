@@ -1,62 +1,65 @@
-import {
-  type ButtonVariants,
-  type ColorTones,
-  type ColorValues,
-  type SpacingOptions,
-  type ThemeColors,
-  type TypographySizes,
-  type TypographyUsageTypes,
-  type TypographyWeights,
-  useTheme,
-} from '@materio/rn-materio-ui';
 import { useState } from 'react';
 import {
   TextInput as RNTextInput,
-  type TextInputProps as RNTextInputProps,
   StyleSheet,
   View,
+  type TextInputProps as RNTextInputProps,
 } from 'react-native';
+import {
+  useComponentDefaults,
+  useComponentStyle,
+} from '../../hooks/useComponentStyle';
+import {
+  useTheme,
+  type ColorTone,
+  type ColorValues,
+  type SolidOutlineVariants,
+  type ThemeColors,
+  type TypographySizes,
+  type TypographyUsageTypes,
+  type TypographyVariants,
+  type TypographyWeights,
+} from '../../index';
+import { getTypographyStyles } from '../../utils/typographyUtils';
 import Typography from '../Typography';
 
 export interface TextInputProps
   extends Omit<RNTextInputProps, 'color' | 'variant' | 'size'> {
-  // Typography-like props
-  color?: ThemeColors;
-  colorTone?: ColorTones;
-  colorValue?: ColorValues;
-  colorAlpha?: string;
-  usageType?: TypographyUsageTypes;
-  align?: 'left' | 'center' | 'right' | 'justify';
-  weight?: null | TypographyWeights;
-  variant?: Extract<ButtonVariants, 'solid' | 'outline'>;
+  // Typography alignment with Typography component
+  variant?: TypographyVariants;
   size?: TypographySizes;
+  weight?: null | TypographyWeights;
+  color?: ThemeColors;
+  colorTone?: ColorTone;
+  colorValue?: ColorValues;
+  /** alpha value will be appended to the color Eg: "#000000" + "60" */
+  colorAlpha?: string;
+  align?: 'left' | 'center' | 'right' | 'justify';
+  usageType?: TypographyUsageTypes;
 
   // TextInput specific props
+  outlined?: boolean; // Replaces variant - true for outline, false for solid
   error?: boolean;
   errorMessage?: string;
   fullWidth?: boolean;
   label?: string;
   disabled?: boolean;
   helperText?: string;
-
-  // Spacing and border radius props
-  padding?: SpacingOptions;
-  borderRadius?: SpacingOptions;
 }
 
+// TODO: Refactor to clearly separate typography variant from visual variant (solid/outline) and improve code clarity.
 export default function TextInput({
   style,
-  variant = 'outline',
-  size = 'small',
-  padding = 'md',
-  borderRadius = 'md',
+  variant,
+  size,
   weight,
-  color = 'neutral',
-  colorTone = 'low',
-  colorValue = 'contrast',
-  colorAlpha = 'ff',
-  usageType = 'primary',
+  color,
+  colorTone,
+  colorValue,
+  colorAlpha,
+  usageType,
   align = 'left',
+  outlined = false,
   error = false,
   errorMessage,
   fullWidth = false,
@@ -65,57 +68,66 @@ export default function TextInput({
   helperText,
   ...props
 }: TextInputProps) {
-  const theme = useTheme();
   const [isFocused, setIsFocused] = useState(false);
+  const theme = useTheme();
 
-  // Apply typography styling similar to Typography component
-  let fontColor = theme.colorScheme.typography[usageType];
-  if (color) {
-    const colorBlock = theme.colorScheme.palette[color];
-    fontColor = colorBlock[colorTone][colorValue] + colorAlpha;
+  // Get default props from theme - using string literals for the generic types
+  const defaultProps = useComponentDefaults<
+    SolidOutlineVariants,
+    TypographySizes
+  >('TextInput');
+
+  // Apply defaults with prop overrides - Typography aligned
+  const finalVariant = variant ?? defaultProps.variant ?? 'body'; // Default to 'body' typography variant
+  const finalSize = size ?? defaultProps.size ?? 'medium';
+  const finalWeight = weight ?? null;
+  const finalUsageType = usageType ?? 'primary';
+  const finalColor = color ?? null;
+  const finalColorTone = colorTone ?? 'base';
+  const finalColorValue = colorValue ?? 'main';
+  const finalColorAlpha = colorAlpha ?? '';
+
+  // Determine the visual variant (solid/outline) from the outlined prop
+  const visualVariant = outlined ? 'outline' : 'solid';
+
+  // Use the new component style system for layout and colors (still using the old component config)
+  const componentStyle = useComponentStyle(
+    'TextInput',
+    visualVariant,
+    finalSize,
+    'neutral' // Use neutral as the base color for input styling
+  );
+
+  // Use Typography styles for font styling
+  const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing } =
+    getTypographyStyles(
+      theme,
+      finalVariant as TypographyVariants,
+      finalSize as TypographySizes,
+      finalWeight
+    );
+
+  // Calculate text color using Typography logic
+  let textColor =
+    theme.colorScheme.typography[finalUsageType as TypographyUsageTypes];
+  if (finalColor) {
+    const colorBlock = theme.colorScheme.palette[finalColor];
+    textColor =
+      colorBlock[finalColorTone as ColorTone][finalColorValue as ColorValues] +
+      finalColorAlpha;
   }
 
-  if (disabled) {
-    fontColor = theme.colorScheme.typography.disabled;
-  }
-
-  const typographyStyle = theme.typography.tokens.body[size];
-  let { fontFamily, fontSize, lineHeight, tracking } = typographyStyle;
-  fontSize = (fontSize * 96) / 72; // convert pt to px
-  lineHeight = (lineHeight * 96) / 72; // convert pt to px
-  tracking = (tracking * 96) / 72; // convert pt to px
-  let letterSpacing = tracking / fontSize; // result is in em units
-  letterSpacing = Math.round(letterSpacing * 1000) / 1000; // round to 3 decimal places
-
-  // Properly type fontWeight to match React Native's expected values
-  let fontWeight = '400' as TypographyWeights; // Default to regular weight
-
-  if (weight) {
-    const { fontFamily: weightFontFamily, fontWeight: weightFontWeight } =
-      theme.typography.weightMap[weight];
-    fontFamily = weightFontFamily;
-    // Cast the weight to match React Native's expected values
-    fontWeight = weightFontWeight as TypographyWeights;
-  }
-
-  // Calculate colors based on state
-  const colorBlock = theme.colorScheme.palette[color];
-  const softPairing = colorBlock.low;
+  // Calculate state-based colors for input styling
   const errorColor = theme.colorScheme.typography.error;
-
-  // Border and background colors based on variant and state
-  let borderColor = softPairing.contrast + '40'; // Default with opacity
-  let backgroundColor = 'transparent';
-
-  if (variant === 'solid') {
-    backgroundColor = softPairing.main + '20'; // Light background
-    borderColor = 'transparent';
-  }
+  let borderColor = componentStyle.borderColor;
+  let backgroundColor = componentStyle.backgroundColor;
 
   if (isFocused) {
     borderColor = error
       ? errorColor
-      : theme.colorScheme.palette[color].base.main;
+      : finalColor
+        ? theme.colorScheme.palette[finalColor].base.main
+        : theme.colorScheme.palette.neutral.base.main;
   } else if (error) {
     borderColor = errorColor;
   }
@@ -123,6 +135,7 @@ export default function TextInput({
   if (disabled) {
     backgroundColor = theme.colorScheme.surface.input + '50';
     borderColor = theme.colorScheme.typography.disabled + '40';
+    textColor = theme.colorScheme.typography.disabled;
   }
 
   return (
@@ -148,13 +161,13 @@ export default function TextInput({
             fontWeight,
             lineHeight,
             letterSpacing,
-            color: fontColor,
+            color: textColor,
             borderColor,
-            borderWidth: variant === 'outline' ? 1 : 0,
-            borderRadius: theme.borderRadius[borderRadius],
-            backgroundColor:
-              variant === 'solid' ? backgroundColor : 'transparent',
-            padding: theme.spacing[padding],
+            borderWidth: outlined ? componentStyle.borderWidth : 0,
+            borderRadius: componentStyle.borderRadius,
+            backgroundColor: !outlined ? backgroundColor : 'transparent',
+            paddingHorizontal: componentStyle.paddingHorizontal,
+            paddingVertical: componentStyle.paddingVertical,
             opacity: disabled ? 0.7 : 1,
           },
           style,

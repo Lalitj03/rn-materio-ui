@@ -1,13 +1,16 @@
+import React, { forwardRef } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+import { useTheme, type ThemeContextType } from '../../contexts/ThemeProvider';
+import {
+  useComponentDefaults,
+  useComponentStyle,
+} from '../../hooks/useComponentStyle';
 import {
   type ButtonColors,
   type ButtonSizes,
   type ButtonVariants,
-  type ThemeContextType,
-  useTheme,
-} from '@materio/rn-materio-ui';
-import React, { forwardRef } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { RectButton, type RectButtonProps } from 'react-native-gesture-handler';
+} from '../../utils/types/theme';
 
 export type ButtonRounded = 'none' | 'full';
 
@@ -34,9 +37,9 @@ export default forwardRef<typeof RectButton, ButtonProps>(function Button(
   {
     onPress,
     children,
-    variant = 'solid',
-    color = 'neutral',
-    size = 'md',
+    variant,
+    color,
+    size,
     rounded,
     startIcon,
     endIcon,
@@ -49,52 +52,47 @@ export default forwardRef<typeof RectButton, ButtonProps>(function Button(
 ) {
   const theme = useTheme();
   const styles = useStyles({ theme, fullwidth });
-  const sizeMap = {
-    xs: { size: 10 },
-    sm: { size: 12 },
-    md: { size: 16 },
-    lg: { size: 20 },
-    xl: { size: 24 },
-  };
-  const iconContainerSize = sizeMap[size].size * (1 + 1 / 4);
-  let paddingHorizontal = sizeMap[size].size;
-  let paddingVertical = (sizeMap[size].size * 1) / 2;
-  const brN = (sizeMap[size].size * 3) / 4;
 
-  const colorBlock = theme.colorScheme.palette[color];
-  const solidPairing = colorBlock.high;
-  const softPairing = colorBlock.low;
+  // Get default props from theme
+  const defaultProps = useComponentDefaults<ButtonVariants, ButtonSizes>(
+    'Button'
+  );
 
-  const borderRadius = rounded === 'none' ? 0 : rounded === 'full' ? 9999 : brN;
-  let borderColor = solidPairing.main;
-  let backgroundColor = solidPairing.main;
-  let textColor = solidPairing.contrast;
+  // Apply defaults with prop overrides
+  const finalVariant = variant ?? defaultProps.variant ?? 'solid';
+  const finalColor = color ?? defaultProps.color ?? 'neutral';
+  const finalSize = size ?? defaultProps.size ?? 'md';
 
-  if (variant === 'soft') {
-    backgroundColor = softPairing.main;
-    textColor = softPairing.contrast;
-  }
+  // Use the new component style system
+  const componentStyle = useComponentStyle(
+    'Button',
+    finalVariant,
+    finalSize,
+    finalColor
+  );
 
-  if (variant === 'outline') {
-    backgroundColor = 'transparent';
-    borderColor = solidPairing.main;
-    textColor = solidPairing.main;
-  }
+  // Handle rounded prop override
+  const finalBorderRadius =
+    rounded === 'none'
+      ? 0
+      : rounded === 'full'
+        ? 9999
+        : componentStyle.borderRadius;
 
-  if (variant === 'ghost') {
-    backgroundColor = 'transparent';
-    textColor = solidPairing.main;
-  }
+  // Calculate icon size based on font size
+  const iconSize = componentStyle.fontSize * 0.875; // Slightly smaller than font size
+  const iconContainerSize = iconSize * 1.25; // 25% larger than icon for proper spacing
 
   // Apply disabled styles if disabled prop is true
-  if (disabled) {
-    backgroundColor = theme.colorScheme.typography.disabled + '20'; // Using typography.disabled with opacity
-    borderColor = theme.colorScheme.typography.disabled;
-    textColor = theme.colorScheme.typography.disabled;
-  }
+  let finalBackgroundColor = componentStyle.backgroundColor;
+  let finalBorderColor = componentStyle.borderColor;
+  let finalTextColor = componentStyle.color;
 
-  const icStartMargin = paddingHorizontal / 2;
-  const icEndMargin = paddingHorizontal / 2;
+  if (disabled) {
+    finalBackgroundColor = theme.colorScheme.typography.disabled + '20'; // Using typography.disabled with opacity
+    finalBorderColor = theme.colorScheme.typography.disabled;
+    finalTextColor = theme.colorScheme.typography.disabled;
+  }
 
   return (
     <RectButton
@@ -104,19 +102,20 @@ export default forwardRef<typeof RectButton, ButtonProps>(function Button(
       style={[
         styles.button,
         {
-          paddingHorizontal: paddingHorizontal,
-          paddingVertical: paddingVertical,
-          borderWidth: variant === 'outline' ? 1 : 0,
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
-          borderRadius: borderRadius,
+          paddingHorizontal: componentStyle.paddingHorizontal,
+          paddingVertical: componentStyle.paddingVertical,
+          borderWidth: componentStyle.borderWidth,
+          backgroundColor: finalBackgroundColor,
+          borderColor: finalBorderColor,
+          borderRadius: finalBorderRadius,
+          minHeight: componentStyle.minHeight,
           opacity: disabled ? 0.6 : 1,
         },
       ]}
       {...props}
     >
       {loading ? (
-        <ActivityIndicator size="small" color={textColor} />
+        <ActivityIndicator size="small" color={finalTextColor} />
       ) : (
         <>
           {startIcon && (
@@ -126,20 +125,24 @@ export default forwardRef<typeof RectButton, ButtonProps>(function Button(
                 {
                   width: iconContainerSize,
                   height: iconContainerSize,
-                  marginRight: icStartMargin,
+                  marginRight: theme.spacing.xs,
                 },
               ]}
             >
               {React.cloneElement(startIcon, {
-                color: textColor,
-                size: sizeMap[size].size,
+                color: finalTextColor,
+                size: iconSize,
               })}
             </View>
           )}
           <Text
             style={[
               styles.buttonText,
-              { color: textColor, fontSize: sizeMap[size].size },
+              {
+                fontFamily: componentStyle.fontFamily,
+                fontSize: componentStyle.fontSize,
+                color: finalTextColor,
+              },
             ]}
           >
             {children}
@@ -151,13 +154,13 @@ export default forwardRef<typeof RectButton, ButtonProps>(function Button(
                 {
                   width: iconContainerSize,
                   height: iconContainerSize,
-                  marginLeft: icEndMargin,
+                  marginLeft: theme.spacing.xs,
                 },
               ]}
             >
               {React.cloneElement(endIcon, {
-                color: textColor,
-                size: sizeMap[size].size,
+                color: finalTextColor,
+                size: iconSize,
               })}
             </View>
           )}
@@ -183,6 +186,6 @@ const useStyles = ({ fullwidth }: ThemeContextType & { fullwidth?: boolean }) =>
       justifyContent: 'center',
     },
     buttonText: {
-      fontFamily: 'NotoSansMedium',
+      // fontFamily is now set dynamically from theme
     },
   });

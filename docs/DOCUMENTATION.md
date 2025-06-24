@@ -149,7 +149,7 @@ import {
   ThemeProvider,
   Button,
   Typography,
-  theme,
+  theme, // Default theme
 } from '@materio/rn-materio-ui';
 
 export default function App() {
@@ -173,11 +173,61 @@ You can implement theme switching between light and dark modes, and even switch 
 ```jsx
 import React, { useState } from 'react';
 import { View, Switch } from 'react-native';
-import { ThemeProvider, Button, Typography } from '@materio/rn-materio-ui';
-// Import your custom themes (these would be created by you)
-import defaultTheme from './themes/default';
-import frozenTheme from './themes/frozen';
-import starwarsTheme from './themes/starwars';
+import {
+  ThemeProvider,
+  Button,
+  Typography,
+  theme as defaultTheme, // Default theme
+  twcolors,
+} from '@materio/rn-materio-ui';
+
+// Example of creating custom themes (you can import pre-made ones too)
+const customTheme = {
+  colorScheme: {
+    light: {
+      palette: {
+        primary: {
+          base: { main: twcolors.purple[600], contrast: twcolors.white },
+          high: { main: twcolors.purple[800], contrast: twcolors.purple[50] },
+          low: { main: twcolors.purple[100], contrast: twcolors.purple[900] },
+        },
+        // ... other colors
+      },
+      surface: { main: twcolors.white, contrast: twcolors.black },
+      typography: {
+        primary: twcolors.black,
+        secondary: twcolors.gray[600],
+        disabled: twcolors.gray[400],
+      },
+    },
+    dark: {
+      palette: {
+        primary: {
+          base: { main: twcolors.purple[400], contrast: twcolors.black },
+          high: { main: twcolors.purple[200], contrast: twcolors.purple[900] },
+          low: { main: twcolors.purple[800], contrast: twcolors.purple[100] },
+        },
+        // ... other colors
+      },
+      surface: { main: twcolors.gray[900], contrast: twcolors.white },
+      typography: {
+        primary: twcolors.white,
+        secondary: twcolors.gray[300],
+        disabled: twcolors.gray[500],
+      },
+    },
+  },
+  typography: {
+    /* typography config */
+  },
+  spacing: {
+    /* spacing config */
+  },
+  borderRadius: {
+    /* border radius config */
+  },
+  // ... other theme properties
+};
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -185,8 +235,7 @@ export default function App() {
 
   const themes = {
     default: defaultTheme,
-    frozen: frozenTheme,
-    starwars: starwarsTheme,
+    custom: customTheme,
   };
 
   return (
@@ -211,7 +260,7 @@ export default function App() {
         <Button
           color="secondary"
           onPress={() =>
-            setSelectedTheme(selectedTheme === 'default' ? 'frozen' : 'default')
+            setSelectedTheme(selectedTheme === 'default' ? 'custom' : 'default')
           }
         >
           Switch Theme Style
@@ -232,7 +281,7 @@ Materio UI comes with a built-in theme system that provides consistent styling a
 
 #### Using the ThemeProvider
 
-The `ThemeProvider` component wraps your application and manages the theme state. You can now pass a custom theme object to completely customize the appearance:
+The `ThemeProvider` component wraps your application and manages the theme state. You can pass a custom theme object to completely customize the appearance:
 
 ```jsx
 import { ThemeProvider, twcolors } from '@materio/rn-materio-ui';
@@ -243,21 +292,95 @@ const customTheme = {
     light: {
       palette: {
         primary: {
-          base: { main: twcolors.blue[600], contrast: '#ffffff' },
+          base: { main: twcolors.blue[600], contrast: twcolors.white },
           high: { main: twcolors.blue[800], contrast: twcolors.blue[50] },
           low: { main: twcolors.blue[100], contrast: twcolors.blue[900] },
         },
-        // ... other colors
+        secondary: {
+          base: { main: twcolors.purple[600], contrast: twcolors.white },
+          high: { main: twcolors.purple[800], contrast: twcolors.purple[50] },
+          low: { main: twcolors.purple[100], contrast: twcolors.purple[900] },
+        },
+        // ... other color definitions (success, danger, warning, info, neutral)
       },
-      // ... other theme properties
+      surface: { main: twcolors.white, contrast: twcolors.black },
+      typography: {
+        primary: twcolors.black,
+        secondary: twcolors.gray[600],
+        disabled: twcolors.gray[400],
+      },
     },
     dark: {
-      // ... dark theme properties
-    }
+      palette: {
+        primary: {
+          base: { main: twcolors.blue[400], contrast: twcolors.black },
+          high: { main: twcolors.blue[200], contrast: twcolors.blue[900] },
+          low: { main: twcolors.blue[800], contrast: twcolors.blue[100] },
+        },
+        // ... other color definitions for dark mode
+      },
+      surface: { main: twcolors.gray[900], contrast: twcolors.white },
+      typography: {
+        primary: twcolors.white,
+        secondary: twcolors.gray[300],
+        disabled: twcolors.gray[500],
+      },
+    },
   },
-  typography: { /* typography settings */ },
-  spacing: { /* spacing settings */ },
-  borderRadius: { /* border radius settings */ },
+  typography: {
+    variants: {
+      display: {
+        /* font family, letterSpacing, etc. */
+      },
+      headline: {
+        /* font styles */
+      },
+      title: {
+        /* font styles */
+      },
+      body: {
+        /* font styles */
+      },
+      label: {
+        /* font styles */
+      },
+    },
+    sizes: {
+      large: {
+        /* size definitions */
+      },
+      medium: {
+        /* size definitions */
+      },
+      small: {
+        /* size definitions */
+      },
+    },
+    weights: {
+      light: '300',
+      regular: '400',
+      medium: '500',
+      semiBold: '600',
+      bold: '700',
+    },
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+    // ... more spacing values
+  },
+  borderRadius: {
+    none: 0,
+    xs: 2,
+    sm: 4,
+    md: 8,
+    lg: 12,
+    xl: 16,
+    // ... more border radius values
+  },
 };
 
 function App() {
@@ -265,10 +388,6 @@ function App() {
     <ThemeProvider colorScheme="light" theme={customTheme}>
       {/* Your app components */}
     </ThemeProvider>
-  );
-}
-  return (
-    <ThemeProvider colorScheme="light">{/* Your app content */}</ThemeProvider>
   );
 }
 ```
@@ -286,11 +405,28 @@ function MyComponent() {
   return (
     <View
       style={{
-        backgroundColor: theme.colorScheme.surface.background,
+        backgroundColor: theme.colorScheme.surface.main,
         padding: theme.spacing.md,
+        borderRadius: theme.borderRadius.md,
       }}
     >
-      <Typography color="primary">Themed Text</Typography>
+      <Typography style={{ color: theme.colorScheme.typography.primary }}>
+        Themed Text
+      </Typography>
+
+      <View
+        style={{
+          backgroundColor: theme.colorScheme.palette.primary.base.main,
+          padding: theme.spacing.sm,
+          borderRadius: theme.borderRadius.sm,
+        }}
+      >
+        <Typography
+          style={{ color: theme.colorScheme.palette.primary.base.contrast }}
+        >
+          Primary Color Box
+        </Typography>
+      </View>
     </View>
   );
 }
@@ -414,10 +550,18 @@ Materio UI provides consistent spacing values through the theme:
 - `md` - 12px
 - `lg` - 16px
 - `xl` - 24px
-- `xxl` - 32px
-- `xxxl` - 40px
+- `2xl` - 32px
+- `3xl` - 40px
 
-Border radius follows the same scale:
+Border radius follows the same scale, and border widths are available for consistent borders:
+
+**Border Widths:**
+
+- `none` - 0px (no border)
+- `hairline` - 0.5px (very thin border)
+- `thin` - 1px (standard thin border)
+- `medium` - 2px (medium border)
+- `thick` - 4px (thick border)
 
 ```jsx
 import { useTheme, View } from '@materio/rn-materio-ui';
@@ -431,6 +575,8 @@ function SpacingExample() {
         padding: theme.spacing.md,
         margin: theme.spacing.lg,
         borderRadius: theme.borderRadius.md,
+        borderWidth: theme.borderWidths.thin,
+        borderColor: '#e5e5e5',
       }}
     >
       {/* Content */}
@@ -451,12 +597,12 @@ Materio UI exports all the components, hooks, types, and utilities you need:
 import {
   // Components
   Button,
+  IconButton,
   Typography,
   Card,
   ColoredCard,
   Chip,
   TextInput,
-  IconButton,
   Paper,
   Divider,
   Menu,
@@ -467,18 +613,27 @@ import {
   // Theme System
   ThemeProvider,
   useTheme,
+  theme, // Default theme
 
   // Utilities
   twcolors,
   invertTone,
 
   // Types (for TypeScript)
+  // All types are exported as well, including:
   Theme,
   ThemeColors,
   ColorTones,
+  ColorValues,
+  ButtonColors,
   ButtonVariants,
+  ButtonSizes,
   TypographyVariants,
-  // ... other types
+  TypographySizes,
+  TypographyWeights,
+  TypographyUsageTypes,
+  ThemeContextType,
+  // ... and many more
 } from '@materio/rn-materio-ui';
 ```
 
@@ -665,7 +820,7 @@ Text component with consistent styling based on the theme.
 | -------------- | ------------------------------------------ | ------------ | ------------------------------------ |
 | `variant`      | TypographyVariants                         | `'body'`     | Text style variant                   |
 | `size`         | TypographySizes                            | `'small'`    | Text size                            |
-| `weight`       | TypographyWeights                          | -            | Font weight                          |
+| `weight`       | TypographyWeights \| null                  | -            | Font weight                          |
 | `color`        | ThemeColors                                | -            | Text color from theme                |
 | `colorTone`    | ColorTones                                 | `'low'`      | Color tone when using a theme color  |
 | `colorValue`   | ColorValues                                | `'contrast'` | Color value when using a theme color |
@@ -685,21 +840,35 @@ import { Typography } from '@materio/rn-materio-ui';
 <Typography variant="title">Title Text</Typography>
 <Typography variant="body">Body Text</Typography>
 <Typography variant="label">Label Text</Typography>
-<Typography variant="caption">Caption Text</Typography>
 
 // Sizes
 <Typography variant="body" size="large">Large Body</Typography>
 <Typography variant="body" size="medium">Medium Body</Typography>
 <Typography variant="body" size="small">Small Body</Typography>
 
-// Colors
-<Typography color="primary">Primary Text</Typography>
-<Typography color="secondary">Secondary Text</Typography>
+// Colors with tones
+<Typography color="primary" colorTone="high">Primary High Tone</Typography>
+<Typography color="secondary" colorTone="low">Secondary Low Tone</Typography>
+<Typography color="success" colorValue="main">Success Main Color</Typography>
+
+// Usage types
 <Typography usageType="link">Link Text</Typography>
 <Typography usageType="error">Error Message</Typography>
+<Typography usageType="secondary">Secondary Text</Typography>
 
-// Alignment
-<Typography align="center">Centered Text</Typography>
+// Weight and alignment
+<Typography weight="bold" align="center">Bold Centered Text</Typography>
+<Typography weight="light" align="right">Light Right-Aligned Text</Typography>
+
+// With gutter bottom
+<Typography variant="title" gutterBottom>
+  Title with bottom margin
+</Typography>
+
+// Color with alpha
+<Typography color="primary" colorAlpha="80">
+  Semi-transparent primary text
+</Typography>
 ```
 
 #### Card
@@ -754,44 +923,95 @@ Cards with background color based on the theme.
 
 **Props:**
 
-| Prop        | Type                 | Default     | Description                   |
-| ----------- | -------------------- | ----------- | ----------------------------- |
-| `color`     | ThemeColors          | `'neutral'` | Card background color         |
-| `colorTone` | ThemeColorTones      | `'low'`     | Color tone for the background |
-| `variant`   | 'solid' \| 'outline' | `'solid'`   | Card variant style            |
-| `rounded`   | number               | `16`        | Border radius of the card     |
-| `padding`   | number               | `8`         | Internal padding for the card |
-| `pressable` | boolean              | `false`     | Whether the card is pressable |
-| `enabled`   | boolean              | `true`      | Whether the card is enabled   |
+| Prop        | Type                                  | Default     | Description                   |
+| ----------- | ------------------------------------- | ----------- | ----------------------------- |
+| `color`     | ThemeColors                           | `'neutral'` | Card background color         |
+| `colorTone` | ThemeColorTones                       | `'low'`     | Color tone for the background |
+| `variant`   | PaperVariants                         | `'solid'`   | Card variant style            |
+| `rounded`   | keyof Theme['borderRadius'] \| number | `'md'`      | Border radius of the card     |
+| `padding`   | keyof Theme['spacing'] \| number      | `'sm'`      | Internal padding for the card |
+| `pressable` | boolean                               | `false`     | Whether the card is pressable |
+| `enabled`   | boolean                               | `true`      | Whether the card is enabled   |
 
-**Example:**
+**Examples:**
 
 ```jsx
-import { ColoredCard, Typography } from '@materio/rn-materio-ui';
+import { ColoredCard, Typography, View } from '@materio/rn-materio-ui';
 
 // Basic ColoredCard
-<ColoredCard color="primary" colorTone="low" style={{ padding: 16 }}>
+<ColoredCard color="primary" colorTone="low">
   <Typography>Colored Card Content</Typography>
 </ColoredCard>
+
+// Different color tones
+<View>
+  <ColoredCard color="primary" colorTone="low" padding="md">
+    <Typography>Primary Low Tone</Typography>
+  </ColoredCard>
+
+  <ColoredCard color="primary" colorTone="base" padding="md">
+    <Typography>Primary Base Tone</Typography>
+  </ColoredCard>
+
+  <ColoredCard color="primary" colorTone="high" padding="md">
+    <Typography>Primary High Tone</Typography>
+  </ColoredCard>
+</View>
+
+// Different colors
+<View>
+  <ColoredCard color="secondary" colorTone="low" padding="md">
+    <Typography>Secondary Color</Typography>
+  </ColoredCard>
+
+  <ColoredCard color="success" colorTone="low" padding="md">
+    <Typography>Success Color</Typography>
+  </ColoredCard>
+
+  <ColoredCard color="warning" colorTone="low" padding="md">
+    <Typography>Warning Color</Typography>
+  </ColoredCard>
+</View>
 
 // Outlined variant
 <ColoredCard
   color="secondary"
-  colorTone="low"
+  colorTone="base"
   variant="outline"
-  style={{ padding: 16 }}
+  padding="lg"
 >
   <Typography>Outlined Colored Card</Typography>
+</ColoredCard>
+
+// Custom rounded corners
+<ColoredCard
+  color="info"
+  colorTone="low"
+  rounded="xl"
+  padding="md"
+>
+  <Typography>Extra Large Rounded</Typography>
 </ColoredCard>
 
 // Pressable ColoredCard
 <ColoredCard
   color="success"
+  colorTone="low"
   pressable
   onPress={() => console.log('Card pressed')}
-  style={{ padding: 16 }}
+  padding="md"
 >
   <Typography>Pressable Colored Card</Typography>
+</ColoredCard>
+
+// Disabled card
+<ColoredCard
+  color="primary"
+  colorTone="base"
+  enabled={false}
+  padding="md"
+>
+  <Typography>Disabled Card</Typography>
 </ColoredCard>
 ```
 
@@ -801,18 +1021,18 @@ Compact elements that represent inputs, attributes, or actions.
 
 **Props:**
 
-| Prop        | Type                                      | Default      | Description                          |
-| ----------- | ----------------------------------------- | ------------ | ------------------------------------ |
-| `children`  | string                                    | **Required** | Text content of the chip             |
-| `color`     | ThemeColors                               | `'neutral'`  | Chip color                           |
-| `variant`   | 'solid' \| 'soft' \| 'outline' \| 'ghost' | `'solid'`    | Chip style variant                   |
-| `size`      | 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'      | `'md'`       | Chip size                            |
-| `rounded`   | 'none' \| 'full' \| number                | -            | Border radius of the chip            |
-| `startIcon` | ReactElement                              | -            | Icon to display at start of chip     |
-| `endIcon`   | ReactElement                              | -            | Icon to display at end of chip       |
-| `onPress`   | function                                  | -            | Function called when chip is pressed |
+| Prop        | Type               | Default      | Description                          |
+| ----------- | ------------------ | ------------ | ------------------------------------ |
+| `children`  | string             | **Required** | Text content of the chip             |
+| `color`     | ButtonColors       | `'neutral'`  | Chip color                           |
+| `variant`   | ButtonVariants     | `'soft'`     | Chip style variant                   |
+| `size`      | ButtonSizes        | `'md'`       | Chip size                            |
+| `rounded`   | 'none' \| 'full'   | -            | Border radius of the chip            |
+| `startIcon` | React.ReactElement | -            | Icon to display at start of chip     |
+| `endIcon`   | React.ReactElement | -            | Icon to display at end of chip       |
+| `onPress`   | function           | -            | Function called when chip is pressed |
 
-**Example:**
+**Examples:**
 
 ```jsx
 import { Chip, View } from '@materio/rn-materio-ui';
@@ -838,23 +1058,40 @@ import { Feather } from '@expo/vector-icons';
   <Chip size="xl">Extra Large</Chip>
 </View>
 
+// Different colors
+<View>
+  <Chip color="primary">Primary</Chip>
+  <Chip color="secondary">Secondary</Chip>
+  <Chip color="success">Success</Chip>
+  <Chip color="warning">Warning</Chip>
+  <Chip color="danger">Danger</Chip>
+  <Chip color="info">Info</Chip>
+  <Chip color="neutral">Neutral</Chip>
+</View>
+
 // With icons
 <View>
-  <Chip startIcon={<Feather name="check" />} color="success">
+  <Chip startIcon={<Feather name="check" size={16} />} color="success">
     Selected
   </Chip>
 
-  <Chip endIcon={<Feather name="info" />} color="info">
+  <Chip endIcon={<Feather name="info" size={16} />} color="info">
     Information
   </Chip>
 
   <Chip
-    startIcon={<Feather name="user" />}
-    endIcon={<Feather name="x" />}
+    startIcon={<Feather name="user" size={16} />}
+    endIcon={<Feather name="x" size={16} />}
     color="primary"
   >
     User
   </Chip>
+</View>
+
+// Rounded chips
+<View>
+  <Chip rounded="none">Square Chip</Chip>
+  <Chip rounded="full">Fully Rounded</Chip>
 </View>
 
 // Interactive
@@ -867,31 +1104,30 @@ import { Feather } from '@expo/vector-icons';
 
 #### TextInput
 
-Text input fields with support for various states.
+Text input fields with typography alignment and theming support.
 
 **Props:**
 
-| Prop           | Type                                       | Default      | Description                       |
-| -------------- | ------------------------------------------ | ------------ | --------------------------------- |
-| `variant`      | 'solid' \| 'outline'                       | `'outline'`  | Input style variant               |
-| `size`         | 'small' \| 'medium' \| 'large'             | `'small'`    | Input size                        |
-| `padding`      | SpacingOptions                             | `'md'`       | Internal padding                  |
-| `borderRadius` | SpacingOptions                             | `'md'`       | Border radius                     |
-| `label`        | string                                     | -            | Input label                       |
-| `helperText`   | string                                     | -            | Helper text displayed below input |
-| `error`        | boolean                                    | `false`      | Error state                       |
-| `errorMessage` | string                                     | -            | Error message to display          |
-| `fullWidth`    | boolean                                    | `false`      | Whether input takes full width    |
-| `disabled`     | boolean                                    | `false`      | Disables the input                |
-| `color`        | ThemeColors                                | `'neutral'`  | Input color                       |
-| `colorTone`    | ColorTones                                 | `'low'`      | Color tone for the input          |
-| `colorValue`   | ColorValues                                | `'contrast'` | Color value (main/contrast)       |
-| `colorAlpha`   | string                                     | `'ff'`       | Alpha value for the color (hex)   |
-| `usageType`    | TypographyUsageTypes                       | `'primary'`  | Semantic usage type               |
-| `align`        | 'left' \| 'center' \| 'right' \| 'justify' | `'left'`     | Text alignment                    |
-| `weight`       | TypographyWeights \| null                  | -            | Font weight                       |
+| Prop           | Type                                       | Default      | Description                               |
+| -------------- | ------------------------------------------ | ------------ | ----------------------------------------- |
+| `variant`      | TypographyVariants                         | `'body'`     | Typography variant for text styling       |
+| `size`         | TypographySizes                            | `'small'`    | Typography size for text                  |
+| `weight`       | TypographyWeights \| null                  | -            | Font weight                               |
+| `color`        | ThemeColors                                | -            | Input text color from theme               |
+| `colorTone`    | ColorTones                                 | `'low'`      | Color tone when using a theme color       |
+| `colorValue`   | ColorValues                                | `'contrast'` | Color value when using a theme color      |
+| `colorAlpha`   | string                                     | `'ff'`       | Alpha value for the color (hex)           |
+| `usageType`    | TypographyUsageTypes                       | `'primary'`  | Semantic usage type                       |
+| `align`        | 'left' \| 'center' \| 'right' \| 'justify' | `'left'`     | Text alignment                            |
+| `outlined`     | boolean                                    | `false`      | Whether to show outline border (vs solid) |
+| `label`        | string                                     | -            | Input label                               |
+| `helperText`   | string                                     | -            | Helper text displayed below input         |
+| `error`        | boolean                                    | `false`      | Error state                               |
+| `errorMessage` | string                                     | -            | Error message to display                  |
+| `fullWidth`    | boolean                                    | `false`      | Whether input takes full width            |
+| `disabled`     | boolean                                    | `false`      | Disables the input                        |
 
-**Example:**
+**Examples:**
 
 ```jsx
 import { TextInput, View } from '@materio/rn-materio-ui';
@@ -901,11 +1137,11 @@ import { TextInput, View } from '@materio/rn-materio-ui';
   <TextInput
     label="Username"
     placeholder="Enter your username"
-    variant="outline"
+    outlined={true}
   />
 
-  {/* Solid variant */}
-  <TextInput label="Email" placeholder="Enter your email" variant="solid" />
+  {/* Solid input (no outline) */}
+  <TextInput label="Email" placeholder="Enter your email" outlined={false} />
 
   {/* With helper text */}
   <TextInput
@@ -928,6 +1164,7 @@ import { TextInput, View } from '@materio/rn-materio-ui';
     label="Custom Color"
     placeholder="Primary colored input"
     color="primary"
+    colorTone="high"
   />
 
   {/* Full width input */}
@@ -937,12 +1174,27 @@ import { TextInput, View } from '@materio/rn-materio-ui';
     fullWidth
   />
 
-  {/* Different sizes */}
-  <TextInput label="Small Input" size="small" placeholder="Small input" />
+  {/* Different typography styles */}
+  <TextInput
+    label="Title Style"
+    variant="title"
+    size="medium"
+    placeholder="Title variant input"
+  />
 
-  <TextInput label="Medium Input" size="medium" placeholder="Medium input" />
+  <TextInput
+    label="Body Style"
+    variant="body"
+    size="large"
+    placeholder="Body variant input"
+  />
 
-  <TextInput label="Large Input" size="large" placeholder="Large input" />
+  {/* Different usage types */}
+  <TextInput
+    label="Link Style"
+    usageType="link"
+    placeholder="Link usage type"
+  />
 </View>;
 ```
 
@@ -1340,8 +1592,8 @@ const frozenTheme = {
     md: 10, // More refined intervals
     lg: 14, // Crisp, clean spacing
     xl: 20, // Elegant larger spacing
-    xxl: 28, // Sophisticated extra large
-    xxxl: 36, // Premium maximum spacing
+    2xl: 28, // Sophisticated extra large
+    3xl: 36, // Premium maximum spacing
   },
   borderRadius: {
     none: 0,
@@ -1350,8 +1602,8 @@ const frozenTheme = {
     md: 10, // Balanced frozen curves
     lg: 14, // Elegant ice formation
     xl: 20, // Smooth glacier edges
-    xxl: 28, // Flowing ice shapes
-    xxxl: 36, // Organic winter forms
+    2xl: 28, // Flowing ice shapes
+    3xl: 36, // Organic winter forms
   },
 };
 ```
@@ -1392,8 +1644,7 @@ const myCustomTheme: Theme = {
     },
     dark: {
       // Dark mode configuration
-    },
-  },
+    },  },
   typography: {
     // Typography system configuration
   },
@@ -1402,6 +1653,14 @@ const myCustomTheme: Theme = {
   },
   borderRadius: {
     // Border radius system configuration
+  },
+  borderWidths: {
+    // Border width system configuration
+    none: 0,
+    hairline: 0.5,
+    thin: 1,
+    medium: 2,
+    thick: 4,
   },
 };
 
@@ -1481,6 +1740,42 @@ const theme: Theme = {
   // ... rest of theme configuration
 };
 ```
+
+#### Enhanced Theme Integration
+
+All components have been updated to use the standardized theme system for consistent spacing, border radius, and border widths. This ensures better consistency across your application and easier customization.
+
+**Components with Enhanced Theme Integration:**
+
+- **Button**: Uses `theme.spacing` for padding, `theme.borderRadius` for corners, and `theme.borderWidths` for outline variant
+- **Card & ColoredCard**: Support theme keys for border radius (`'sm'`, `'md'`, `'lg'`, `'xl'`) and padding
+- **Chip**: Uses theme-based spacing and border radius mapping by size
+- **IconButton**: Uses theme spacing and border radius with size-based mapping
+- **Menu/MenuItem**: Uses theme spacing for padding and gaps
+- **Paper**: Supports theme keys for border radius and uses theme border widths
+- **Popover**: Uses theme border radius for modal styling
+- **TextInput**: Already integrated with theme spacing and border radius
+
+**Usage Example:**
+
+```jsx
+import { Button, Card, Paper } from '@materio/rn-materio-ui';
+
+// All these components now use theme values
+<Button size="lg">
+  Uses theme.spacing.xl for padding and theme.borderRadius.lg for corners
+</Button>
+
+<Card rounded="md" variant="outline">
+  Uses theme.borderRadius.md and theme.borderWidths.medium
+</Card>
+
+<Paper rounded="lg" variant="outline">
+  Supports both theme keys and custom values
+</Paper>
+```
+
+---
 
 ### Responsive Design
 
@@ -1595,6 +1890,7 @@ interface Theme {
   };
   spacing: Spacing;
   borderRadius: BorderRadius;
+  borderWidths: BorderWidths;
 }
 ```
 
