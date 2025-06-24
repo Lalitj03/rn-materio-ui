@@ -28,7 +28,7 @@ const VariantRow = ({
     <View style={styles.variantRow}>
       {colors.map((color) => (
         <Button key={`${variant}-${color}`} variant={variant} color={color}>
-          {color}
+          {color?.toLocaleUpperCase()}
         </Button>
       ))}
     </View>
