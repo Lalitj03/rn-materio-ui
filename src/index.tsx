@@ -29,5 +29,8 @@ export { default as theme } from './constants/theme';
 // Export tailwind colors
 export { default as twcolors } from './constants/twcolors';
 
-// Export utils
 export { default as invertTone } from './utils/invertTone';
+
+// Export utility functions
+export { createPalette } from './utils/colors';
+export { extendTheme } from './utils/extendTheme';
