@@ -1,5 +1,5 @@
 import { View, type ViewProps } from 'react-native';
-import { useComponentStyle } from 'src/hooks/useComponentStyle';
+import { useComponentStyle } from '../../hooks/useComponentStyle';
 import { type PaperVariants } from '../../index';
 
 export interface PaperProps extends ViewProps {

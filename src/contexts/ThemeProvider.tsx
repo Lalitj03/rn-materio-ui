@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import React, { createContext, useContext } from 'react';
-import theme from 'src/constants/theme';
 import type {
   BorderRadius,
   BorderWidths,
@@ -9,7 +8,8 @@ import type {
   Spacing,
   Theme,
   Typography,
-} from 'src/utils/types/theme';
+} from '../../src/utils/types/theme';
+import theme from '../constants/theme';
 
 export interface ThemeContextType {
   theme: {

@@ -1,5 +1,5 @@
 import { Text, type TextProps } from 'react-native';
-import { useComponentDefaults } from 'src/hooks/useComponentStyle';
+import { useComponentDefaults } from '../../hooks/useComponentStyle';
 import {
   type ColorTone,
   type ColorValues,
