@@ -1,5 +1,5 @@
 import { BaseButton, type BaseButtonProps } from 'react-native-gesture-handler';
-import { useComponentStyle } from 'src/hooks/useComponentStyle';
+import { useComponentStyle } from '../../hooks/useComponentStyle';
 import { type PaperVariants } from '../../index';
 
 export interface CardProps extends BaseButtonProps {
