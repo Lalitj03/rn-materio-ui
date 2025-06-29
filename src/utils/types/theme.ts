@@ -178,10 +178,10 @@ export interface ComponentConfig<
   baseStyle?: ComponentStyle;
 
   // Size-specific styles
-  sizes?: Record<TSizes, ComponentStyle>;
+  sizes?: Partial<Record<TSizes, ComponentStyle>>;
 
   // Variant-specific styles
-  variants?: Record<TVariants, ComponentStyle | VariantFunction>;
+  variants?: Partial<Record<TVariants, ComponentStyle | VariantFunction>>;
 }
 
 // Button Component Configuration (now using the generic pattern)
@@ -193,13 +193,13 @@ export type ButtonComponentConfig = ComponentConfig<
 // Paper Component Configuration (simple config, no variants needed)
 export interface PaperComponentConfig {
   baseStyle: ComponentStyle;
-  variants?: Record<PaperVariants, ComponentStyle | VariantFunction>;
+  variants?: Partial<Record<PaperVariants, ComponentStyle | VariantFunction>>;
 }
 
 // Card Component Configuration (simple config, no variants needed)
 export interface CardComponentConfig {
   baseStyle: ComponentStyle;
-  variants?: Record<PaperVariants, ComponentStyle | VariantFunction>;
+  variants?: Partial<Record<PaperVariants, ComponentStyle | VariantFunction>>;
 }
 
 // Chip Component Configuration (uses Button variants and sizes)

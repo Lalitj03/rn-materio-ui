@@ -33,4 +33,4 @@ export { default as invertTone } from './utils/invertTone';
 
 // Export utility functions
 export { createPalette } from './utils/colors';
-export { extendTheme } from './utils/extendTheme';
+export { extendTheme, type DeepPartial } from './utils/extendTheme';

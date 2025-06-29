@@ -1,12 +1,22 @@
 import { type Theme, theme } from '../index';
 
 /**
- * A utility type that makes all properties of an object, including nested ones, optional.
- * This is perfect for the `overrides` object in `extendTheme`, as users will only
- * provide the parts of the theme they want to change.
+ * A utility type that makes all properties of an object optional while preserving primitive types.
+ * This is more sophisticated than the previous version and correctly handles primitives, functions,
+ * and arrays without making them deeply partial.
  */
 export type DeepPartial<T> = {
-  [P in keyof T]?: DeepPartial<T[P]>;
+  [P in keyof T]?: T[P] extends any[]
+    ? T[P] // Arrays are kept as-is
+    : T[P] extends (...args: any[]) => any
+      ? T[P] // Functions are kept as-is
+      : T[P] extends object
+        ? T[P] extends Date
+          ? T[P] // Dates are kept as-is
+          : T[P] extends RegExp
+            ? T[P] // RegExp are kept as-is
+            : DeepPartial<T[P]> // Only objects are made deeply partial
+        : T[P]; // Primitives (number, string, boolean, etc.) are kept as-is
 };
 
 /**

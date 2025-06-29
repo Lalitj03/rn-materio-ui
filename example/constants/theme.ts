@@ -1,12 +1,10 @@
 import {
   createPalette,
   extendTheme,
-  theme as materioTheme,
   twcolors,
   type Theme,
   type ThemeColors,
 } from '@materio/rn-materio-ui';
-import type { DeepPartial } from 'src/utils/extendTheme';
 
 export const corporatePalette = createPalette({
   primary: ['pink', '500'],
@@ -40,10 +38,14 @@ const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {
-        ...materioTheme.components.Button.baseStyle,
         borderRadius: 'sm',
         fontWeight: 'regular',
-      } as DeepPartial<Theme['components']['Button']['baseStyle']>,
+      },
+      sizes: {
+        sm: {
+          fontSize: 14,
+        },
+      },
       variants: {
         outline: (_theme: Theme, color: ThemeColors) => ({
           backgroundColor: 'transparent',
